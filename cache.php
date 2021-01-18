@@ -9,7 +9,7 @@ try{
    $dbh = new PDO($dbh,$db_user,$db_pass);
    //echo '成功';
 }catch(PDOException $e){
-   //pass
+   //echo '失败';
 }
 
 // 参数
@@ -20,7 +20,7 @@ $ep_id = @$_GET['ep_id'];
 $refresh_cache = 0;
 
 if ($access_key ==""){
-    $type = "0";
+    $type = "0"; // 未登录
 }else{
     // 判断大会员
     $sqlco = "SELECT `due_date` FROM `keys` WHERE `access_key` = '".$access_key."'";
@@ -28,9 +28,9 @@ if ($access_key ==""){
     $vnum = $cres -> fetch();
     $due = $vnum['due_date'];
     if ((int)$due > time()*1000 ){
-        $type = "2";
+        $type = "2"; // 大会员
     }else{
-        $type = "1";
+        $type = "1"; // 不是大会员
     }
 }
 
@@ -86,6 +86,14 @@ function write_cache(){
         if ($refresh_cache==1){
             $sql = "UPDATE `cache` SET `add_time` = '$ts', `cache` = '$output' WHERE `area` = '$area' AND `type` = '$type' AND `cid` = '$cid' AND `ep_id` = '$ep_id';";
         }
+        $dbh -> exec($sql);
+    // 10403 地区错误
+    }else if ($code == "-10403" && SERVER_AREA == $area){
+        $sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cid`,`ep_id`,`cache`) VALUES ('9999999999','$area','$type','$cid','$ep_id','$output')";
+        $dbh -> exec($sql);
+    // 404 泰版地区错误
+    }else if ($code == "-404" && SERVER_AREA == $area && $area == "th"){
+        $sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cid`,`ep_id`,`cache`) VALUES ('9999999999','$area','$type','$cid','$ep_id','$output')";
         $dbh -> exec($sql);
     }
 }

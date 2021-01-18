@@ -1,6 +1,5 @@
 <?php
-// 白名单
-$whitelist = array("1", "2", "3");
+
 // 获取 access_key
 $access_key = @$_GET['access_key'];
 // 判断 access_key
@@ -10,7 +9,9 @@ if ($access_key != ""){
     }else{
         $uid = get_uid();
     }
-    if (!in_array($uid, $whitelist)) {
+    if (in_array($uid, $whitelist)) {
+        //pass
+    }else{
         if (REPLACE_HLW==1){
             include ("hlw.php");
             hlw();
@@ -54,7 +55,9 @@ function get_uid_fromsql(){
        $dbh = new PDO($dbh,$db_user,$db_pass);
        //echo '成功';
     }catch(PDOException $e){
-       //pass
+       //echo '错误';
+       $uid = get_uid();
+       return $uid;
     }
     $access_key = $_GET['access_key'];
     $sqlco = "SELECT `uid` FROM `keys` WHERE `access_key` = '".$access_key."'";

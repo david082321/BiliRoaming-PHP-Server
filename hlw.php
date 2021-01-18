@@ -15,8 +15,6 @@ if ($path=="/intl/gateway/v2/ogv/playurl"){
 }
 
 $url = "https://black.qimo.ink/hlw.php";
-// 如果你是国内服务器，请取消下一行注解
-//$url = "https://api.bilibili.com/pgc/player/api/playurl?appkey=1d8b6e7d45233436&area=cn&build=6151000&cid=3684209&device=android&ep_id=62780&fnval=144&fnver=0&force_host=0&fourk=0&mobi_app=android&platform=android&qn=80&ts=1610306582&sign=b30530dcdf4de77dcf94126baa5783a7";
 $ch = curl_init();
 curl_setopt($ch,CURLOPT_URL,$url);
 curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true); 

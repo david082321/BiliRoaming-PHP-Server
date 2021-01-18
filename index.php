@@ -7,6 +7,14 @@ if (SAVE_CACHE==1){
     include ("log.php");
 }
 
+// 服务器锁区
+function lock_area(){
+    $area = @$_GET['area'];
+    if (SERVER_AREA != "" && SERVER_AREA != $area){
+        exit(BLOCK_RETURN);
+    }
+}
+
 // 判断要转发的host
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
 if ($path=="/intl/gateway/v2/ogv/playurl"){
@@ -37,7 +45,7 @@ if (SAVE_CACHE==1){
     get_cache();
 }
 
-// 转发到b站服务器
+// 转发到指定服务器
 $url = "https://".$host.$path."?".$_SERVER['QUERY_STRING'];
 $ch = curl_init();
 curl_setopt($ch,CURLOPT_URL,$url);
@@ -51,6 +59,7 @@ $output = curl_exec($ch);
 curl_close($ch);
 print($output);
 
+// 写入缓存
 if (SAVE_CACHE==1){
     write_cache();
 }
