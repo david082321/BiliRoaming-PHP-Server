@@ -13,6 +13,17 @@ define('DB_USER', '这里改成登录的用户名'); //登录的用户名
 define('DB_PASS', '登录的密码'); //登录的密码
 define('DB_NAME', '数据库名称'); //数据库名称
 
+//自定义API,避免集中请求，降低风控几率
+//$tw_api = array("api1.example.com","api2.example.com","api3.example.com","api.bilibili.com");//可以自定义其他反代api,例如云函数,CFW
+//$tw_sum = array_rand($tw_api);//计数
+
+//define('CUSTOM_HOST_DEFULT', $tw_api[$tw_sum]); //随机调用
+
+//API相关
+define('CUSTOM_HOST_DEFULT', 'api.bilibili.com'); //默认解析HKTWapi
+define('CUSTOM_HOST_TH', 'api.global.bilibili.com'); //泰区解析api
+define('CUSTOM_HOST_SUB', 'app.global.bilibili.com'); //泰区搜索字幕用api
+
 //其他
 define('WELCOME', 'Success!'); //首页欢迎语
 define('BLOCK_RETURN', '{"code":-10403,"message":"你已被封锁"}'); //封锁返回内容

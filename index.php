@@ -10,16 +10,16 @@ if (SAVE_CACHE==1){
 // 判断要转发的host
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
 if ($path=="/intl/gateway/v2/ogv/playurl"){
-    $host = "api.global.bilibili.com";
+    $host = CUSTOM_HOST_TH;
     include (BLOCK_TYPE.".php"); // 鉴权
 }elseif ($path=="/intl/gateway/v2/app/search/type"){
-    $host = "app.global.bilibili.com";
+    $host = CUSTOM_HOST_SUB;
     include (BLOCK_TYPE.".php"); // 鉴权
 }elseif ($path=="/pgc/player/api/playurl"){
-    $host = "api.bilibili.com";
+    $host = CUSTOM_HOST_DEFULT;
     include (BLOCK_TYPE.".php"); // 鉴权
 }elseif ($path=="/intl/gateway/v2/app/subtitle"){
-    $host = "app.global.bilibili.com";
+    $host = CUSTOM_HOST_SUB;
 }else {
     // 欢迎语
     exit(WELCOME);
