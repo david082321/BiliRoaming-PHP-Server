@@ -1,5 +1,6 @@
 <?php
 function hlw(){
+exit(BLOCK_RETURN); // 已失效，暂时停止解析葫芦娃
 // 判断来源
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
 if ($path=="/intl/gateway/v2/ogv/playurl"){
