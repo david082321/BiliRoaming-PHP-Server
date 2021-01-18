@@ -8,7 +8,7 @@ if ($path=="/intl/gateway/v2/ogv/playurl"){
 }elseif ($path=="/intl/gateway/v2/app/search/type"){
     exit(BLOCK_RETURN);
 }elseif ($path=="/pgc/player/api/playurl"){
-    $host = CUSTOM_HOST_DEFULT;
+    $host = CUSTOM_HOST_DEFAULT;
     $type = "main";
 }elseif ($path=="/intl/gateway/v2/app/subtitle"){
     exit(BLOCK_RETURN);

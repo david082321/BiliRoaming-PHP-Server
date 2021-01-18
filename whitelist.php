@@ -1,20 +1,20 @@
 <?php
 
-// 获取 access_key
-$access_key = @$_GET['access_key'];
-// 判断 access_key
-if ($access_key != ""){
-    if (SAVE_CACHE==1){
-        $uid = get_uid_fromsql();
+$access_key = @$_GET['access_key']; // 获取 access_key
+
+if ($access_key != ""){ // access_key 是否存在
+    if (SAVE_CACHE==1){ // 是否开启缓存
+        $uid = get_uid_fromsql(); // 从数据库获取
     }else{
-        $uid = get_uid();
+        $uid = get_uid(); // 从API获取
     }
+    // 是否在白名单内
     if (in_array($uid, $whitelist)) {
-        //pass
+        // pass
     }else{
         if (REPLACE_HLW==1){
             include ("hlw.php");
-            hlw();
+            hlw(); // 替换成葫芦娃
         }else{
             exit(BLOCK_RETURN);
         }

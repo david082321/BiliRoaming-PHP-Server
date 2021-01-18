@@ -24,7 +24,7 @@ if ($path=="/intl/gateway/v2/ogv/playurl"){
     $host = CUSTOM_HOST_SUB;
     include (BLOCK_TYPE.".php"); // 鉴权
 }elseif ($path=="/pgc/player/api/playurl"){
-    $host = CUSTOM_HOST_DEFULT;
+    $host = CUSTOM_HOST_DEFAULT;
     include (BLOCK_TYPE.".php"); // 鉴权
 }elseif ($path=="/intl/gateway/v2/app/subtitle"){
     $host = CUSTOM_HOST_SUB;
