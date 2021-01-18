@@ -8,7 +8,7 @@
 
 ## 下载：
 
-* [全版本](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.1.zip)
+* [全版本](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.2.zip)
 
 * 默认为「黑名单-葫芦娃」模式，若要切换到其他模式，请看底下说明。
 
@@ -67,4 +67,12 @@
 	rewrite "^/intl/gateway/v2/app/subtitle?(.*)$" /intl/gateway/v2/app/subtitle?$1 last;
   
 	}
+
+## (非必要步骤) 缓存
+
+* 安装 MySQL
+
+* 配置 config.php 的缓存设置
+
+* 导入 cache.sql
 
