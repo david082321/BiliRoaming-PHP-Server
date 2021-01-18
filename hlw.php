@@ -3,12 +3,12 @@ function hlw(){
 // 判断来源
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
 if ($path=="/intl/gateway/v2/ogv/playurl"){
-    $host = "api.global.bilibili.com";
+    $host = CUSTOM_HOST_TH;
     $type = "intl";
 }elseif ($path=="/intl/gateway/v2/app/search/type"){
     exit(BLOCK_RETURN);
 }elseif ($path=="/pgc/player/api/playurl"){
-    $host = "api.bilibili.com";
+    $host = CUSTOM_HOST_DEFULT;
     $type = "main";
 }elseif ($path=="/intl/gateway/v2/app/subtitle"){
     exit(BLOCK_RETURN);
