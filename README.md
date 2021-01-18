@@ -8,16 +8,16 @@
 
 ## 下载：
 
-* [全版本](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.2.zip)
-
-* 默认为「黑名单-葫芦娃」模式，若要切换到其他模式，请看底下说明。
+* [下载(GitHub)](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.2.zip)
 
 
 ## 用法：
 
-直接放到网站根目录，例如 wwwroot 或 public_html 或 private_html
+* 直接放到网站根目录，例如 wwwroot 或 public_html 或 private_html
 
-(若您使用白名单模式，请查看最后面的修改白名单方法)
+* 默认为「黑名单-葫芦娃」模式，若要切换到其他模式，请看底下说明。
+
+* 若您使用白名单模式，请查看底下关于修改白名单方法。
 
 ## 示例：
 
@@ -34,7 +34,7 @@
 
 * 每行后面都有注释提供参考
 
-## (非必要步骤)白名单
+## (非必要步骤) 白名单
 
 * 如果你选择白名单模式，请修改 whitelist.php 的第 3 行，改成你要放行的 uid
 
