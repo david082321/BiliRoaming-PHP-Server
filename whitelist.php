@@ -17,9 +17,12 @@ if ($access_key != ""){ // access_key 是否存在
     if (in_array($uid, $WHITELIST)) {
         // pass
     }else{
-        if (REPLACE_HLW==1){
+        if (REPLACE_TYPE=="hlw"){ // 替换成葫芦娃
             include ("hlw.php");
-            hlw(); // 替换成葫芦娃
+            hlw();
+        }elseif (REPLACE_TYPE=="tom"){ // 替换成猫和老鼠
+            include ("tom.php");
+            tom();
         }else{
             exit(BLOCK_RETURN);
         }

@@ -51,12 +51,25 @@ if (SAVE_CACHE==1){
     }
 }
 
+
+$url = "https://".$link.$path."?".$_SERVER['QUERY_STRING'];
+$ch = curl_init();
+curl_setopt($ch,CURLOPT_URL,$url);
+curl_setopt($ch,CURLOPT_RESOLVE,[$link.":443:".$ip]);
+
+// 指定ip回源
+if (IP_RESOLVE==1){
+	$host = $links[array_rand($hosts)];
+	$ip = $ips[array_rand($ips)];
+}
+
 // 转发到指定服务器
 $url = "https://".$host.$path."?".$_SERVER['QUERY_STRING'];
 $ch = curl_init();
 curl_setopt($ch,CURLOPT_URL,$url);
 curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+if (IP_RESOLVE==1){curl_setopt($ch,CURLOPT_RESOLVE,[$host.":443:".$ip]);} // 指定ip回源
 curl_setopt($ch,CURLOPT_HTTPHEADER, array(
     'User-Agent: '.@$_SERVER["HTTP_USER_AGENT"]
 ));

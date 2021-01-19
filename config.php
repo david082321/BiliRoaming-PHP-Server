@@ -1,17 +1,13 @@
 <?php
-// 防止外部破解
-if(!defined('SYSTEM')){
-    header('HTTP/1.1 404 Not Found');
-}
+if(!defined('SYSTEM')){header('HTTP/1.1 404 Not Found');}// 防止外部破解，不可以改
 
 // 封锁
 define('BLOCK_TYPE','blacklist'); // 封锁类型：none 不封锁, blacklist 黑名单, whitelist 本地白名单
-define('REPLACE_HLW', 1); // 是否替换成葫芦娃(仅黑/白名单时生效)。0 否, 1 是
+define('REPLACE_TYPE', "tom"); // 是否替换视频(仅黑/白名单时生效)。hlw 葫芦娃, tom 猫和老鼠
 define('NEED_LOGIN', 0); //是否要登录用户才能用。0 否, 1 是
 define('BILIROAMING', 1); //是否要用哔哩漫游才能使用。0 否, 1 是
 define('LOCK_AREA', 0); //服务器锁区，须设置$SERVER_AREA。0 否, 1 是
 $WHITELIST = array('1', '2', '3'); // 本地白名单，填写 uid，可自行添加、删除，注意使用英文,和'
-
 
 // 缓存
 define('SAVE_CACHE', 0); //开启缓存，须配置MySQL。0 否, 1 是
@@ -44,6 +40,11 @@ define('CUSTOM_HOST_SUB', 'app.global.bilibili.com'); //泰区 搜索字幕用ap
 //$tw_api = array("api1.example.com","api2.example.com","api3.example.com","api.bilibili.com");//可以自定义其他反代api,例如云函数,CFW
 //$tw_sum = array_rand($tw_api);//计数
 //define('CUSTOM_HOST_TW', $tw_api[$tw_sum]); //随机调用
+
+// 指定ip回源
+define('IP_RESOLVE', 0); // 开启功能。0 否, 1 是
+$ips=array("172.0.0.1","192.168.0.1","1.2.3.4");
+$hosts=array("workers.dev","workers.dev");
 
 // 其他
 define('WELCOME', 'Success!'); //首页欢迎语

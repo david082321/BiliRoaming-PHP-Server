@@ -6,14 +6,14 @@
 
 ## 下载：
 
-* [下载(GitHub) v2.6](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.6.zip)
+* [下载(GitHub) v2.7](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.7.zip)
 
 
 ## 用法：
 
 * 直接放到网站根目录，例如 wwwroot 或 public_html 或 private_html
 
-* 默认为「黑名单-葫芦娃」模式，若要切换到其他模式，请看底下说明。
+* 默认为「黑名单-猫和老鼠」模式，若要切换到其他模式，请看底下说明。
 
 ## 示例：
 
@@ -26,7 +26,7 @@
 
 ## (非必要步骤) 切换到其他模式
 
-* 默认为「黑名单-葫芦娃」模式，若您想使用「黑名单」或是「本地白名单」或是「无任何限制」等其他模式，请手动修改 config.php
+* 默认为「黑名单-猫和老鼠」模式，若您想使用「黑名单」或是「黑名单-葫芦娃」或是「本地白名单」或是「无任何限制」等其他模式，请手动修改 config.php
 
 * 每行后面都有注释提供参考
 

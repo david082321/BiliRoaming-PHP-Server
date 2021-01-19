@@ -18,10 +18,13 @@ if ($access_key != ""){
     curl_close($ch);
     // 如果是黑名单
     if ($out=="ban"){
-        if (REPLACE_HLW==1){
+        if (REPLACE_TYPE=="hlw"){ // 替换成葫芦娃
             include ("hlw.php");
             hlw();
-        }else{
+        }elseif (REPLACE_TYPE=="tom"){ // 替换成猫和老鼠
+            include ("tom.php");
+            tom();
+        }else {
             exit(BLOCK_RETURN);
         }
     }
