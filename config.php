@@ -7,7 +7,7 @@ if(!defined('SYSTEM')){
 
 // 封锁
 define('BLOCK_TYPE','blacklist'); // 封锁类型：none 不封锁, blacklist 黑名单, whitelist 本地白名单
-define('REPLACE_HLW', 0); // 是否替换成葫芦娃(仅黑/白名单时生效)。0 否, 1 是
+define('REPLACE_HLW', 1); // 是否替换成葫芦娃(仅黑/白名单时生效)。0 否, 1 是
 define('NEED_LOGIN', 0); //是否要登录用户才能用。0 否, 1 是
 define('BILIROAMING', 1); //是否要用哔哩漫游才能使用。0 否, 1 是
 define('SERVER_AREA', ''); //此服务器所在的地区，可不填，填写后可以锁区，及缓存-10403。cn hk tw th
