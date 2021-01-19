@@ -2,7 +2,7 @@
 // 防止外部破解
 if(!defined('SYSTEM')){
     header('HTTP/1.1 404 Not Found');
-    exit('禁止访问');
+    exit(BLOCK_RETURN);
 }
 
 $db_host=DB_HOST;
@@ -59,7 +59,7 @@ function get_cache(){
         if( (int)$add_time+CACHE_TIME>=$ts){
             return $cache;
         }else{
-            //刷新缓存
+            // 准备刷新缓存
             $refresh_cache = 1;
             return "";
         }
@@ -74,6 +74,7 @@ function write_cache(){
     global $area;
     global $cid;
     global $ep_id;
+    global $SERVER_AREA;
     global $output;
     global $refresh_cache;
     $ts = time();
@@ -89,17 +90,17 @@ function write_cache(){
         }
         $output = $out.$a[count($a)-1];
         $sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cid`,`ep_id`,`cache`) VALUES ('$ts','$area','$type','$cid','$ep_id','$output')";
-        //刷新缓存
+        // 刷新缓存
         if ($refresh_cache==1){
             $sql = "UPDATE `cache` SET `add_time` = '$ts', `cache` = '$output' WHERE `area` = '$area' AND `type` = '$type' AND `cid` = '$cid' AND `ep_id` = '$ep_id';";
         }
         $dbh -> exec($sql);
     // 10403 地区错误
-    }else if ($code == "-10403" && SERVER_AREA == $area){
+    }else if ($code == "-10403" && in_array($area, $SERVER_AREA)){
         $sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cid`,`ep_id`,`cache`) VALUES ('9999999999','$area','$type','$cid','$ep_id','$output')";
         $dbh -> exec($sql);
     // 404 泰版地区错误
-    }else if ($code == "-404" && $area == "th"){
+    }else if ($code == "-404" && in_array($area, $SERVER_AREA)){
         $sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cid`,`ep_id`,`cache`) VALUES ('9999999999','$area','$type','$cid','$ep_id','$output')";
         $dbh -> exec($sql);
     }

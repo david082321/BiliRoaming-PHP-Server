@@ -7,22 +7,19 @@ if (SAVE_CACHE==1){
     include ("log.php");
 }
 
-// 服务器锁区
-$area = @$_GET['area'];
-if (SERVER_AREA != "" && SERVER_AREA != $area){
-    exit(BLOCK_RETURN);
-}
-
 // 判断要转发的host
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
 if ($path=="/intl/gateway/v2/ogv/playurl"){
     $host = CUSTOM_HOST_TH;
 }elseif ($path=="/intl/gateway/v2/app/search/type"){
     $host = CUSTOM_HOST_SUB;
-}elseif ($path=="/pgc/player/api/playurl"){
-    $host = CUSTOM_HOST_DEFAULT;
 }elseif ($path=="/intl/gateway/v2/app/subtitle"){
     $host = CUSTOM_HOST_SUB;
+}elseif ($path=="/pgc/player/api/playurl"){
+    if ($area=="cn"){$host = CUSTOM_HOST_CN;}
+    else if ($area=="hk"){$host = CUSTOM_HOST_HK;}
+    else if ($area=="tw"){$host = CUSTOM_HOST_TW;}
+    else {$host = CUSTOM_HOST_DEFAULT;}
 }else {
     // 欢迎语
     exit(WELCOME);
@@ -31,6 +28,12 @@ if ($path=="/intl/gateway/v2/ogv/playurl"){
 // 模块请求都会带上X-From-Biliroaming的请求头，为了防止被盗用，可以加上请求头判断
 $headerStringValue = $_SERVER['HTTP_X_FROM_BILIROAMING'];
 if ($headerStringValue=="" && BILIROAMING==1){
+    exit(BLOCK_RETURN);
+}
+
+// 服务器锁区
+$area = @$_GET['area'];
+if ( !empty($SERVER_AREA) && !in_array($area, $SERVER_AREA) && LOCK_AREA=="1" ){
     exit(BLOCK_RETURN);
 }
 
@@ -52,15 +55,13 @@ if (SAVE_CACHE==1){
 $url = "https://".$host.$path."?".$_SERVER['QUERY_STRING'];
 $ch = curl_init();
 curl_setopt($ch,CURLOPT_URL,$url);
-curl_setopt($ch,CURLOPT_FOLLOWLOCATION,false); 
-curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 curl_setopt($ch,CURLOPT_HTTPHEADER, array(
     'User-Agent: '.@$_SERVER["HTTP_USER_AGENT"]
 ));
 $output = curl_exec($ch);
 curl_close($ch);
-
 print($output);
 
 // 写入缓存

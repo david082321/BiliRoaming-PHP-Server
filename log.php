@@ -2,7 +2,7 @@
 // 防止外部破解
 if(!defined('SYSTEM')){
     header('HTTP/1.1 404 Not Found');
-    exit('禁止访问');
+    exit(BLOCK_RETURN);
 }
 
 // https://zhuanlan.zhihu.com/p/122967323

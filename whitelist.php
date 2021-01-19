@@ -2,7 +2,7 @@
 // 防止外部破解
 if(!defined('SYSTEM')){
     header('HTTP/1.1 404 Not Found');
-    exit('禁止访问');
+    exit(BLOCK_RETURN);
 }
 
 $access_key = @$_GET['access_key']; // 获取 access_key
@@ -14,7 +14,7 @@ if ($access_key != ""){ // access_key 是否存在
         $uid = get_uid(); // 从API获取
     }
     // 是否在白名单内
-    if (in_array($uid, $whitelist)) {
+    if (in_array($uid, $WHITELIST)) {
         // pass
     }else{
         if (REPLACE_HLW==1){
