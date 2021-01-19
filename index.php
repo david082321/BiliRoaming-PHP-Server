@@ -11,6 +11,7 @@ if (SAVE_CACHE==1){
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
 if ($path=="/intl/gateway/v2/ogv/playurl"){
     $host = CUSTOM_HOST_TH;
+    lock_area();
 }elseif ($path=="/intl/gateway/v2/app/search/type"){
     $host = CUSTOM_HOST_SUB;
 }elseif ($path=="/intl/gateway/v2/app/subtitle"){
@@ -20,6 +21,7 @@ if ($path=="/intl/gateway/v2/ogv/playurl"){
     else if ($area=="hk"){$host = CUSTOM_HOST_HK;}
     else if ($area=="tw"){$host = CUSTOM_HOST_TW;}
     else {$host = CUSTOM_HOST_DEFAULT;}
+    lock_area();
 }else {
     // 欢迎语
     exit(WELCOME);
@@ -32,9 +34,11 @@ if ($headerStringValue=="" && BILIROAMING==1){
 }
 
 // 服务器锁区
-$area = @$_GET['area'];
-if ( !empty($SERVER_AREA) && !in_array($area, $SERVER_AREA) && LOCK_AREA=="1" ){
-    exit(BLOCK_RETURN);
+function lock_area(){
+    $area = @$_GET['area'];
+    if ( !empty($SERVER_AREA) && !in_array($area, $SERVER_AREA) && LOCK_AREA=="1" ){
+        exit(BLOCK_RETURN);
+    }
 }
 
 // 鉴权
@@ -51,7 +55,6 @@ if (SAVE_CACHE==1){
     }
 }
 
-
 $url = "https://".$link.$path."?".$_SERVER['QUERY_STRING'];
 $ch = curl_init();
 curl_setopt($ch,CURLOPT_URL,$url);
@@ -59,8 +62,8 @@ curl_setopt($ch,CURLOPT_RESOLVE,[$link.":443:".$ip]);
 
 // 指定ip回源
 if (IP_RESOLVE==1){
-	$host = $links[array_rand($hosts)];
-	$ip = $ips[array_rand($ips)];
+    $host = $links[array_rand($hosts)];
+    $ip = $ips[array_rand($ips)];
 }
 
 // 转发到指定服务器
