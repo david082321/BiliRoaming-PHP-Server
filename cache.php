@@ -1,4 +1,9 @@
 <?php
+// 防止外部破解
+if(!defined('SYSTEM')){
+    header('HTTP/1.1 404 Not Found');
+    exit('禁止访问');
+}
 
 $db_host=DB_HOST;
 $db_user=DB_USER;
@@ -52,12 +57,14 @@ function get_cache(){
     $cache = str_replace("u0026","&",$cache);
     if ($cache != ""){
         if( (int)$add_time+CACHE_TIME>=$ts){
-            exit($cache);
+            return $cache;
         }else{
             //刷新缓存
             $refresh_cache = 1;
+            return "";
         }
     }
+    return "";
 }
 
 // 写入缓存
@@ -92,7 +99,7 @@ function write_cache(){
         $sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cid`,`ep_id`,`cache`) VALUES ('9999999999','$area','$type','$cid','$ep_id','$output')";
         $dbh -> exec($sql);
     // 404 泰版地区错误
-    }else if ($code == "-404" && SERVER_AREA == $area && $area == "th"){
+    }else if ($code == "-404" && $area == "th"){
         $sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cid`,`ep_id`,`cache`) VALUES ('9999999999','$area','$type','$cid','$ep_id','$output')";
         $dbh -> exec($sql);
     }

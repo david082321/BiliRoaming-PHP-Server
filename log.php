@@ -1,4 +1,10 @@
 <?php
+// 防止外部破解
+if(!defined('SYSTEM')){
+    header('HTTP/1.1 404 Not Found');
+    exit('禁止访问');
+}
+
 // https://zhuanlan.zhihu.com/p/122967323
 //获取访客信息
 //pdo连接数据库

@@ -1,11 +1,17 @@
 <?php
+// 防止外部破解
+if(!defined('SYSTEM')){
+    header('HTTP/1.1 404 Not Found');
+    exit('禁止访问');
+}
+
 // 封锁
 define('BLOCK_TYPE','blacklist'); // 封锁类型：none 不封锁, blacklist 黑名单, whitelist 本地白名单
 define('REPLACE_HLW', 0); // 是否替换成葫芦娃(仅黑/白名单时生效)。0 否, 1 是
 define('NEED_LOGIN', 0); //是否要登录用户才能用。0 否, 1 是
 define('BILIROAMING', 1); //是否要用哔哩漫游才能使用。0 否, 1 是
 define('SERVER_AREA', ''); //此服务器所在的地区，可不填，填写后可以锁区，及缓存-10403。cn hk tw th
-$whitelist = array("1", "2", "3"); // 本地白名单，填写 uid，可自行添加、删除，注意使用英文,和"
+$whitelist = array('1', '2', '3'); // 本地白名单，填写 uid，可自行添加、删除，注意使用英文,和'
 
 // 缓存
 define('SAVE_CACHE', 0); //开启缓存，须配置MySQL。0 否, 1 是
