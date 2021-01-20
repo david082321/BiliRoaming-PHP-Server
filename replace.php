@@ -10,8 +10,8 @@ function replace(){
         $url = 'https://black.qimo.ink/hlw.php';
     }else if (REPLACE_TYPE=="tom"){
         $url = 'https://black.qimo.ink/TandJ.php';
-    }else if (REPLACE_TYPE=="hop"){
-        $url = 'https://bili.tuturu.top/av17001.php';
+    }else if (REPLACE_TYPE=="xyy"){
+        $url = 'https://bili.tuturu.top/xyyjson.php';
     }else if (REPLACE_TYPE=="404"){
         $url = 'https://'.$_SERVER['HTTP_HOST'].'/404.php';
     }else{

@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '2.9');
+define('VERSION', '2.9.1');
 // 加载配置
 include ("config.php");
 // 缓存用
