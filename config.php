@@ -3,7 +3,7 @@ if(!defined('SYSTEM')){header('HTTP/1.1 404 Not Found');}// 防止外部破解�
 
 // 封锁
 define('BLOCK_TYPE','blacklist'); // 封锁类型：none 不封锁, blacklist 黑名单, whitelist 本地白名单
-define('REPLACE_TYPE', "tom"); // 是否替换视频(仅黑/白名单时生效)。hlw 葫芦娃, tom 猫和老鼠，hop 妖王av17001合集
+define('REPLACE_TYPE', "tom"); // 是否替换视频(仅黑/白名单时生效)。hlw 葫芦娃, tom 猫和老鼠, hop 妖王av17001合集
 define('NEED_LOGIN', 0); //是否要登录用户才能用。0 否, 1 是
 define('BILIROAMING', 1); //是否要用哔哩漫游才能使用。0 否, 1 是
 define('LOCK_AREA', 0); //服务器锁区，须设置$SERVER_AREA。0 否, 1 是
@@ -31,7 +31,7 @@ $SERVER_AREA = array(); // 空白，不锁区
 // API相关
 define('CUSTOM_HOST_DEFAULT', 'api.bilibili.com'); // 兼容未发送 area 参数的其他脚本
 define('CUSTOM_HOST_CN', 'api.bilibili.com'); // CN 解析api
-define('CUSTOM_HOST_HK', 'api.bilibili.com'); // HK 解析api 
+define('CUSTOM_HOST_HK', 'api.bilibili.com'); // HK 解析api
 define('CUSTOM_HOST_TW', 'api.bilibili.com'); // TW 解析api
 define('CUSTOM_HOST_TH', 'api.global.bilibili.com'); //泰区 解析api
 define('CUSTOM_HOST_SUB', 'app.global.bilibili.com'); //泰区 搜索字幕用api
@@ -52,4 +52,13 @@ $hosts=array("workers.dev","workers.dev");
 // 其他
 define('WELCOME', 'Success!'); //首页欢迎语
 define('BLOCK_RETURN', '{"code":-10403,"message":"你已被封锁"}'); //封锁返回内容
+
+// 参数，不懂就别改
+define('APPKEY', '1d8b6e7d45233436');
+define('APPSEC', '560c52ccd288fed045859ed18bffd973');
+define('ACCESS_KEY', @$_GET['access_key']);
+define('AREA', @$_GET['area']);
+define('CID', @$_GET['cid']);
+define('EP_ID', @$_GET['ep_id']);
+define('TS', @$_GET['ts']);
 ?>

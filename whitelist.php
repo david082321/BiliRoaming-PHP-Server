@@ -5,9 +5,7 @@ if(!defined('SYSTEM')){
     exit(BLOCK_RETURN);
 }
 
-$access_key = @$_GET['access_key']; // 获取 access_key
-
-if ($access_key != ""){ // access_key 是否存在
+if (ACCESS_KEY != ""){ // access_key 是否存在
     if (SAVE_CACHE==1){ // 是否开启缓存
         $uid = get_uid_fromsql(); // 从数据库获取
     }else{
@@ -17,16 +15,10 @@ if ($access_key != ""){ // access_key 是否存在
     if (in_array($uid, $WHITELIST)) {
         // pass
     }else{
-        if (REPLACE_TYPE=="hlw"){ // 替换成葫芦娃
-            include ("hlw.php");
-            hlw();
-        }elseif (REPLACE_TYPE=="tom"){ // 替换成猫和老鼠
-            include ("tom.php");
-            tom();
-		}elseif (REPLACE_TYPE=="hop"){ // 替换成hop
-            include ("hop.php");
-            hop();
-        }else{
+        if (REPLACE_TYPE=="hlw" || REPLACE_TYPE=="tom" || REPLACE_TYPE=="hop"){ // 替换成葫芦娃、猫和老鼠、hop
+            include ("replace.php");
+            replace();
+        }else {
             exit(BLOCK_RETURN);
         }
     }
@@ -35,12 +27,8 @@ if ($access_key != ""){ // access_key 是否存在
 }
 
 function get_uid(){
-    $access_key = $_GET['access_key'];
-    $ts = time();
-    $appkey = "1d8b6e7d45233436";
-    $appsec = "560c52ccd288fed045859ed18bffd973";
-    $sign = md5("access_key=".$access_key."&appkey=".$appkey."&ts=".$ts.$appsec);
-    $testurl = "https://app.bilibili.com/x/v2/account/myinfo?access_key=".$access_key."&appkey=".$appkey."&ts=".$ts."&sign=".$sign;
+    $sign = md5("access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS.APPSEC);
+    $testurl = "https://app.bilibili.com/x/v2/account/myinfo?access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS."&sign=".$sign;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $testurl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -57,21 +45,8 @@ function get_uid(){
 }
 
 function get_uid_fromsql(){
-    $db_host=DB_HOST;
-    $db_user=DB_USER;
-    $db_pass=DB_PASS;
-    $db_name=DB_NAME;
-    $dbh='mysql:host='.$db_host.';'.'dbname='.$db_name;
-    try{
-       $dbh = new PDO($dbh,$db_user,$db_pass);
-       //echo '成功';
-    }catch(PDOException $e){
-       //echo '错误';
-       $uid = get_uid();
-       return $uid;
-    }
-    $access_key = $_GET['access_key'];
-    $sqlco = "SELECT `uid` FROM `keys` WHERE `access_key` = '".$access_key."'";
+    global $dbh;
+    $sqlco = "SELECT `uid` FROM `keys` WHERE `access_key` = '".ACCESS_KEY."'";
     $cres = $dbh -> query($sqlco);
     $vnum = $cres -> fetch();
     $uid = $vnum['uid'];

@@ -20,9 +20,8 @@ try{
    //pass
 }
 
-$access_key = @$_GET['access_key'];
-if ($access_key !=""){
-    $sqlco = "SELECT `uid` as num FROM `keys` WHERE `access_key` = '".$access_key."'";
+if (ACCESS_KEY !=""){
+    $sqlco = "SELECT `uid` as num FROM `keys` WHERE `access_key` = '".ACCESS_KEY."'";
     $cres = $dbh -> query($sqlco);
     $vnum = $cres -> fetch();
     $uid = $vnum['num'];
@@ -31,19 +30,15 @@ if ($access_key !=""){
         $uid = $out[0];
         $due = $out[1];
         if ($uid != "0"){
-            $sql =" INSERT INTO `keys` (`add_time`,`uid`,`access_key`,`due_date`) VALUES (now(),'$uid','$access_key','$due')";
+            $sql =" INSERT INTO `keys` (`add_time`,`uid`,`access_key`,`due_date`) VALUES (now(),'$uid','".ACCESS_KEY."','$due')";
             $dbh -> exec($sql);
         }
     }
 }
 
 function get_userinfo(){
-    $access_key = $_GET['access_key'];
-    $ts = $_GET['ts'];
-    $appkey = "1d8b6e7d45233436";
-    $appsec = "560c52ccd288fed045859ed18bffd973";
-    $sign = md5("access_key=".$access_key."&appkey=".$appkey."&ts=".$ts.$appsec);
-    $testurl = "https://app.bilibili.com/x/v2/account/myinfo?access_key=".$access_key."&appkey=".$appkey."&ts=".$ts."&sign=".$sign;
+    $sign = md5("access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS.APPSEC);
+    $testurl = "https://app.bilibili.com/x/v2/account/myinfo?access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS."&sign=".$sign;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $testurl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

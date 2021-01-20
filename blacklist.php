@@ -5,11 +5,8 @@ if(!defined('SYSTEM')){
     exit(BLOCK_RETURN);
 }
 
-// 获取 access_key
-$access_key = @$_GET['access_key'];
-// 判断 access_key
-if ($access_key != ""){
-    $url = "https://black.qimo.ink/?access_key=".$access_key;
+if (ACCESS_KEY != ""){ // access_key 是否存在
+    $url = "https://black.qimo.ink/?access_key=".ACCESS_KEY;
     $ch = curl_init();
     curl_setopt($ch,CURLOPT_URL,$url);
     curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
@@ -18,15 +15,9 @@ if ($access_key != ""){
     curl_close($ch);
     // 如果是黑名单
     if ($out=="ban"){
-        if (REPLACE_TYPE=="hlw"){ // 替换成葫芦娃
-            include ("hlw.php");
-            hlw();
-        }elseif (REPLACE_TYPE=="tom"){ // 替换成猫和老鼠
-            include ("tom.php");
-            tom();
-		}elseif (REPLACE_TYPE=="hop"){ // 替换成hop
-            include ("hop.php");
-            hop();
+        if (REPLACE_TYPE=="hlw" || REPLACE_TYPE=="tom" || REPLACE_TYPE=="hop"){ // 替换成葫芦娃、猫和老鼠、hop
+            include ("replace.php");
+            replace();
         }else {
             exit(BLOCK_RETURN);
         }
