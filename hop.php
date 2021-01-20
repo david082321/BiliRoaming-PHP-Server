@@ -5,7 +5,7 @@ if(!defined('SYSTEM')){
     exit(BLOCK_RETURN);
 }
 
-function tom(){
+function hop(){
     $url = "https://bili.tuturu.top/av17001.php";
     $ch = curl_init();
     curl_setopt($ch,CURLOPT_URL,$url);

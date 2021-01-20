@@ -25,7 +25,7 @@ if ($access_key != ""){ // access_key 是否存在
             tom();
 		}elseif (REPLACE_TYPE=="hop"){ // 替换成hop
             include ("hop.php");
-            tom();
+            hop();
         }else{
             exit(BLOCK_RETURN);
         }
