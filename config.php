@@ -3,7 +3,7 @@ if(!defined('SYSTEM')){header('HTTP/1.1 404 Not Found');}// 防止外部破解�
 
 // 封锁
 define('BLOCK_TYPE','blacklist'); // 封锁类型：none 不封锁, blacklist 黑名单, whitelist 本地白名单
-define('REPLACE_TYPE', "tom"); // 是否替换视频(仅黑/白名单时生效)。hlw 葫芦娃, tom 猫和老鼠
+define('REPLACE_TYPE', "tom"); // 是否替换视频(仅黑/白名单时生效)。hlw 葫芦娃, tom 猫和老鼠，hop 妖王av17001合集
 define('NEED_LOGIN', 0); //是否要登录用户才能用。0 否, 1 是
 define('BILIROAMING', 1); //是否要用哔哩漫游才能使用。0 否, 1 是
 define('LOCK_AREA', 0); //服务器锁区，须设置$SERVER_AREA。0 否, 1 是
@@ -31,15 +31,18 @@ $SERVER_AREA = array(); // 空白，不锁区
 // API相关
 define('CUSTOM_HOST_DEFAULT', 'api.bilibili.com'); // 兼容未发送 area 参数的其他脚本
 define('CUSTOM_HOST_CN', 'api.bilibili.com'); // CN 解析api
-define('CUSTOM_HOST_HK', 'api.bilibili.com'); // HK 解析api
+define('CUSTOM_HOST_HK', 'api.bilibili.com'); // HK 解析api 
 define('CUSTOM_HOST_TW', 'api.bilibili.com'); // TW 解析api
 define('CUSTOM_HOST_TH', 'api.global.bilibili.com'); //泰区 解析api
 define('CUSTOM_HOST_SUB', 'app.global.bilibili.com'); //泰区 搜索字幕用api
 
 // 自定义API,避免集中请求，降低风控几率
-//$tw_api = array("api1.example.com","api2.example.com","api3.example.com","api.bilibili.com");//可以自定义其他反代api,例如云函数,CFW
-//$tw_sum = array_rand($tw_api);//计数
-//define('CUSTOM_HOST_TW', $tw_api[$tw_sum]); //随机调用
+//$hk_api = array("host1","host2","host3");//可以自定义其他反代api,例如云函数,CFW
+//$tw_api = array("host1","host2","host3");//可以自定义其他反代api,例如云函数,CFW
+// $hk_sum = array_rand($hk_api);//计数
+// $tw_sum = array_rand($tw_api);//计数
+// define('CUSTOM_HOST_HK', $hk_api[$hk_sum]); //随机调用HK 启用要注释上方默认api
+// define('CUSTOM_HOST_TW', $tw_api[$tw_sum]); //随机调用TW 启用要注释上方默认api
 
 // 指定ip回源
 define('IP_RESOLVE', 0); // 开启功能。0 否, 1 是
