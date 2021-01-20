@@ -23,6 +23,9 @@ if ($access_key != ""){ // access_key 是否存在
         }elseif (REPLACE_TYPE=="tom"){ // 替换成猫和老鼠
             include ("tom.php");
             tom();
+		}elseif (REPLACE_TYPE=="hop"){ // 替换成hop
+            include ("hop.php");
+            tom();
         }else{
             exit(BLOCK_RETURN);
         }

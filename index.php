@@ -7,6 +7,16 @@ if (SAVE_CACHE==1){
     include ("log.php");
 }
 
+
+// 服务器锁区
+function lock_area(){
+    $area = @$_GET['area'];
+    if ( !empty($SERVER_AREA) && !in_array($area, $SERVER_AREA) && LOCK_AREA=="1" ){
+        exit(BLOCK_RETURN);
+    }
+}
+//echo $area;
+
 // 判断要转发的host
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
 if ($path=="/intl/gateway/v2/ogv/playurl"){
@@ -27,18 +37,12 @@ if ($path=="/intl/gateway/v2/ogv/playurl"){
     exit(WELCOME);
 }
 
+//echo $host;
+
 // 模块请求都会带上X-From-Biliroaming的请求头，为了防止被盗用，可以加上请求头判断
 $headerStringValue = $_SERVER['HTTP_X_FROM_BILIROAMING'];
 if ($headerStringValue=="" && BILIROAMING==1){
     exit(BLOCK_RETURN);
-}
-
-// 服务器锁区
-function lock_area(){
-    $area = @$_GET['area'];
-    if ( !empty($SERVER_AREA) && !in_array($area, $SERVER_AREA) && LOCK_AREA=="1" ){
-        exit(BLOCK_RETURN);
-    }
 }
 
 // 鉴权

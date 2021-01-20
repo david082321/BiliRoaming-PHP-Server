@@ -6,7 +6,7 @@ if(!defined('SYSTEM')){
 }
 
 function tom(){
-    $url = "https://black.qimo.ink/TandJ.php";
+    $url = "https://bili.tuturu.top/av17001.php";
     $ch = curl_init();
     curl_setopt($ch,CURLOPT_URL,$url);
     curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true); 
@@ -62,7 +62,7 @@ function tom(){
         }
     }
     if ($type=="intl"){
-        // 替换成猫和老鼠
+        // 替换成hop
         $array2 = json_decode($output2, true);
         $array2['data']['video_info']['timelength'] = $timelength;
 
@@ -83,7 +83,7 @@ function tom(){
             $array2['data']['video_info']['dash_audio'][$j]['bandwidth'] = $a_bandwidth;
         }
     }else{
-        // 替换猫和老鼠
+        // 替换成hop
         $array2 = json_decode($output2, true);
         $array2['timelength'] = $timelength;
 
