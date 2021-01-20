@@ -5,16 +5,8 @@ if(!defined('SYSTEM')){
     exit(BLOCK_RETURN);
 }
 
-function replace(){
-    if (REPLACE_TYPE=="hlw"){
-        $url = 'https://black.qimo.ink/hlw.php';
-    }else if (REPLACE_TYPE=="tom"){
-        $url = 'https://black.qimo.ink/TandJ.php';
-    }else if (REPLACE_TYPE=="xyy"){
-        $url = 'https://bili.tuturu.top/xyyjson.php';
-    }else{
-        $url = 'https://black.qimo.ink/TandJ.php';
-    }
+function xyy(){
+    $url = "https://bili.tuturu.top/xyyjson.php";
     $ch = curl_init();
     curl_setopt($ch,CURLOPT_URL,$url);
     curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true); 
@@ -70,7 +62,7 @@ function replace(){
         }
     }
     if ($type=="intl"){
-        // 替换成hop
+        // 替换成喜羊羊
         $array2 = json_decode($output2, true);
         $array2['data']['video_info']['timelength'] = $timelength;
 
@@ -91,7 +83,7 @@ function replace(){
             $array2['data']['video_info']['dash_audio'][$j]['bandwidth'] = $a_bandwidth;
         }
     }else{
-        // 替换成hop
+        // 替换成喜羊羊
         $array2 = json_decode($output2, true);
         $array2['timelength'] = $timelength;
 
