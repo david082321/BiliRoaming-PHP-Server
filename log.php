@@ -5,8 +5,6 @@ if(!defined('SYSTEM')){
     exit(BLOCK_RETURN);
 }
 
-// https://zhuanlan.zhihu.com/p/122967323
-//获取访客信息
 //pdo连接数据库
 $db_host=DB_HOST;
 $db_user=DB_USER;

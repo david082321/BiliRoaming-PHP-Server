@@ -1,9 +1,9 @@
 <?php
-if(!defined('SYSTEM')){header('HTTP/1.1 404 Not Found');}// 防止外部破解，不可以改
+if(!defined('SYSTEM')){header('HTTP/1.1 404 Not Found');} // 防止外部破解，不可以改
 
 // 封锁
 define('BLOCK_TYPE','blacklist'); // 封锁类型：none 不封锁, blacklist 黑名单, whitelist 本地白名单
-define('REPLACE_TYPE', "tom"); // 是否替换视频(仅黑/白名单时生效)。hlw 葫芦娃, tom 猫和老鼠, hop 妖王av17001合集
+define('REPLACE_TYPE', "tom"); // 是否替换视频(仅黑/白名单时生效)。hlw 葫芦娃, tom 猫和老鼠, hop 妖王av17001合集, 404 肥肠抱歉。提示：hop和404要用户把UPOS改成不替换。
 define('NEED_LOGIN', 0); //是否要登录用户才能用。0 否, 1 是
 define('BILIROAMING', 1); //是否要用哔哩漫游才能使用。0 否, 1 是
 define('LOCK_AREA', 0); //服务器锁区，须设置$SERVER_AREA。0 否, 1 是

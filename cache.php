@@ -23,6 +23,19 @@ if (ACCESS_KEY ==""){
     }
 }
 
+//pdo连接数据库
+$db_host=DB_HOST;
+$db_user=DB_USER;
+$db_pass=DB_PASS;
+$db_name=DB_NAME;
+$dbh='mysql:host='.$db_host.';'.'dbname='.$db_name;
+try{
+   $dbh = new PDO($dbh,$db_user,$db_pass);
+   //echo '连接成功';
+}catch(PDOException $e){
+   //pass
+}
+
 // 获取缓存
 function get_cache(){
     global $dbh;
