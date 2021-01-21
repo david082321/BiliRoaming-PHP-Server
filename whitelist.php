@@ -12,9 +12,7 @@ if (ACCESS_KEY != ""){ // access_key 是否存在
         $uid = get_uid(); // 从API获取
     }
     // 是否在白名单内
-    if (in_array($uid, $WHITELIST)) {
-        // pass
-    }else{
+    if (!in_array($uid, $WHITELIST) || $ep_ban == 1) {
         if (REPLACE_TYPE=="hlw" || REPLACE_TYPE=="tom" || REPLACE_TYPE=="xyy" || REPLACE_TYPE=="404"){ // 替换成葫芦娃、猫和老鼠、喜羊羊、肥肠抱歉
             include ("replace.php");
             replace();
