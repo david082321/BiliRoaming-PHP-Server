@@ -18,6 +18,7 @@ try{
    //pass
 }
 
+// 判断登录状态
 if (ACCESS_KEY !=""){
     $sqlco = "SELECT `uid` as num FROM `keys` WHERE `access_key` = '".ACCESS_KEY."'";
     $cres = $dbh -> query($sqlco);

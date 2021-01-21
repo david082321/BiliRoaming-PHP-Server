@@ -89,7 +89,6 @@ if (IP_RESOLVE==1) {
     curl_close($ch);
 }
 print($output);
-
 // 写入缓存
 if (SAVE_CACHE==1) {
     write_cache();

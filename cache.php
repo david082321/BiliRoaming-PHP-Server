@@ -8,6 +8,7 @@ if(!defined('SYSTEM')){
 // 参数
 $refresh_cache = 0;
 
+// 判断登录状态
 if (ACCESS_KEY ==""){
     define('TYPE', 0); //未登录
 }else{
@@ -94,5 +95,4 @@ function write_cache(){
         }
     }
 }
-
 ?>
