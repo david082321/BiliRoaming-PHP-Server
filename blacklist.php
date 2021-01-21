@@ -15,7 +15,7 @@ if (ACCESS_KEY != ""){ // access_key 是否存在
     $out = curl_exec($ch);
     curl_close($ch);
     // 如果是黑名单
-    if ($out=="ban"){
+    if ($out=="ban" || $ep_ban == 1){
         if (REPLACE_TYPE=="hlw" || REPLACE_TYPE=="tom" || REPLACE_TYPE=="xyy" || REPLACE_TYPE=="404"){ // 替换成葫芦娃、猫和老鼠、喜羊羊、肥肠抱歉
             include ("replace.php");
             replace();

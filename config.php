@@ -61,4 +61,14 @@ define('AREA', @$_GET['area']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
 define('TS', @$_GET['ts']);
+
+//ban指定epid视频
+define('BAN_EP', 0); //是否开启ban特定视频
+
+$epid_list = array("369747","371362","371461","371462","371463","371596");//巨人最终季
+ if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
+        $ep_ban = 1;
+    }else {
+        $ep_ban = 0;
+    }
 ?>
