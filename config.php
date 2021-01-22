@@ -1,6 +1,4 @@
 <?php
-if(!defined('SYSTEM')){exit(BLOCK_RETURN);} // 防止外部破解，不可以改
-
 // 封锁
 define('BLOCK_TYPE','blacklist'); // 封锁类型：none 不封锁, blacklist 黑名单, whitelist 本地白名单
 define('REPLACE_TYPE', "tom"); // 是否替换视频(仅黑/白名单时生效)。hlw 葫芦娃, tom 猫和老鼠, xyy 喜羊羊
@@ -74,5 +72,9 @@ if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
 }
 if (in_array(CID, $cid_list) && BAN_CID == 1) {
     $baned = 1;
+}
+// 防止外部破解
+if(!defined('SYSTEM')){
+    exit(BLOCK_RETURN);
 }
 ?>
