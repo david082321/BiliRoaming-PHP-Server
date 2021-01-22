@@ -12,6 +12,9 @@ $WHITELIST = array('1', '2', '3'); // 本地白名单，填写 uid，可自行�
 // 封锁指定epid视频
 define('BAN_EP', 0); //是否开启ban特定视频
 $epid_list = array("369747","371362","371461","371462","371463","371596"); //巨人最终季
+// 封锁指定cid视频
+define('BAN_CID', 0); //是否开启ban特定视频
+$cid_list = array();
 
 // 缓存
 define('SAVE_CACHE', 0); //开启缓存，须配置MySQL。0 否, 1 是
@@ -53,8 +56,6 @@ define('IP_RESOLVE', 0); // 开启功能。0 否, 1 是
 $ips=array("172.0.0.1","192.168.0.1","1.2.3.4");
 $hosts=array("workers.dev","workers.dev");
 
-
-
 // 其他
 define('WELCOME', 'Success!'); //首页欢迎语
 define('BLOCK_RETURN', '{"code":-10403,"message":"你已被封锁"}'); //封锁返回内容
@@ -67,10 +68,11 @@ define('AREA', @$_GET['area']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
 define('TS', @$_GET['ts']);
+$baned = 0;
 if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
-    $ep_ban = 1;
-}else {
-    $ep_ban = 0;
+    $baned = 1;
 }
-
+if (in_array(CID, $cid_list) && BAN_CID == 1) {
+    $baned = 1;
+}
 ?>
