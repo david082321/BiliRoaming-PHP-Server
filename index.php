@@ -1,7 +1,9 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '2.9.1');
+define('VERSION', '2.9.3');
+// 加上json的Header
+header('Content-Type: application/json; charset=utf-8');
 // 加载配置
 include ("config.php");
 // 缓存用
@@ -40,9 +42,9 @@ if ($headerStringValue=="" && BILIROAMING==1) {
 // 服务器锁区
 function lock_area() {
     if ( LOCK_AREA=="1" ) {
-		if ( !empty($SERVER_AREA) && !in_array(AREA, $SERVER_AREA)) {
-			exit(BLOCK_RETURN);
-		}
+        if ( !empty($SERVER_AREA) && !in_array(AREA, $SERVER_AREA)) {
+            exit(BLOCK_RETURN);
+        }
     }
 }
 // 鉴权

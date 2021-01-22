@@ -1,7 +1,6 @@
 <?php
 // 防止外部破解
 if(!defined('SYSTEM')){
-    header('HTTP/1.1 404 Not Found');
     exit(BLOCK_RETURN);
 }
 

@@ -1,7 +1,6 @@
 <?php
 // 防止外部破解
 if(!defined('SYSTEM')){
-    header('HTTP/1.1 404 Not Found');
     exit(BLOCK_RETURN);
 }
 
@@ -102,7 +101,6 @@ function replace(){
     }
 
     // 发送内容
-    header('Content-Type: application/json; charset=utf-8');
     $output3 = json_encode($array2);
     $output3 = str_replace("\/","/",$output3);
     print($output3);

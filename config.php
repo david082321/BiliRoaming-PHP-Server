@@ -1,5 +1,5 @@
 <?php
-if(!defined('SYSTEM')){header('HTTP/1.1 404 Not Found');} // 防止外部破解，不可以改
+if(!defined('SYSTEM')){exit(BLOCK_RETURN);} // 防止外部破解，不可以改
 
 // 封锁
 define('BLOCK_TYPE','blacklist'); // 封锁类型：none 不封锁, blacklist 黑名单, whitelist 本地白名单
