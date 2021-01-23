@@ -80,9 +80,9 @@ if (SAVE_CACHE==1) {
 function get_webpage($url,$host="",$ip=""){
     $ch = curl_init();
     curl_setopt($ch,CURLOPT_URL,$url);
-	if (IP_RESOLVE==1) { // 指定ip回源
-		curl_setopt($ch,CURLOPT_RESOLVE,[$host.":443:".$ip]);
-	}
+    if (IP_RESOLVE==1) { // 指定ip回源
+        curl_setopt($ch,CURLOPT_RESOLVE,[$host.":443:".$ip]);
+    }
     curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
     curl_setopt($ch,CURLOPT_HTTPHEADER, array(
