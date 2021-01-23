@@ -58,7 +58,7 @@ $hosts=array("workers.dev","workers.dev");
 
 // 其他
 define('WELCOME', 'Success!'); //首页欢迎语
-define('BLOCK_RETURN', '{"code":-10403,"message":"你已被封锁"}'); //封锁返回内容
+define('BLOCK_RETURN', '{"code":-10403,"message":"抱歉您已被封锁"}'); //封锁返回内容
 
 // 参数，不懂就别改
 define('APPKEY', '1d8b6e7d45233436');
