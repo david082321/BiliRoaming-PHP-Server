@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '2.9.7');
+define('VERSION', '2.9.8');
 // 加上json的Header
 header('Content-Type: application/json; charset=utf-8');
 // 加载配置
@@ -26,7 +26,16 @@ if ($path=="/intl/gateway/v2/ogv/playurl") {
     } else {
         $host = CUSTOM_HOST_DEFAULT;
     }
-}else {
+// web接口
+} elseif (WEB_ON == 1) {
+    if(substr_count($_SERVER['QUERY_STRING'],'module=')==0 && substr_count($_SERVER['QUERY_STRING'],'cid=')==0 ){
+        exit(BLOCK_RETURN);
+    }
+    $host = CUSTOM_HOST_DEFAULT;
+    $path = "/pgc/player/web/playurl";
+    header("Access-Control-Allow-Origin: https://www.bilibili.com");
+    header("Access-Control-Allow-Credentials: true");
+} else {
     // 欢迎语
     exit(WELCOME);
 }
@@ -73,7 +82,7 @@ if (IP_RESOLVE==1) {
 }
 print($output);
 // 写入缓存
-if (SAVE_CACHE==1 && $path!="/pgc/player/web/playurl") { //屏蔽web缓存
+if (SAVE_CACHE==1) {
     write_cache();
 }
 
