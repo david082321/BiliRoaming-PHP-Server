@@ -1,7 +1,6 @@
 <?php
 // 防止外部破解
 if(!defined('SYSTEM')){
-    header('HTTP/1.1 404 Not Found');
     exit(BLOCK_RETURN);
 }
 
@@ -17,15 +16,7 @@ function replace(){
     }else{
         $url = 'https://black.qimo.ink/TandJ.php';
     }
-    $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true); 
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($ch,CURLOPT_HTTPHEADER, array(
-        'User-Agent: '.@$_SERVER["HTTP_USER_AGENT"]
-    ));
-    $output = curl_exec($ch);
-    curl_close($ch);
+    $output = get_webpage($url);
     // 分析 output
     $array = json_decode($output, true);
     $timelength = $array['timelength'];
@@ -47,15 +38,7 @@ function replace(){
 
     // 转发到指定服务器
     $url = "https://".$host.$path."?".$_SERVER['QUERY_STRING'];
-    $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($ch,CURLOPT_HTTPHEADER, array(
-        'User-Agent: '.@$_SERVER["HTTP_USER_AGENT"]
-    ));
-    $output2 = curl_exec($ch);
-    curl_close($ch);
+    $output2 = get_webpage($url);
     if ($type=="intl"){
         // 替换成hop
         $array2 = json_decode($output2, true);
@@ -102,7 +85,6 @@ function replace(){
     }
 
     // 发送内容
-    header('Content-Type: application/json; charset=utf-8');
     $output3 = json_encode($array2);
     $output3 = str_replace("\/","/",$output3);
     print($output3);
