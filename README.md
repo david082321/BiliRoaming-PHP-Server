@@ -64,3 +64,34 @@
 
 * 导入 cache.sql
 
+--------
+
+# 文件功能介绍
+
+├-intl/gateway/v2
+
+│　├-app
+
+│　│　├-search/type/index.php (转发到根目录的 index.php 处理)
+
+│　│　└-subtitle/index.php (转发到根目录的 index.php 处理)
+
+│　└-ogv/playurl/index.php (转发到根目录的 index.php 处理)
+
+├-pgc/player/api/playurl/index.php (转发到根目录的 index.php 处理)
+
+├-404.php (肥肠抱歉视频)
+
+├-auth.php (鉴权)
+
+├-cache.php (缓存)[仅缓存使用]
+
+├-cache.sql (导入MySQL用的)[仅缓存使用]
+
+├-config.php (用户设置)
+
+├-index.php (接受上面index.php) <---主要入口在这里
+
+├-log.php (缓存用户)[仅缓存使用]
+
+└-replace.php (替换视频)
