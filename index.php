@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '2.9.3');
+define('VERSION', '2.9.4');
 // 加上json的Header
 header('Content-Type: application/json; charset=utf-8');
 // 加载配置
@@ -48,8 +48,8 @@ function lock_area() {
     }
 }
 // 鉴权
-if ($path!="/intl/gateway/v2/app/subtitle") {
-    include (BLOCK_TYPE.".php");
+if ($path=="/intl/gateway/v2/ogv/playurl" || $path=="/pgc/player/api/playurl"){
+    include ("auth.php");
 }
 // 获取缓存
 if (SAVE_CACHE==1) {
@@ -66,33 +66,30 @@ if (IP_RESOLVE==1) {
 }
 // 转发到指定服务器
 $url = "https://".$host.$path."?".$_SERVER['QUERY_STRING'];
-if (IP_RESOLVE==0) {
-    $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($ch,CURLOPT_HTTPHEADER, array(
-        'User-Agent: '.@$_SERVER["HTTP_USER_AGENT"]
-    ));
-    $output = curl_exec($ch);
-    curl_close($ch);
-}
 if (IP_RESOLVE==1) {
-    $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL,$url);
-    // 指定ip回源
-    curl_setopt($ch,CURLOPT_RESOLVE,[$host.":443:".$ip]);    
-    curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($ch,CURLOPT_HTTPHEADER, array(
-        'User-Agent: '.@$_SERVER["HTTP_USER_AGENT"]
-    ));
-    $output = curl_exec($ch);
-    curl_close($ch);
+    $output = get_webpage($url,$host,$ip);
+}else {
+    $output = get_webpage($url);
 }
 print($output);
 // 写入缓存
 if (SAVE_CACHE==1) {
     write_cache();
+}
+
+function get_webpage($url,$host="",$ip=""){
+    $ch = curl_init();
+    curl_setopt($ch,CURLOPT_URL,$url);
+	if (IP_RESOLVE==1) { // 指定ip回源
+		curl_setopt($ch,CURLOPT_RESOLVE,[$host.":443:".$ip]);
+	}
+    curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+    curl_setopt($ch,CURLOPT_HTTPHEADER, array(
+        'User-Agent: '.@$_SERVER["HTTP_USER_AGENT"]
+    ));
+    $output = curl_exec($ch);
+    curl_close($ch);
+    return $output;
 }
 ?>
