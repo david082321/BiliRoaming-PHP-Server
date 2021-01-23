@@ -30,13 +30,28 @@ if ($path=="/intl/gateway/v2/ogv/playurl") {
         $host = CUSTOM_HOST_DEFAULT;
     }
     lock_area();
-} else {
+}elseif ($path=="/pgc/player/web/playurl") {
+    if(WEB_ON == 0){
+		exit(BLOCK_RETURN);
+	}else if(AREA=="cn") {
+        $host = CUSTOM_HOST_CN;
+    } else if (AREA=="hk") {
+        $host = CUSTOM_HOST_HK;
+    } else if (AREA=="tw") {
+        $host = CUSTOM_HOST_TW;
+    } else {
+        $host = CUSTOM_HOST_DEFAULT;
+    }
+    header("Access-Control-Allow-Origin: https://www.bilibili.com");
+    header("Access-Control-Allow-Credentials: true");
+    // lock_area(); //网页脚本目前未实现区域判断，走默认api
+}else {
     // 欢迎语
     exit(WELCOME);
 }
-// 模块请求都会带上X-From-Biliroaming的请求头，为了防止被盗用，可以加上请求头判断
+// 模块请求都会带上X-From-Biliroaming的请求头，为了防止被盗用，可以加上请求头判断，WEB接口暂不限制
 $headerStringValue = $_SERVER['HTTP_X_FROM_BILIROAMING'];
-if ($headerStringValue=="" && BILIROAMING==1) {
+if ($headerStringValue=="" && BILIROAMING==1 && $path!="/pgc/player/web/playurl") {
     exit(BLOCK_RETURN);
 }
 // 服务器锁区
@@ -73,7 +88,7 @@ if (IP_RESOLVE==1) {
 }
 print($output);
 // 写入缓存
-if (SAVE_CACHE==1) {
+if (SAVE_CACHE==1 && $path!="/pgc/player/web/playurl") { //屏蔽web缓存
     write_cache();
 }
 
