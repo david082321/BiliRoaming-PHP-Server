@@ -37,7 +37,7 @@ function replace(){
     }
 
     // 转发到指定服务器
-    $url = "https://".$host.$path."?".$_SERVER['QUERY_STRING'];
+    $url = $host.$path."?".$_SERVER['QUERY_STRING'];
     $output2 = get_webpage($url);
     if ($type=="intl"){
         // 替换成hop
