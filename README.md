@@ -64,6 +64,20 @@
 
 * 导入 cache.sql
 
+## (非必要步骤) 支持网页版油猴脚本
+
+* [油猴脚本地址](https://github.com/ipcjs/bilibili-helper/blob/user.js/packages/unblock-area-limit/README.md)
+
+* 配置 config.php 的 WEB_ON
+
+* 脚本的 代理服务器->自定义 输入以下内容 ( example.com 请改成你的服务器地址)
+
+##### 　　　https://example.com/
+
+* (可选步骤) 配置上面的禁用 301 转址。然后脚本的 代理服务器->自定义 改成
+
+##### 　　　https://example.com
+
 --------
 
 # 文件功能介绍
