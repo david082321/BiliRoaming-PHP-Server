@@ -1,6 +1,4 @@
 <?php
-if(!defined('SYSTEM')){header('HTTP/1.1 404 Not Found');}// 防止外部破解，不可以改
-
 // 封锁
 define('BLOCK_TYPE','blacklist'); // 封锁类型：none 不封锁, blacklist 黑名单, whitelist 本地白名单
 define('REPLACE_TYPE', "tom"); // 是否替换视频(仅黑/白名单时生效)。hlw 葫芦娃, tom 猫和老鼠, xyy 喜羊羊
@@ -8,6 +6,14 @@ define('NEED_LOGIN', 0); //是否要登录用户才能用。0 否, 1 是
 define('BILIROAMING', 1); //是否要用哔哩漫游才能使用。0 否, 1 是
 define('LOCK_AREA', 0); //服务器锁区，须设置$SERVER_AREA。0 否, 1 是
 $WHITELIST = array('1', '2', '3'); // 本地白名单，填写 uid，可自行添加、删除，注意使用英文,和'
+
+// 封锁指定epid视频
+define('BAN_EP', 0); //是否开启ban特定视频
+//$epid_list = array("369747","371362","371461","371462","371463","371596"); //示范内容：巨人最终季
+$epid_list = array();
+// 封锁指定cid视频
+define('BAN_CID', 0); //是否开启ban特定视频
+$cid_list = array();
 
 // 缓存
 define('SAVE_CACHE', 0); //开启缓存，须配置MySQL。0 否, 1 是
@@ -29,12 +35,12 @@ define('DB_NAME', '数据库名称'); //数据库名称
 $SERVER_AREA = array(); // 空白，不锁区
 
 // API相关
-define('CUSTOM_HOST_DEFAULT', 'api.bilibili.com'); // 兼容未发送 area 参数的其他脚本
-define('CUSTOM_HOST_CN', 'api.bilibili.com'); // CN 解析api
-define('CUSTOM_HOST_HK', 'api.bilibili.com'); // HK 解析api
-define('CUSTOM_HOST_TW', 'api.bilibili.com'); // TW 解析api
-define('CUSTOM_HOST_TH', 'api.global.bilibili.com'); //泰区 解析api
-define('CUSTOM_HOST_SUB', 'app.global.bilibili.com'); //泰区 搜索字幕用api
+define('CUSTOM_HOST_DEFAULT', 'https://api.bilibili.com'); // 兼容未发送 area 参数的其他脚本
+define('CUSTOM_HOST_CN', 'https://api.bilibili.com'); // CN 解析api
+define('CUSTOM_HOST_HK', 'https://api.bilibili.com'); // HK 解析api
+define('CUSTOM_HOST_TW', 'https://api.bilibili.com'); // TW 解析api
+define('CUSTOM_HOST_TH', 'https://api.global.bilibili.com'); //泰区 解析api
+define('CUSTOM_HOST_SUB', 'https://app.global.bilibili.com'); //泰区 搜索字幕用api
 
 // 自定义API,避免集中请求，降低风控几率
 //$hk_api = array("host1","host2","host3");//可以自定义其他反代api,例如云函数,CFW
@@ -61,4 +67,15 @@ define('AREA', @$_GET['area']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
 define('TS', @$_GET['ts']);
+$baned = 0;
+if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
+    $baned = 1;
+}
+if (in_array(CID, $cid_list) && BAN_CID == 1) {
+    $baned = 1;
+}
+// 防止外部破解
+if(!defined('SYSTEM')){
+    exit(BLOCK_RETURN);
+}
 ?>

@@ -1,12 +1,9 @@
 <?php
 // 防止外部破解
 if(!defined('SYSTEM')){
-    header('HTTP/1.1 404 Not Found');
     exit(BLOCK_RETURN);
 }
 
-// https://zhuanlan.zhihu.com/p/122967323
-//获取访客信息
 //pdo连接数据库
 $db_host=DB_HOST;
 $db_user=DB_USER;
@@ -20,6 +17,7 @@ try{
    //pass
 }
 
+// 判断登录状态
 if (ACCESS_KEY !=""){
     $sqlco = "SELECT `uid` as num FROM `keys` WHERE `access_key` = '".ACCESS_KEY."'";
     $cres = $dbh -> query($sqlco);
@@ -38,12 +36,8 @@ if (ACCESS_KEY !=""){
 
 function get_userinfo(){
     $sign = md5("access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS.APPSEC);
-    $testurl = "https://app.bilibili.com/x/v2/account/myinfo?access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS."&sign=".$sign;
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $testurl);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $output = curl_exec($ch);
-    curl_close($ch);
+    $url = "https://app.bilibili.com/x/v2/account/myinfo?access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS."&sign=".$sign;
+    $output = get_webpage($url);
     $array = json_decode($output, true);
     $code = $array['code'];
     if ($code=="0"){

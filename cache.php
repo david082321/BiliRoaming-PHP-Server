@@ -1,13 +1,13 @@
 <?php
 // 防止外部破解
 if(!defined('SYSTEM')){
-    header('HTTP/1.1 404 Not Found');
     exit(BLOCK_RETURN);
 }
 
 // 参数
 $refresh_cache = 0;
 
+// 判断登录状态
 if (ACCESS_KEY ==""){
     define('TYPE', 0); //未登录
 }else{
@@ -21,6 +21,19 @@ if (ACCESS_KEY ==""){
     }else{
         define('TYPE', 1); // 不是大会员
     }
+}
+
+//pdo连接数据库
+$db_host=DB_HOST;
+$db_user=DB_USER;
+$db_pass=DB_PASS;
+$db_name=DB_NAME;
+$dbh='mysql:host='.$db_host.';'.'dbname='.$db_name;
+try{
+   $dbh = new PDO($dbh,$db_user,$db_pass);
+   //echo '连接成功';
+}catch(PDOException $e){
+   //pass
 }
 
 // 获取缓存
@@ -81,5 +94,4 @@ function write_cache(){
         }
     }
 }
-
 ?>

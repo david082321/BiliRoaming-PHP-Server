@@ -1,7 +1,6 @@
 <?php
 // 防止外部破解
 if(!defined('SYSTEM')){
-    header('HTTP/1.1 404 Not Found');
     exit(BLOCK_RETURN);
 }
 
@@ -12,19 +11,12 @@ function replace(){
         $url = 'https://black.qimo.ink/TandJ.php';
     }else if (REPLACE_TYPE=="xyy"){
         $url = 'https://bili.tuturu.top/xyyjson.php';
+    }else if (REPLACE_TYPE=="404"){
+        $url = 'https://'.$_SERVER['HTTP_HOST'].'/404.php';
     }else{
         $url = 'https://black.qimo.ink/TandJ.php';
     }
-    $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true); 
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($ch,CURLOPT_HTTPHEADER, array(
-        'User-Agent: '.@$_SERVER["HTTP_USER_AGENT"]
-    ));
-    $output = curl_exec($ch);
-    curl_close($ch);
-
+    $output = get_webpage($url);
     // 分析 output
     $array = json_decode($output, true);
     $timelength = $array['timelength'];
@@ -35,40 +27,18 @@ function replace(){
     $a_bandwidth = $array['a_bandwidth'];
     $a_backup_url =  $array['a_backup_url'];
 
-    // 获取缓存
-    if (SAVE_CACHE==1){
-        include ("cache.php");
-        $output2 = get_cache();
-    }else{
-        $output2 = "";
+    global $host;
+    global $path;
+    // 判断来源
+    if ($path=="/intl/gateway/v2/ogv/playurl"){
+        $type = "intl";
+    }elseif ($path=="/pgc/player/api/playurl"){
+        $type = "main";
     }
-    if ($output2 == ""){
-        global $host;
-        global $path;
-        // 判断来源
-        if ($path=="/intl/gateway/v2/ogv/playurl"){
-            $type = "intl";
-        }elseif ($path=="/pgc/player/api/playurl"){
-            $type = "main";
-        }
 
-        // 转发到指定服务器
-        $url = "https://".$host.$path."?".$_SERVER['QUERY_STRING'];
-        $ch = curl_init();
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-        curl_setopt($ch,CURLOPT_HTTPHEADER, array(
-            'User-Agent: '.@$_SERVER["HTTP_USER_AGENT"]
-        ));
-        $output2 = curl_exec($ch);
-        curl_close($ch);
-        // 写入缓存
-        if (SAVE_CACHE==1){
-            $output = $output2;
-            write_cache();
-        }
-    }
+    // 转发到指定服务器
+    $url = "https://".$host.$path."?".$_SERVER['QUERY_STRING'];
+    $output2 = get_webpage($url);
     if ($type=="intl"){
         // 替换成hop
         $array2 = json_decode($output2, true);
@@ -115,10 +85,9 @@ function replace(){
     }
 
     // 发送内容
-    header('Content-Type: application/json; charset=utf-8');
     $output3 = json_encode($array2);
     $output3 = str_replace("\/","/",$output3);
     print($output3);
     exit();
-    }
+}
 ?>
