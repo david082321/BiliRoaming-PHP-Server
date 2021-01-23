@@ -35,12 +35,12 @@ define('DB_NAME', '数据库名称'); //数据库名称
 $SERVER_AREA = array(); // 空白，不锁区
 
 // API相关
-define('CUSTOM_HOST_DEFAULT', 'api.bilibili.com'); // 兼容未发送 area 参数的其他脚本
-define('CUSTOM_HOST_CN', 'api.bilibili.com'); // CN 解析api
-define('CUSTOM_HOST_HK', 'api.bilibili.com'); // HK 解析api
-define('CUSTOM_HOST_TW', 'api.bilibili.com'); // TW 解析api
-define('CUSTOM_HOST_TH', 'api.global.bilibili.com'); //泰区 解析api
-define('CUSTOM_HOST_SUB', 'app.global.bilibili.com'); //泰区 搜索字幕用api
+define('CUSTOM_HOST_DEFAULT', 'https://api.bilibili.com'); // 兼容未发送 area 参数的其他脚本
+define('CUSTOM_HOST_CN', 'https://api.bilibili.com'); // CN 解析api
+define('CUSTOM_HOST_HK', 'https://api.bilibili.com'); // HK 解析api
+define('CUSTOM_HOST_TW', 'https://api.bilibili.com'); // TW 解析api
+define('CUSTOM_HOST_TH', 'https://api.global.bilibili.com'); //泰区 解析api
+define('CUSTOM_HOST_SUB', 'https://app.global.bilibili.com'); //泰区 搜索字幕用api
 
 // 自定义API,避免集中请求，降低风控几率
 //$hk_api = array("host1","host2","host3");//可以自定义其他反代api,例如云函数,CFW

@@ -65,7 +65,7 @@ if (IP_RESOLVE==1) {
     $ip = $ips[array_rand($ips)];
 }
 // 转发到指定服务器
-$url = "https://".$host.$path."?".$_SERVER['QUERY_STRING'];
+$url = $host.$path."?".$_SERVER['QUERY_STRING'];
 if (IP_RESOLVE==1) {
     $output = get_webpage($url,$host,$ip);
 }else {
