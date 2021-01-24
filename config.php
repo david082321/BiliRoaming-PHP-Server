@@ -3,8 +3,8 @@
 define('BLOCK_TYPE','blacklist'); // 封锁类型：none 不封锁, blacklist 黑名单, whitelist 本地白名单
 define('REPLACE_TYPE', "tom"); // 是否替换视频(仅黑/白名单时生效)。hlw 葫芦娃, tom 猫和老鼠, xyy 喜羊羊
 define('NEED_LOGIN', 0); //是否要登录用户才能用。0 否, 1 是
-define('BILIROAMING', 1); //是否要用哔哩漫游才能使用。0 否, 1 是 
-define('WEB_ON', 0);//是否开启web接口 0 否, 1 是 目前Web接口不受哔哩漫游请求头影响（待更新）
+define('BILIROAMING', 1); //是否要用哔哩漫游才能使用。0 否, 1 是
+define('WEB_ON', 0);//是否开启web接口 0 否, 1 是 目前Web接口不受哔哩漫游请求头影响，且无法服务器锁区（待更新）
 define('LOCK_AREA', 0); //服务器锁区，须设置$SERVER_AREA。0 否, 1 是
 $WHITELIST = array('1', '2', '3'); // 本地白名单，填写 uid，可自行添加、删除，注意使用英文,和'
 
@@ -58,16 +58,24 @@ $hosts=array("workers.dev","workers.dev");
 
 // 其他
 define('WELCOME', 'Success!'); //首页欢迎语
-define('BLOCK_RETURN', '{"code":-10403,"message":"你已被封锁"}'); //封锁返回内容
+define('BLOCK_RETURN', '{"code":-10403,"message":"抱歉您已被封锁"}'); //封锁返回内容
 
 // 参数，不懂就别改
 define('APPKEY', '1d8b6e7d45233436');
 define('APPSEC', '560c52ccd288fed045859ed18bffd973');
 define('ACCESS_KEY', @$_GET['access_key']);
-define('AREA', @$_GET['area']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
-define('TS', @$_GET['ts']);
+if (@$_GET['area']==""){
+    define('AREA', 'noarea');
+}else{
+    define('AREA', @$_GET['area']);
+}
+if (@$_GET['ts']==""){
+    define('TS', time());
+}else{
+    define('TS', @$_GET['ts']);
+}
 $baned = 0;
 if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
     $baned = 1;
