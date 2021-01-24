@@ -12,7 +12,7 @@ if (BLOCK_TYPE=="none"){ // 无鉴权模式
         $out = get_webpage($url);
         // 如果是黑名单
         if ($out=="ban" || $baned == 1){
-            if (REPLACE_TYPE=="hlw" || REPLACE_TYPE=="tom" || REPLACE_TYPE=="xyy" || REPLACE_TYPE=="404" || REPLACE_TYPE=="rickroll"){ // 替换成葫芦娃、猫和老鼠、喜羊羊、肥肠抱歉
+            if (REPLACE_TYPE=="hlw" || REPLACE_TYPE=="tom" || REPLACE_TYPE=="xyy"){ // 替换成葫芦娃、猫和老鼠、喜羊羊
                 include ("replace.php");
                 replace();
             }else {

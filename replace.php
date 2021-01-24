@@ -22,10 +22,6 @@ function replace(){
         $url = 'https://black.qimo.ink/TandJ.php?type='.$type;
     }else if (REPLACE_TYPE=="xyy"){
         $url = 'https://bili.tuturu.top/xyyjson.php?type='.$type;
-    }else if (REPLACE_TYPE=="404"){
-        $url = 'https://'.$_SERVER['HTTP_HOST'].'/404.php?type='.$type;
-    }else if (REPLACE_TYPE=="rickroll"){
-        $url = 'https://'.$_SERVER['HTTP_HOST'].'/rickroll.php?type='.$type;
     }else{
         $url = 'https://black.qimo.ink/TandJ.php?type='.$type;
     }
