@@ -15,7 +15,7 @@ function replace(){
     }elseif ($path!="/intl/gateway/v2/app/search/type" && $path!="/intl/gateway/v2/app/subtitle"){
         $type = "web";
     }
-    
+
     if (REPLACE_TYPE=="hlw"){
         $url = 'https://black.qimo.ink/hlw.php?type='.$type;
     }else if (REPLACE_TYPE=="tom"){
@@ -28,8 +28,8 @@ function replace(){
         $url = 'https://black.qimo.ink/TandJ.php?type='.$type;
     }
     $output = get_webpage($url);
-    
-    
+
+
     // 分析 output
     $array = json_decode($output, true);
     $timelength = $array['timelength'];
@@ -39,7 +39,7 @@ function replace(){
     $a_base_url = $array['a_base_url'];
     $a_bandwidth = $array['a_bandwidth'];
     $a_backup_url =  $array['a_backup_url'];
-    
+
     if ($type=="web"){
         exit($output);
     }
@@ -53,7 +53,7 @@ function replace(){
 
         // 替换视频
         // 好像是count不到正确数量，不晓得有没有人会改的
-        //$v_count = count($array2['data']['video_info']['stream_list']); 
+        //$v_count = count($array2['data']['video_info']['stream_list']);
         for($j=0 ; $j<5; $j++){
             $array2['data']['video_info']['stream_list'][$j]['dash_video']['base_url'] = $base_url;
             $array2['data']['video_info']['stream_list'][$j]['dash_video']['backup_url'] = $backup_url;

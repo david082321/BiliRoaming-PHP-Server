@@ -41,7 +41,7 @@ function get_cache(){
     global $dbh;
     global $refresh_cache;
     $ts = time();
-    
+
     $sqlco = "SELECT * FROM `cache` WHERE `area` = '".AREA."' AND `type` = '".TYPE."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."'";
     $cres = $dbh -> query($sqlco);
     $vnum = $cres -> fetch();

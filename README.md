@@ -6,7 +6,7 @@
 
 ## 下载：
 
-* [下载(GitHub) v2.9.8](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.8.zip)
+* [下载(GitHub) v2.9.10](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.10.zip)
 
 
 ## 用法：
@@ -40,21 +40,23 @@
 
 * 在配置文件中加入以下代码
 
-	server
-  
-	{
-  
-	#...(中间略过，请加在配置文件最底下)...
-  
-	rewrite "^/pgc/player/api/playurl?(.*)$" /pgc/player/api/playurl/index.php?$1 last;
-  
-	rewrite "^/intl/gateway/v2/ogv/playurl?(.*)$" /intl/gateway/v2/ogv/playurl/index.php?$1 last;
-  
-	rewrite "^/intl/gateway/v2/app/search/type?(.*)$" /intl/gateway/v2/app/search/type/index.php?$1 last;
-  
-	rewrite "^/intl/gateway/v2/app/subtitle?(.*)$" /intl/gateway/v2/app/subtitle?$1 last;
-  
-	}
+    server
+
+    {
+
+    #...(中间略过，请加在配置文件最底下)...
+
+    rewrite "^/pgc/player/api/playurl?(.*)$" /pgc/player/api/playurl/index.php?$1 last;
+
+    rewrite "^/pgc/player/web/playurl?(.*)$" /pgc/player/web/playurl/index.php?$1 last;
+
+    rewrite "^/intl/gateway/v2/ogv/playurl?(.*)$" /intl/gateway/v2/ogv/playurl/index.php?$1 last;
+
+    rewrite "^/intl/gateway/v2/app/search/type?(.*)$" /intl/gateway/v2/app/search/type/index.php?$1 last;
+
+    rewrite "^/intl/gateway/v2/app/subtitle?(.*)$" /intl/gateway/v2/app/subtitle?$1 last;
+
+    }
 
 ## (非必要步骤) 缓存
 
