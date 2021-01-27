@@ -4,9 +4,7 @@ if(!defined('SYSTEM')){
     exit(BLOCK_RETURN);
 }
 
-if (BLOCK_TYPE=="none"){ // 无鉴权模式
-    // pass
-}else if (ACCESS_KEY != ""){ // access_key 存在
+if (ACCESS_KEY != ""){ // access_key 存在
     if (BLOCK_TYPE == "blacklist"){ // 黑名单鉴权
         $url = "https://black.qimo.ink/?access_key=".ACCESS_KEY;
         $out = get_webpage($url);

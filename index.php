@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '2.9.10');
+define('VERSION', '2.9.11');
 // 加上json的Header
 header('Content-Type: application/json; charset=utf-8');
 // 加载配置
@@ -27,6 +27,7 @@ if ($path=="/intl/gateway/v2/ogv/playurl") {
         $host = CUSTOM_HOST_DEFAULT;
     }
 } elseif (WEB_ON == 1) {
+    // web脚本
     $host = CUSTOM_HOST_DEFAULT;
     $path = "/pgc/player/web/playurl";
     header("Access-Control-Allow-Origin: https://www.bilibili.com");
@@ -52,20 +53,21 @@ $headerStringValue = $_SERVER['HTTP_X_FROM_BILIROAMING'];
 if ($headerStringValue=="" && BILIROAMING==1 && $path!="/pgc/player/web/playurl") {
     exit(BLOCK_RETURN);
 }
-// 鉴权
+// 判断 playurl
+$playurl = 0;
 if ($path!="/intl/gateway/v2/app/search/type" && $path!="/intl/gateway/v2/app/subtitle"){
+    $playurl = 1;
+}
+// 鉴权
+if ($playurl==1){
     include ("auth.php");
 }
 // 获取缓存
-if (SAVE_CACHE==1) {
-    if ($path=="/intl/gateway/v2/app/search/type" || $path=="/intl/gateway/v2/app/subtitle") {
-        // 不缓存
-    }else{
-        include ("cache.php");
-        $cache = get_cache();
-        if ($cache != "") {
-            exit($cache);
-        }
+if (SAVE_CACHE==1 && $playurl==1) {
+    include ("cache.php");
+    $cache = get_cache();
+    if ($cache != "") {
+        exit($cache);
     }
 }
 // 指定ip回源
@@ -82,12 +84,8 @@ if (IP_RESOLVE==1) {
 }
 print($output);
 // 写入缓存
-if (SAVE_CACHE==1) {
-    if ($path=="/intl/gateway/v2/app/search/type" || $path=="/intl/gateway/v2/app/subtitle") {
-        // 不缓存
-    }else{
-        write_cache();
-    }
+if (SAVE_CACHE==1 && $playurl==1) {
+    write_cache();
 }
 
 function get_webpage($url,$host="",$ip=""){
