@@ -66,12 +66,15 @@ define('APPSEC', '560c52ccd288fed045859ed18bffd973');
 define('ACCESS_KEY', @$_GET['access_key']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
-if (@$_GET['area']=='') {
+define('BILIROAMING_VERSION', @$_SERVER['HTTP_X_FROM_BILIROAMING']);
+if (@$_GET['area'] == '' && BILIROAMING_VERSION == '') {
 	define('AREA', 'noarea');
+}else if (@$_GET['area'] == '') {
+	define('AREA', 'oldversion');
 }else{
 	define('AREA', @$_GET['area']);
 }
-if (@$_GET['ts']=='') {
+if (@$_GET['ts'] == '') {
 	define('TS', time());
 }else{
 	define('TS', @$_GET['ts']);
