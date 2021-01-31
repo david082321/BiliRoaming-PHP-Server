@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '2.9.11');
+define('VERSION', '2.9.12');
 // 加上json的Header
 header('Content-Type: application/json; charset=utf-8');
 // 加载配置
@@ -53,8 +53,7 @@ if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/pgc/player/api/playurl
 	header("Access-Control-Allow-Credentials: true");
 }
 // 模块请求都会带上X-From-Biliroaming的请求头，为了防止被盗用，可以加上请求头判断，WEB接口暂不限制
-$headerStringValue = $_SERVER['HTTP_X_FROM_BILIROAMING'];
-if ($headerStringValue == "" && BILIROAMING == 1 && $path != "/pgc/player/web/playurl") {
+if (BILIROAMING_VERSION == "" && BILIROAMING == 1 && $path != "/pgc/player/web/playurl") {
 	exit(BLOCK_RETURN);
 }
 // 判断 playurl
