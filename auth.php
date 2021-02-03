@@ -18,7 +18,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 	}else if (BLOCK_TYPE == "whitelist") { // 白名单鉴权
 		if (SAVE_CACHE == 1) { // 是否开启缓存
 			$uid = get_uid_fromsql(); // 从数据库获取
-		}else{
+		} else {
 			$uid = get_uid(); // 从API获取
 		}
 		// 是否在白名单内
@@ -26,13 +26,15 @@ if (ACCESS_KEY != "") { // access_key 存在
 			if (REPLACE_TYPE == "hlw" || REPLACE_TYPE == "tom" || REPLACE_TYPE == "xyy" || REPLACE_TYPE == "404") { // 替换成葫芦娃、猫和老鼠、喜羊羊、肥肠抱歉
 				include ("replace.php");
 				replace();
-			}else {
+			} else {
 				exit(BLOCK_RETURN);
 			}
 		}
 	}
-}else{  // access_key 不存在
-	if (BLOCK_TYPE == "whitelist" || NEED_LOGIN == 1) { // 白名单模式 或 黑名单模式+需要登录
+} else {  // access_key 不存在
+	if (CID == "13073143") { // 漫游测速
+		//pass
+	} else if (BLOCK_TYPE == "whitelist" || NEED_LOGIN == 1) { // 白名单模式 或 黑名单模式+需要登录
 		exit(BLOCK_RETURN);
 	}
 }
