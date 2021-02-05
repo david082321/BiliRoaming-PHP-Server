@@ -6,7 +6,7 @@
 
 ## 下载：
 
-* [下载(GitHub) v2.9.14](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.14.zip)
+* [下载(GitHub) v2.9.15](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.15.zip)
 
 
 ## 用法：

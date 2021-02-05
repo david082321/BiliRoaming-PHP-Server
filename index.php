@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '2.9.12');
+define('VERSION', '2.9.15');
 // 加上json的Header
 header('Content-Type: application/json; charset=utf-8');
 // 加载配置
@@ -18,8 +18,7 @@ if (WEB_ON == 1 && $path == "/") {
 	$path = "/pgc/player/web/playurl";
 	header("Access-Control-Allow-Origin: https://www.bilibili.com");
 	header("Access-Control-Allow-Credentials: true");	
-}
-if ($path == "/intl/gateway/v2/ogv/playurl") {
+} elseif ($path == "/intl/gateway/v2/ogv/playurl") {
 	$host = CUSTOM_HOST_TH;
 } elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle") {
 	$host = CUSTOM_HOST_SUB;
