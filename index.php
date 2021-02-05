@@ -12,13 +12,7 @@ if (SAVE_CACHE == 1) {
 }
 // 判断要转发的host
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
-// Web接口
-if (WEB_ON == 1 && $path == "/") {
-	$host = CUSTOM_HOST_DEFAULT;
-	$path = "/pgc/player/web/playurl";
-	header("Access-Control-Allow-Origin: https://www.bilibili.com");
-	header("Access-Control-Allow-Credentials: true");	
-} elseif ($path == "/intl/gateway/v2/ogv/playurl") {
+if ($path == "/intl/gateway/v2/ogv/playurl") {
 	$host = CUSTOM_HOST_TH;
 } elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle") {
 	$host = CUSTOM_HOST_SUB;
@@ -30,11 +24,16 @@ if (WEB_ON == 1 && $path == "/") {
 	} else if (AREA=="tw") {
 		$host = CUSTOM_HOST_TW;
 	} else {
-		// Web接口
 		$host = CUSTOM_HOST_DEFAULT;
 		header("Access-Control-Allow-Origin: https://www.bilibili.com");
 		header("Access-Control-Allow-Credentials: true");
 	}
+} else if (WEB_ON == 1) {
+	// Web接口
+	$host = CUSTOM_HOST_DEFAULT;
+	$path = "/pgc/player/web/playurl";
+	header("Access-Control-Allow-Origin: https://www.bilibili.com");
+	header("Access-Control-Allow-Credentials: true");
 } else {
 	// 欢迎语
 	exit(WELCOME);
