@@ -29,6 +29,10 @@ if ($path == "/intl/gateway/v2/ogv/playurl") {
 		header("Access-Control-Allow-Credentials: true");
 	}
 } else if (WEB_ON == 1) {
+	if (CID == "" && EP_ID == "") {
+		// 欢迎语
+		exit(WELCOME);
+	}
 	// Web接口
 	$host = CUSTOM_HOST_DEFAULT;
 	$path = "/pgc/player/web/playurl";
