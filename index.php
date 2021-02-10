@@ -2,10 +2,15 @@
 // 防止外部破解
 define('SYSTEM', TRUE);
 define('VERSION', '2.9.16');
-// 加上json的Header
-header('Content-Type: application/json; charset=utf-8');
 // 加载配置
 include ("config.php");
+// 加上json的Header
+header('Content-Type: application/json; charset=utf-8');
+// 加上web的Header
+if (WEB_ON == 1){
+	header("Access-Control-Allow-Origin: https://www.bilibili.com");
+	header("Access-Control-Allow-Credentials: true");
+}
 // 缓存用
 if (SAVE_CACHE == 1) {
 	include ("log.php");
@@ -26,8 +31,6 @@ if ($path == "/intl/gateway/v2/ogv/playurl") {
 		$host = CUSTOM_HOST_TW;
 	} else {
 		$host = CUSTOM_HOST_DEFAULT;
-		header("Access-Control-Allow-Origin: https://www.bilibili.com");
-		header("Access-Control-Allow-Credentials: true");
 	}
 } else if (WEB_ON == 1) {
 	if (CID == "" && EP_ID == "") {
@@ -37,23 +40,19 @@ if ($path == "/intl/gateway/v2/ogv/playurl") {
 	// Web接口
 	$host = CUSTOM_HOST_DEFAULT;
 	$path = "/pgc/player/web/playurl";
-	header("Access-Control-Allow-Origin: https://www.bilibili.com");
-	header("Access-Control-Allow-Credentials: true");
 } else {
 	// 欢迎语
 	exit(WELCOME);
 }
 // 判断服务器锁区 及 web接口
 if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/pgc/player/api/playurl") {
-	if (LOCK_AREA == "1" && !empty($SERVER_AREA) && !in_array(AREA, $SERVER_AREA)) {
+	if (WEB_ON == 0 && LOCK_AREA == 1 && !empty($SERVER_AREA) && !in_array(AREA, $SERVER_AREA)) {
 		exit(BLOCK_RETURN);
 	}
 }elseif ($path == "/pgc/player/web/playurl") {
 	if(WEB_ON == 0) {
 		exit(BLOCK_RETURN);
 	}
-	header("Access-Control-Allow-Origin: https://www.bilibili.com");
-	header("Access-Control-Allow-Credentials: true");
 }
 // 模块请求都会带上X-From-Biliroaming的请求头，为了防止被盗用，可以加上请求头判断，WEB接口暂不限制
 if (BILIROAMING_VERSION == "" && BILIROAMING == 1 && $path != "/pgc/player/web/playurl") {
@@ -68,9 +67,9 @@ if ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/ap
 if ($playurl == 1) {
 	include ("auth.php");
 }
-// 替换泰国大会员
-if ($path == "/intl/gateway/v2/ogv/playurl" && ACCESS_KEY != "") {
- //include("resign.php");
+// 替换key
+if (ACCESS_KEY != "" && $playurl == 1) {
+	//include("resign.php");
 }
 // 获取缓存
 if (SAVE_CACHE == 1 && $playurl == 1) {

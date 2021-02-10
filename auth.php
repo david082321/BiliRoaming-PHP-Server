@@ -8,7 +8,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 		$out = get_webpage($url);
 		// 如果是黑名单
 		if ($out == "ban" || $baned == 1) {
-			if (REPLACE_TYPE == "hlw" || REPLACE_TYPE == "tom" || REPLACE_TYPE == "xyy") { // 替换成葫芦娃、猫和老鼠、喜羊羊
+			if (REPLACE_TYPE == "hlw" || REPLACE_TYPE == "tom" || REPLACE_TYPE == "xyy" || REPLACE_TYPE == "all") { // 替换成葫芦娃、猫和老鼠、喜羊羊
 				include ("replace.php");
 				replace();
 			}else {
@@ -23,7 +23,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 		}
 		// 是否在白名单内
 		if (!in_array($uid, $WHITELIST) || $baned == 1) {
-			if (REPLACE_TYPE == "hlw" || REPLACE_TYPE == "tom" || REPLACE_TYPE == "xyy" || REPLACE_TYPE == "404") { // 替换成葫芦娃、猫和老鼠、喜羊羊、肥肠抱歉
+			if (REPLACE_TYPE == "hlw" || REPLACE_TYPE == "tom" || REPLACE_TYPE == "xyy" || REPLACE_TYPE == "all") { // 替换成葫芦娃、猫和老鼠、喜羊羊、肥肠抱歉
 				include ("replace.php");
 				replace();
 			} else {
