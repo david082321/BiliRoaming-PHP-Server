@@ -8,6 +8,8 @@ $refresh_cache = 0;
 // 判断登录状态
 if (ACCESS_KEY == "") {
 	define('TYPE', 0); //未登录
+}else if ($thailand_auth == "pass") {
+	define('TYPE', 9); // 泰国大会员
 }else{
 	// 判断大会员
 	$sqlco = "SELECT `due_date` FROM `keys` WHERE `access_key` = '".ACCESS_KEY."'";

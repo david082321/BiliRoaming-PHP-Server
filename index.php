@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '2.9.15');
+define('VERSION', '2.9.16');
 // 加上json的Header
 header('Content-Type: application/json; charset=utf-8');
 // 加载配置
@@ -10,8 +10,9 @@ include ("config.php");
 if (SAVE_CACHE == 1) {
 	include ("log.php");
 }
-// 判断要转发的host
+// 判断要转发的内容
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
+$query = $_SERVER['QUERY_STRING'];
 if ($path == "/intl/gateway/v2/ogv/playurl") {
 	$host = CUSTOM_HOST_TH;
 } elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle") {
@@ -67,6 +68,10 @@ if ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/ap
 if ($playurl == 1) {
 	include ("auth.php");
 }
+// 替换泰国大会员
+if ($path == "/intl/gateway/v2/ogv/playurl" && ACCESS_KEY != "") {
+ //include("resign.php");
+}
 // 获取缓存
 if (SAVE_CACHE == 1 && $playurl == 1) {
 	include ("cache.php");
@@ -81,7 +86,7 @@ if (IP_RESOLVE == 1) {
 	$ip = $ips[array_rand($ips)];
 }
 // 转发到指定服务器
-$url = $host.$path."?".$_SERVER['QUERY_STRING'];
+$url = $host.$path."?".$query;
 if (IP_RESOLVE == 1) {
 	$output = get_webpage($url,$host,$ip);
 }else {
