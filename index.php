@@ -64,8 +64,10 @@ if ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/ap
 	$playurl = 1;
 }
 // 鉴权
-if ($playurl == 1) {
+if ($playurl == 1) { //playurl
 	include ("auth.php");
+} elseif ($path == "/intl/gateway/v2/app/subtitle" && $baned == 1) { //泰国字幕
+	exit(BLOCK_RETURN);
 }
 // 替换key
 if (ACCESS_KEY != "" && $playurl == 1) {
