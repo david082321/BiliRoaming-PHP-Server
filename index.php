@@ -93,6 +93,7 @@ if (IP_RESOLVE == 1) {
 }else {
 	$output = get_webpage($url);
 }
+$output = str_replace("\u0026","&",$output);
 print($output);
 // 写入缓存
 if (SAVE_CACHE == 1 && $playurl == 1) {
