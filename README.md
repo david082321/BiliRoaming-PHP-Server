@@ -6,7 +6,7 @@
 
 ## 下载：
 
-* [下载(GitHub) v2.9.12](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.12.zip)
+* [下载(GitHub) v2.9.16](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.16.zip)
 
 
 ## 用法：
@@ -75,6 +75,10 @@
 * 脚本的 代理服务器->自定义 输入以下内容 ( example.com 请改成你的服务器地址)
 
 ##### 　　　https://example.com/
+
+* 脚本的 代理服务器->自定义(泰国/东南亚) 输入以下内容 ( example.com 请改成你的服务器地址)
+
+##### 　　　https://example.com/intl/gateway/v2/ogv/playurl/
 
 * (可选步骤) 配置上面的禁用 301 转址。然后脚本的 代理服务器->自定义 改成
 

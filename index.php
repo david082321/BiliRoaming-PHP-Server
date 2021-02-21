@@ -1,24 +1,23 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '2.9.12');
-// 加上json的Header
-header('Content-Type: application/json; charset=utf-8');
+define('VERSION', '2.9.16');
 // 加载配置
 include ("config.php");
+// 加上json的Header
+header('Content-Type: application/json; charset=utf-8');
+// 加上web的Header
+if (WEB_ON == 1){
+	header("Access-Control-Allow-Origin: https://www.bilibili.com");
+	header("Access-Control-Allow-Credentials: true");
+}
 // 缓存用
 if (SAVE_CACHE == 1) {
 	include ("log.php");
 }
-// 判断要转发的host
+// 判断要转发的内容
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
-// Web接口
-if (WEB_ON == 1 && $path == "/") {
-	$host = CUSTOM_HOST_DEFAULT;
-	$path = "/pgc/player/web/playurl";
-	header("Access-Control-Allow-Origin: https://www.bilibili.com");
-	header("Access-Control-Allow-Credentials: true");	
-}
+$query = $_SERVER['QUERY_STRING'];
 if ($path == "/intl/gateway/v2/ogv/playurl") {
 	$host = CUSTOM_HOST_TH;
 } elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle") {
@@ -31,26 +30,29 @@ if ($path == "/intl/gateway/v2/ogv/playurl") {
 	} else if (AREA=="tw") {
 		$host = CUSTOM_HOST_TW;
 	} else {
-		// Web接口
 		$host = CUSTOM_HOST_DEFAULT;
-		header("Access-Control-Allow-Origin: https://www.bilibili.com");
-		header("Access-Control-Allow-Credentials: true");
 	}
+} else if (WEB_ON == 1) {
+	if (CID == "" && EP_ID == "") {
+		// 欢迎语
+		exit(WELCOME);
+	}
+	// Web接口
+	$host = CUSTOM_HOST_DEFAULT;
+	$path = "/pgc/player/web/playurl";
 } else {
 	// 欢迎语
 	exit(WELCOME);
 }
 // 判断服务器锁区 及 web接口
 if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/pgc/player/api/playurl") {
-	if (LOCK_AREA == "1" && !empty($SERVER_AREA) && !in_array(AREA, $SERVER_AREA)) {
+	if (WEB_ON == 0 && LOCK_AREA == 1 && !empty($SERVER_AREA) && !in_array(AREA, $SERVER_AREA)) {
 		exit(BLOCK_RETURN);
 	}
 }elseif ($path == "/pgc/player/web/playurl") {
 	if(WEB_ON == 0) {
 		exit(BLOCK_RETURN);
 	}
-	header("Access-Control-Allow-Origin: https://www.bilibili.com");
-	header("Access-Control-Allow-Credentials: true");
 }
 // 模块请求都会带上X-From-Biliroaming的请求头，为了防止被盗用，可以加上请求头判断，WEB接口暂不限制
 if (BILIROAMING_VERSION == "" && BILIROAMING == 1 && $path != "/pgc/player/web/playurl") {
@@ -62,8 +64,14 @@ if ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/ap
 	$playurl = 1;
 }
 // 鉴权
-if ($playurl == 1) {
+if ($playurl == 1) { //playurl
 	include ("auth.php");
+} elseif ($path == "/intl/gateway/v2/app/subtitle" && $baned == 1) { //泰国字幕
+	exit(BLOCK_RETURN);
+}
+// 替换key
+if (ACCESS_KEY != "" && $playurl == 1) {
+	//include("resign.php");
 }
 // 获取缓存
 if (SAVE_CACHE == 1 && $playurl == 1) {
@@ -79,12 +87,13 @@ if (IP_RESOLVE == 1) {
 	$ip = $ips[array_rand($ips)];
 }
 // 转发到指定服务器
-$url = $host.$path."?".$_SERVER['QUERY_STRING'];
+$url = $host.$path."?".$query;
 if (IP_RESOLVE == 1) {
 	$output = get_webpage($url,$host,$ip);
 }else {
 	$output = get_webpage($url);
 }
+$output = str_replace("\u0026","&",$output);
 print($output);
 // 写入缓存
 if (SAVE_CACHE == 1 && $playurl == 1) {
