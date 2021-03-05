@@ -6,7 +6,7 @@
 
 ## 下载：
 
-* [下载(GitHub) v2.9.16](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.16.zip)
+* [下载(GitHub) v2.9.17](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.17.zip)
 
 
 ## 用法：
@@ -66,7 +66,7 @@
 
 * 导入 cache.sql
 
-## (非必要步骤) 支持网页版油猴脚本
+## (非必要步骤，实验性) 支持网页版油猴脚本
 
 * [油猴脚本地址](https://github.com/ipcjs/bilibili-helper/blob/user.js/packages/unblock-area-limit/README.md)
 
@@ -96,7 +96,11 @@
 
 │　│　└─subtitle/index.php (转发到根目录的 index.php 处理)
 
-│　└─ogv/playurl/index.php (转发到根目录的 index.php 处理)
+│　└─ogv
+
+│　　　├─playurl/index.php (转发到根目录的 index.php 处理)
+
+│　　　└─view/app/season/index.php (转发到根目录的 index.php 处理)
 
 ├─pgc/player/
 
