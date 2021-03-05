@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '2.9.16');
+define('VERSION', '2.9.17');
 // 加载配置
 include ("config.php");
 // 加上json的Header
@@ -18,9 +18,9 @@ if (SAVE_CACHE == 1) {
 // 判断要转发的内容
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
 $query = $_SERVER['QUERY_STRING'];
-if ($path == "/intl/gateway/v2/ogv/playurl") {
+if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/intl/gateway/v2/ogv/view/app/season") {
 	$host = CUSTOM_HOST_TH;
-} elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle" || $path == "/intl/gateway/v2/ogv/view/app/season") {
+} elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle") {
 	$host = CUSTOM_HOST_SUB;
 } elseif ($path == "/pgc/player/api/playurl" || $path == "/pgc/player/web/playurl") {
 	if (AREA=="cn") {
@@ -60,7 +60,7 @@ if (BILIROAMING_VERSION == "" && BILIROAMING == 1 && $path != "/pgc/player/web/p
 }
 // 判断 playurl
 $playurl = 0;
-if ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/app/subtitle") {
+if ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/app/subtitle" && $path != "/intl/gateway/v2/ogv/view/app/season") {
 	$playurl = 1;
 }
 // 鉴权
