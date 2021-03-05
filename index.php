@@ -20,7 +20,7 @@ $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
 $query = $_SERVER['QUERY_STRING'];
 if ($path == "/intl/gateway/v2/ogv/playurl") {
 	$host = CUSTOM_HOST_TH;
-} elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle") {
+} elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle" || $path == "/intl/gateway/v2/ogv/view/app/season") {
 	$host = CUSTOM_HOST_SUB;
 } elseif ($path == "/pgc/player/api/playurl" || $path == "/pgc/player/web/playurl") {
 	if (AREA=="cn") {
@@ -55,7 +55,7 @@ if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/pgc/player/api/playurl
 	}
 }
 // 模块请求都会带上X-From-Biliroaming的请求头，为了防止被盗用，可以加上请求头判断，WEB接口暂不限制
-if (BILIROAMING_VERSION == "" && BILIROAMING == 1 && $path != "/pgc/player/web/playurl") {
+if (BILIROAMING_VERSION == "" && BILIROAMING == 1 && $path != "/pgc/player/web/playurl" && $path != "/intl/gateway/v2/ogv/view/app/season") {
 	exit(BLOCK_RETURN);
 }
 // 判断 playurl
