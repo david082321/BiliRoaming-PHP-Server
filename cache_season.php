@@ -29,7 +29,9 @@ function get_cache_season() {
 	$vnum = $cres -> fetch();
 	$cache = $vnum['cache'];
 	$add_time = $vnum['add_time'];
+	//修复读取问题
 	$cache = str_replace("u0026","&",$cache);
+	$cache = str_replace("\n","\\n",$cache);
 	if ($cache != "") {
 		if( (int)$add_time + CACHE_TIME_SEASON >= $ts) {
 			return $cache;
