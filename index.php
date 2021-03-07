@@ -62,6 +62,8 @@ if (BILIROAMING_VERSION == "" && BILIROAMING == 1 && $path != "/pgc/player/web/p
 $playurl = 0;
 if ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/app/subtitle" && $path != "/intl/gateway/v2/ogv/view/app/season") {
 	$playurl = 1;
+} else if ($path == "/intl/gateway/v2/ogv/view/app/season") {
+	$playurl = 2;
 }
 // 鉴权
 if ($playurl == 1) { //playurl
@@ -73,10 +75,17 @@ if ($playurl == 1) { //playurl
 if (ACCESS_KEY != "" && $playurl == 1) {
 	//include("resign.php");
 }
-// 获取缓存
+// 获取缓存 (playurl)
 if (SAVE_CACHE == 1 && $playurl == 1) {
 	include ("cache.php");
 	$cache = get_cache();
+	if ($cache != "") {
+		exit($cache);
+	}
+// 获取缓存 (东南亚season)
+} else if (SAVE_CACHE == 1 && $playurl == 2) {
+	include ("cache_season.php");
+	$cache = get_cache_season();
 	if ($cache != "") {
 		exit($cache);
 	}
@@ -90,14 +99,16 @@ if (IP_RESOLVE == 1) {
 $url = $host.$path."?".$query;
 if (IP_RESOLVE == 1) {
 	$output = get_webpage($url,$host,$ip);
-}else {
+} else {
 	$output = get_webpage($url);
 }
 $output = str_replace("\u0026","&",$output);
 print($output);
 // 写入缓存
 if (SAVE_CACHE == 1 && $playurl == 1) {
-	write_cache();
+	write_cache(); // 写入playurl
+} else if (SAVE_CACHE == 1 && $playurl == 2) {
+	write_cache_season(); //写入东南亚season
 }
 
 function get_webpage($url,$host="",$ip="") {
