@@ -31,6 +31,7 @@ function get_cache_season() {
 	$add_time = $vnum['add_time'];
 	//修复读取问题
 	$cache = str_replace("u0026","&",$cache);
+	$cache = str_replace("\r","\\r",$cache);
 	$cache = str_replace("\n","\\n",$cache);
 	if ($cache != "") {
 		if( (int)$add_time + CACHE_TIME_SEASON >= $ts) {
