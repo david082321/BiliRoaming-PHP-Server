@@ -3,6 +3,7 @@
 	RewriteRule pgc/player/api/playurl pgc/player/api/playurl/index.php
 	RewriteRule pgc/player/web/playurl pgc/player/web/playurl/index.php
 	RewriteRule intl/gateway/v2/ogv/playurl intl/gateway/v2/ogv/playurl/index.php
+	RewriteRule intl/gateway/v2/ogv/view/app/season intl/gateway/v2/ogv/view/app/season/index.php
 	RewriteRule intl/gateway/v2/app/search/type intl/gateway/v2/app/search/type/index.php
 	RewriteRule intl/gateway/v2/app/subtitle intl/gateway/v2/app/subtitle/index.php
 </IfModule>
