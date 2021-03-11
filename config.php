@@ -42,6 +42,8 @@ define('CACHE_TIME_SEASON_404', 60*60*24*3); //泰国 season (返回404时的)�
 	$SERVER_AREA = array('th');
 	*/
 $SERVER_AREA = array(); // 空白，不锁区
+// 指定锁区（不论上面怎么设置，只要填这个，可以锁定指定的地区）
+$BAN_SERVER_AREA = array(); // 空白，不锁区
 
 // API相关
 define('CUSTOM_HOST_DEFAULT', 'https://api.bilibili.com'); // 兼容未发送 area 参数的其他脚本
@@ -94,6 +96,10 @@ if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
 }
 if (in_array(CID, $cid_list) && BAN_CID == 1) {
 	$baned = 1;
+}
+if (in_array(AREA, $BAN_SERVER_AREA)) {
+	$baned = 1;
+	exit(BLOCK_RETURN);
 }
 // 防止外部破解
 if(!defined('SYSTEM')) {
