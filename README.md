@@ -56,6 +56,8 @@
 
     rewrite "^/intl/gateway/v2/app/subtitle?(.*)$" /intl/gateway/v2/app/subtitle/index.php?$1 last;
 
+    rewrite "^/intl/gateway/v2/ogv/view/app/season?(.*)$" /intl/gateway/v2/ogv/view/app/season/index.php?$1 last;
+
     }
 
 ## (非必要步骤) 缓存
@@ -81,6 +83,8 @@
 ##### 　　　https://example.com/intl/gateway/v2/ogv/playurl/
 
 * (可选步骤) 配置上面的禁用 301 转址。然后脚本的 代理服务器->自定义 改成
+
+* 注意：不配置上方的 「禁用 301 转址」，少部分 泰国/东南亚番剧 将无法加载。
 
 ##### 　　　https://example.com
 
@@ -112,6 +116,8 @@
 
 ├─cache.php (缓存)[仅缓存使用]
 
+├─cache_season.php (缓存泰国/东南亚season)[仅缓存使用]
+
 ├─cache.sql (导入MySQL用的)[仅缓存使用]
 
 ├─config.php (用户设置)
@@ -120,4 +126,8 @@
 
 ├─log.php (缓存用户)[仅缓存使用]
 
-└─replace.php (替换视频)
+├─replace.php (替换视频)
+
+├─sign.php (重签名)[未公开源码]
+
+└─resign.php (替换access_key)[未公开源码]

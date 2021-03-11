@@ -71,7 +71,7 @@ if ($playurl == 1) { //playurl
 } elseif ($path == "/intl/gateway/v2/app/subtitle" && $baned == 1) { //泰国字幕
 	exit(BLOCK_RETURN);
 }
-// 替换key
+// 替换access_key
 if (ACCESS_KEY != "" && $playurl == 1) {
 	//include("resign.php");
 }
