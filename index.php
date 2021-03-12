@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '2.9.16');
+define('VERSION', '2.9.18');
 // 加载配置
 include ("config.php");
 // 加上json的Header
@@ -18,7 +18,7 @@ if (SAVE_CACHE == 1) {
 // 判断要转发的内容
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
 $query = $_SERVER['QUERY_STRING'];
-if ($path == "/intl/gateway/v2/ogv/playurl") {
+if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/intl/gateway/v2/ogv/view/app/season") {
 	$host = CUSTOM_HOST_TH;
 } elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle") {
 	$host = CUSTOM_HOST_SUB;
@@ -55,13 +55,15 @@ if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/pgc/player/api/playurl
 	}
 }
 // 模块请求都会带上X-From-Biliroaming的请求头，为了防止被盗用，可以加上请求头判断，WEB接口暂不限制
-if (BILIROAMING_VERSION == "" && BILIROAMING == 1 && $path != "/pgc/player/web/playurl") {
+if (BILIROAMING_VERSION == "" && BILIROAMING == 1 && $path != "/pgc/player/web/playurl" && $path != "/intl/gateway/v2/ogv/view/app/season") {
 	exit(BLOCK_RETURN);
 }
 // 判断 playurl
 $playurl = 0;
-if ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/app/subtitle") {
+if ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/app/subtitle" && $path != "/intl/gateway/v2/ogv/view/app/season") {
 	$playurl = 1;
+} else if ($path == "/intl/gateway/v2/ogv/view/app/season") {
+	$playurl = 2;
 }
 // 鉴权
 if ($playurl == 1) { //playurl
@@ -69,14 +71,21 @@ if ($playurl == 1) { //playurl
 } elseif ($path == "/intl/gateway/v2/app/subtitle" && $baned == 1) { //泰国字幕
 	exit(BLOCK_RETURN);
 }
-// 替换key
+// 替换access_key
 if (ACCESS_KEY != "" && $playurl == 1) {
 	//include("resign.php");
 }
-// 获取缓存
+// 获取缓存 (playurl)
 if (SAVE_CACHE == 1 && $playurl == 1) {
 	include ("cache.php");
 	$cache = get_cache();
+	if ($cache != "") {
+		exit($cache);
+	}
+// 获取缓存 (东南亚season)
+} else if (SAVE_CACHE == 1 && $playurl == 2) {
+	include ("cache_season.php");
+	$cache = get_cache_season();
 	if ($cache != "") {
 		exit($cache);
 	}
@@ -90,14 +99,16 @@ if (IP_RESOLVE == 1) {
 $url = $host.$path."?".$query;
 if (IP_RESOLVE == 1) {
 	$output = get_webpage($url,$host,$ip);
-}else {
+} else {
 	$output = get_webpage($url);
 }
 $output = str_replace("\u0026","&",$output);
 print($output);
 // 写入缓存
 if (SAVE_CACHE == 1 && $playurl == 1) {
-	write_cache();
+	write_cache(); // 写入playurl
+} else if (SAVE_CACHE == 1 && $playurl == 2) {
+	write_cache_season(); //写入东南亚season
 }
 
 function get_webpage($url,$host="",$ip="") {

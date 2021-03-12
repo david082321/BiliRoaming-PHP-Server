@@ -6,7 +6,7 @@
 
 ## 下载：
 
-* [下载(GitHub) v2.9.16](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.16.zip)
+* [下载(GitHub) v2.9.18](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.18.zip)
 
 
 ## 用法：
@@ -56,6 +56,8 @@
 
     rewrite "^/intl/gateway/v2/app/subtitle?(.*)$" /intl/gateway/v2/app/subtitle/index.php?$1 last;
 
+    rewrite "^/intl/gateway/v2/ogv/view/app/season?(.*)$" /intl/gateway/v2/ogv/view/app/season/index.php?$1 last;
+
     }
 
 ## (非必要步骤) 缓存
@@ -66,7 +68,7 @@
 
 * 导入 cache.sql
 
-## (非必要步骤) 支持网页版油猴脚本
+## (非必要步骤，实验性) 支持网页版油猴脚本
 
 * [油猴脚本地址](https://github.com/ipcjs/bilibili-helper/blob/user.js/packages/unblock-area-limit/README.md)
 
@@ -84,6 +86,8 @@
 
 ##### 　　　https://example.com
 
+* 注意：不配置上面的 「禁用 301 转址」，少部分 泰国/东南亚番剧 将无法在网页版加载。(哔哩漫游无影响)
+
 --------
 
 # 文件功能介绍
@@ -96,7 +100,11 @@
 
 │　│　└─subtitle/index.php (转发到根目录的 index.php 处理)
 
-│　└─ogv/playurl/index.php (转发到根目录的 index.php 处理)
+│　└─ogv
+
+│　　　├─playurl/index.php (转发到根目录的 index.php 处理)
+
+│　　　└─view/app/season/index.php (转发到根目录的 index.php 处理)
 
 ├─pgc/player/
 
@@ -108,6 +116,8 @@
 
 ├─cache.php (缓存)[仅缓存使用]
 
+├─cache_season.php (缓存泰国/东南亚season)[仅缓存使用]
+
 ├─cache.sql (导入MySQL用的)[仅缓存使用]
 
 ├─config.php (用户设置)
@@ -116,4 +126,8 @@
 
 ├─log.php (缓存用户)[仅缓存使用]
 
-└─replace.php (替换视频)
+├─replace.php (替换视频)
+
+├─sign.php (重签名)[未公开源码]
+
+└─resign.php (替换access_key)[未公开源码]

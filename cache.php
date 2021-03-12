@@ -8,9 +8,9 @@ $refresh_cache = 0;
 // 判断登录状态
 if ($member_type > 0) {
 	// pass
-}else if (ACCESS_KEY == "") {
+} else if (ACCESS_KEY == "") {
 	$member_type = 0; //未登录
-}else{
+} else {
 	// 判断大会员
 	$sqlco = "SELECT `due_date` FROM `keys` WHERE `access_key` = '".ACCESS_KEY."'";
 	$cres = $dbh -> query($sqlco);
@@ -29,10 +29,10 @@ $db_user=DB_USER;
 $db_pass=DB_PASS;
 $db_name=DB_NAME;
 $dbh='mysql:host='.$db_host.';'.'dbname='.$db_name;
-try{
+try {
    $dbh = new PDO($dbh,$db_user,$db_pass);
    //echo '连接成功';
-}catch(PDOException $e) {
+} catch(PDOException $e) {
    //pass
 }
 
@@ -73,7 +73,7 @@ function write_cache() {
 	if ($code == "0") {
 		$a = explode('mid=', $output);
 		$out = $a[0];
-		for($j=1; $j<count($a)-1; $j++) {
+		for ($j=1; $j<count($a)-1; $j++) {
 			//echo $a[$j];
 			$b = explode('orderid=', $a[$j]);
 			$out = $out.'orderid='.$b[1];
@@ -86,11 +86,11 @@ function write_cache() {
 		}
 		$dbh -> exec($sql);
 	// 缓存地区错误
-	}else if (in_array(AREA, $SERVER_AREA)) {
+	} else if (in_array(AREA, $SERVER_AREA)) {
 		$sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cid`,`ep_id`,`cache`) VALUES ('9999999999','".AREA."','".$member_type."','".CID."','".EP_ID."','$output')";
 		if ($code == "-10403") {// 10403 地区错误
 			$dbh -> exec($sql);
-		}else if ($code == "-404" && AREA == "th") {// 404 泰版地区错误
+		} else if ($code == "-404" && AREA == "th") {// 404 泰版地区错误
 			$dbh -> exec($sql);
 		}
 	}

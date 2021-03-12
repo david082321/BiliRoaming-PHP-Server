@@ -23,11 +23,14 @@ $cid_list = array();
 
 // 缓存
 define('SAVE_CACHE', 0); //开启缓存，须配置MySQL。0 否, 1 是
-define('CACHE_TIME', 10000); //缓存时长（秒），目前最长可到14400秒
+define('CACHE_TIME', 60*60*3); //缓存时长（秒），目前最长可到14400秒
 define('DB_HOST', 'localhost');
 define('DB_USER', '这里改成登录的用户名'); //登录的用户名
 define('DB_PASS', '登录的密码'); //登录的密码
 define('DB_NAME', '数据库名称'); //数据库名称
+// 缓存泰国 season
+define('CACHE_TIME_SEASON', 60*60*24); //泰国 season 的缓存时长（秒）
+define('CACHE_TIME_SEASON_404', 60*60*24*3); //泰国 season (返回404时的)缓存时长（秒）
 
 // 服务器所在的地区
 	/*
@@ -39,6 +42,8 @@ define('DB_NAME', '数据库名称'); //数据库名称
 	$SERVER_AREA = array('th');
 	*/
 $SERVER_AREA = array(); // 空白，不锁区
+// 指定锁区（不论上面怎么设置，只要填这个，可以锁定指定的地区）
+$BAN_SERVER_AREA = array(); // 空白，不锁区
 
 // API相关
 define('CUSTOM_HOST_DEFAULT', 'https://api.bilibili.com'); // 兼容未发送 area 参数的其他脚本
@@ -71,6 +76,7 @@ define('APPSEC', '560c52ccd288fed045859ed18bffd973');
 define('ACCESS_KEY', @$_GET['access_key']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
+define('SS_ID', @$_GET['season_id']);
 define('BILIROAMING_VERSION', @$_SERVER['HTTP_X_FROM_BILIROAMING']);
 if (@$_GET['area'] == '' && BILIROAMING_VERSION == '') {
 	define('AREA', 'noarea');
@@ -90,6 +96,10 @@ if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
 }
 if (in_array(CID, $cid_list) && BAN_CID == 1) {
 	$baned = 1;
+}
+if (in_array(AREA, $BAN_SERVER_AREA)) {
+	$baned = 1;
+	exit(BLOCK_RETURN);
 }
 // 防止外部破解
 if(!defined('SYSTEM')) {
