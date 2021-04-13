@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `cache` (
   `add_time` int(11) NOT NULL COMMENT '添加时间',
   `area` varchar(10) DEFAULT NULL,
   `type` tinyint(4) NOT NULL,
+  `cache_type` varchar(100) NOT NULL,
   `cid` varchar(100) NOT NULL,
   `ep_id` varchar(100) DEFAULT NULL,
   `cache` mediumtext NOT NULL COMMENT '缓存内容'

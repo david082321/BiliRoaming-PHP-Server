@@ -24,7 +24,7 @@ function get_cache_season() {
 	global $member_type;
 	global $refresh_cache_season;
 	$ts = time();
-	$sqlco = "SELECT * FROM `cache` WHERE `area` = 'season' AND `type` = '0' AND `cid` = '0' AND `ep_id` = '".SS_ID."'";
+	$sqlco = "SELECT * FROM `cache` WHERE `area` = 'season' AND `type` = '0' AND `cache_tpye` = 'season' AND `cid` = '0' AND `ep_id` = '".SS_ID."'";
 	$cres = $dbh -> query($sqlco);
 	$vnum = $cres -> fetch();
 	$cache = $vnum['cache'];
@@ -54,16 +54,16 @@ function write_cache_season() {
 	$array = json_decode($output, true);
 	$code = $array['code'];
 	if ($code == "0") {
-		$sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cid`,`ep_id`,`cache`) VALUES ('$ts','season','0','0','".SS_ID."','$output')";
+		$sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('$ts','season','0','season','0','".SS_ID."','$output')";
 		// 刷新缓存
 		if ($refresh_cache_season == 1) {
-			$sql = "UPDATE `cache` SET `add_time` = '$ts', `cache` = '$output' WHERE `area` = '".AREA."' AND `type` = '".$member_type."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."';";
+			$sql = "UPDATE `cache` SET `add_time` = '$ts', `cache` = '$output' WHERE `area` = '".AREA."' AND `cache_type` = 'season' AND `type` = '".$member_type."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."';";
 		}
 		$dbh -> exec($sql);
 	// 缓存 404 错误
 	} else if ($code == "-404") {
 		$ts = $ts + CACHE_TIME_SEASON_404;
-		$sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cid`,`ep_id`,`cache`) VALUES ('$ts','season','0','0','".SS_ID."','$output')";
+		$sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('$ts','season','0','season','0','".SS_ID."','$output')";
 		$dbh -> exec($sql);
 	}
 }

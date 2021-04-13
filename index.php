@@ -17,6 +17,13 @@ if (SAVE_CACHE == 1) {
 }
 // 判断要转发的内容
 $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
+
+// 判断接口区分app和web缓存
+$cache_type = 'app';//默认类型app
+if ($path == "/pgc/player/web/playurl") {
+    $cache_type = 'web';
+}
+
 $query = $_SERVER['QUERY_STRING'];
 if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/intl/gateway/v2/ogv/view/app/season") {
 	$host = CUSTOM_HOST_TH;
