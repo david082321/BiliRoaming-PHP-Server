@@ -24,7 +24,7 @@ function get_cache_season() {
 	global $member_type;
 	global $refresh_cache_season;
 	$ts = time();
-	$sqlco = "SELECT * FROM `cache` WHERE `area` = 'season' AND `type` = '0' AND `cache_tpye` = 'season' AND `cid` = '0' AND `ep_id` = '".SS_ID."'";
+	$sqlco = "SELECT * FROM `cache` WHERE `area` = 'season' AND `type` = '0' AND `cache_type` = 'season' AND `cid` = '0' AND `ep_id` = '".SS_ID."'";
 	$cres = $dbh -> query($sqlco);
 	$vnum = $cres -> fetch();
 	$cache = $vnum['cache'];
