@@ -78,7 +78,7 @@ define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
 define('SS_ID', @$_GET['season_id']);
 define('BILIROAMING_VERSION', @$_SERVER['HTTP_X_FROM_BILIROAMING']);
-if (@$_GET['area'] == '' && BILIROAMING_VERSION == '') {
+if (@$_GET['area'] == '' || @$_GET['area'] == 'false' && BILIROAMING_VERSION == '') {
 	define('AREA', 'noarea');
 }else if (@$_GET['area'] == '') {
 	define('AREA', 'oldversion');
