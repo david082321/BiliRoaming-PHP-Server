@@ -81,7 +81,7 @@ define('BILIROAMING_VERSION', @$_SERVER['HTTP_X_FROM_BILIROAMING']);
 if (BILIROAMING_VERSION == '') {
 	if (BILIROAMING == 1 && WEB_ON == 0) { //仅限漫游用户，且未开放web脚本
 		exit(BLOCK_RETURN);
-	}else if (@$_GET['area'] == '' || @$_GET['area'] == false') { //web脚本
+	}else if (@$_GET['area'] == '' || @$_GET['area'] == 'false') { //web脚本
 		define('AREA', 'noarea');
 	}
 }else if (@$_GET['area'] == '') { //适配老漫游版本
