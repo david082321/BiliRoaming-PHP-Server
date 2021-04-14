@@ -40,9 +40,10 @@ try {
 function get_cache() {
 	global $dbh;
 	global $member_type;
+	global $cache_type;
 	global $refresh_cache;
 	$ts = time();
-	$sqlco = "SELECT * FROM `cache` WHERE `area` = '".AREA."' AND `type` = '".$member_type."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."'";
+	$sqlco = "SELECT * FROM `cache` WHERE `area` = '".AREA."' AND `type` = '".$member_type."' AND `cache_type` = '".$cache_type."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."'";
 	$cres = $dbh -> query($sqlco);
 	$vnum = $cres -> fetch();
 	$cache = $vnum['cache'];
@@ -65,6 +66,7 @@ function write_cache() {
 	global $dbh;
 	global $SERVER_AREA;
 	global $member_type;
+	global $cache_type;
 	global $output;
 	global $refresh_cache;
 	$ts = time();
@@ -79,15 +81,15 @@ function write_cache() {
 			$out = $out.'orderid='.$b[1];
 		}
 		$output = $out.$a[count($a)-1];
-		$sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cid`,`ep_id`,`cache`) VALUES ('$ts','".AREA."','".$member_type."','".CID."','".EP_ID."','$output')";
+		$sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('$ts','".AREA."','".$member_type."','".$cache_type."','".CID."','".EP_ID."','$output')";
 		// 刷新缓存
 		if ($refresh_cache == 1) {
-			$sql = "UPDATE `cache` SET `add_time` = '$ts', `cache` = '$output' WHERE `area` = '".AREA."' AND `type` = '".$member_type."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."';";
+			$sql = "UPDATE `cache` SET `add_time` = '$ts', `cache` = '$output' WHERE `area` = '".AREA."' AND `type` = '".$member_type."' AND `cache_type` = '".$cache_type."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."';";
 		}
 		$dbh -> exec($sql);
 	// 缓存地区错误
 	} else if (in_array(AREA, $SERVER_AREA)) {
-		$sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cid`,`ep_id`,`cache`) VALUES ('9999999999','".AREA."','".$member_type."','".CID."','".EP_ID."','$output')";
+		$sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('9999999999','".AREA."','".$member_type."','".$cache_type."','".CID."','".EP_ID."','$output')";
 		if ($code == "-10403") {// 10403 地区错误
 			$dbh -> exec($sql);
 		} else if ($code == "-404" && AREA == "th") {// 404 泰版地区错误

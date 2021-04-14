@@ -78,9 +78,13 @@ define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
 define('SS_ID', @$_GET['season_id']);
 define('BILIROAMING_VERSION', @$_SERVER['HTTP_X_FROM_BILIROAMING']);
-if (@$_GET['area'] == '' && BILIROAMING_VERSION == '') {
-	define('AREA', 'noarea');
-}else if (@$_GET['area'] == '') {
+if (BILIROAMING_VERSION == '') {
+	if (BILIROAMING == 1 && WEB_ON == 0) { //仅限漫游用户，且未开放web脚本
+		exit(BLOCK_RETURN);
+	}else if (@$_GET['area'] == '' || @$_GET['area'] == 'false') { //web脚本
+		define('AREA', 'noarea');
+	}
+}else if (@$_GET['area'] == '') { //适配老漫游版本
 	define('AREA', 'oldversion');
 }else{
 	define('AREA', @$_GET['area']);

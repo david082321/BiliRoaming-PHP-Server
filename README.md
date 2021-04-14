@@ -6,7 +6,7 @@
 
 ## 下载：
 
-* [下载(GitHub) v2.9.18](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.18.zip)
+* [下载(GitHub) v2.9.18-beta1](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.18-beta1.zip)
 
 
 ## 用法：
@@ -67,6 +67,8 @@
 * 配置 config.php 的缓存设置
 
 * 导入 cache.sql
+
+* ！！！重要！！！由于网页脚本的更新，为作缓存区分，更新了数据库字段，请务必更新数据库。
 
 ## (非必要步骤，实验性) 支持网页版油猴脚本
 
