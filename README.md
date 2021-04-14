@@ -6,8 +6,9 @@
 
 ## 下载：
 
-* [下载(GitHub) v2.9.18-beta1](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v2.9.18-beta1.zip)
+* [下载(GitHub) v3.0.0](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v3.0.0.zip)
 
+* ！！！重要！！！由于网页脚本的更新，为作缓存区分，v3.0.0 更新了数据库字段。从 1.x 或 2.x 升级的用户，请务必更新数据库。
 
 ## 用法：
 
@@ -68,7 +69,7 @@
 
 * 导入 cache.sql
 
-* ！！！重要！！！由于网页脚本的更新，为作缓存区分，更新了数据库字段，请务必更新数据库。
+* ！！！重要！！！由于网页脚本的更新，为作缓存区分，v3.0.0 更新了数据库字段。从 1.x 或 2.x 升级的用户，请务必更新数据库。
 
 ## (非必要步骤，实验性) 支持网页版油猴脚本
 
