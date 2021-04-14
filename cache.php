@@ -89,7 +89,7 @@ function write_cache() {
 		$dbh -> exec($sql);
 	// 缓存地区错误
 	} else if (in_array(AREA, $SERVER_AREA)) {
-		$sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cache_tpye`,`cid`,`ep_id`,`cache`) VALUES ('9999999999','".AREA."','".$member_type."','".$cache_type."','".CID."','".EP_ID."','$output')";
+		$sql ="INSERT INTO `cache` (`add_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('9999999999','".AREA."','".$member_type."','".$cache_type."','".CID."','".EP_ID."','$output')";
 		if ($code == "-10403") {// 10403 地区错误
 			$dbh -> exec($sql);
 		} else if ($code == "-404" && AREA == "th") {// 404 泰版地区错误
