@@ -1,4 +1,8 @@
 <?php
+// 防止外部破解
+if(!defined('SYSTEM')) {exit(BLOCK_RETURN);} // 防止外部破解，此行勿改
+
+
 // 封锁
 define('BLOCK_TYPE','blacklist'); // 封锁类型：blacklist 黑名单, whitelist 本地白名单, 不是填写前面两个就是不封锁
 define('REPLACE_TYPE', 'tom'); // 是否替换视频(仅黑/白名单时生效)。hlw 葫芦娃, tom 猫和老鼠, xyy 喜羊羊, all 随机
@@ -67,46 +71,11 @@ $ips=array('172.0.0.1','192.168.0.1','1.2.3.4');
 $hosts=array('workers.dev','workers.dev');
 
 // 其他
-define('WELCOME', 'Success!'); //首页欢迎语
+define('WELCOME', "Success!<br>Power by BiliRoaming-PHP-Server. Ver".VERSION); //首页欢迎语
 define('BLOCK_RETURN', '{"code":-10403,"message":"抱歉您已被封锁"}'); //封锁返回内容
 
-// 参数，不懂就别改
+// 这个参数，不懂就别改
 define('APPKEY', '1d8b6e7d45233436');
 define('APPSEC', '560c52ccd288fed045859ed18bffd973');
-define('ACCESS_KEY', @$_GET['access_key']);
-define('CID', @$_GET['cid']);
-define('EP_ID', @$_GET['ep_id']);
-define('SS_ID', @$_GET['season_id']);
-define('BILIROAMING_VERSION', @$_SERVER['HTTP_X_FROM_BILIROAMING']);
-if (BILIROAMING_VERSION == '') {
-	if (BILIROAMING == 1 && WEB_ON == 0) { //仅限漫游用户，且未开放web脚本
-		exit(BLOCK_RETURN);
-	}else if (@$_GET['area'] == '' || @$_GET['area'] == 'false') { //web脚本
-		define('AREA', 'noarea');
-	}
-}else if (@$_GET['area'] == '') { //适配老漫游版本
-	define('AREA', 'oldversion');
-}else{
-	define('AREA', @$_GET['area']);
-}
-if (@$_GET['ts'] == '') {
-	define('TS', time());
-}else{
-	define('TS', @$_GET['ts']);
-}
-$baned = 0;
-if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
-	$baned = 1;
-}
-if (in_array(CID, $cid_list) && BAN_CID == 1) {
-	$baned = 1;
-}
-if (in_array(AREA, $BAN_SERVER_AREA)) {
-	$baned = 1;
-	exit(BLOCK_RETURN);
-}
-// 防止外部破解
-if(!defined('SYSTEM')) {
-	exit(BLOCK_RETURN);
-}
+
 ?>

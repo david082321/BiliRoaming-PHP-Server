@@ -1,9 +1,11 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '3.0.0');
+define('VERSION', '3.0.1');
 // 加载配置
 include ("config.php");
+// 处理用户传入参数
+include ("process.php");
 // 加上json的Header
 header('Content-Type: application/json; charset=utf-8');
 // 加上web的Header
