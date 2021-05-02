@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '3.0.1');
+define('VERSION', '3.0.2');
 // 加载配置
 include ("config.php");
 // 处理用户传入参数
@@ -27,6 +27,7 @@ if ($path == "/pgc/player/web/playurl") {
 }
 
 $query = $_SERVER['QUERY_STRING'];
+$query = str_replace("/&","",$query);
 if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/intl/gateway/v2/ogv/view/app/season") {
 	$host = CUSTOM_HOST_TH;
 } elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle") {
