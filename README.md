@@ -6,7 +6,7 @@
 
 ## 下载：
 
-* [下载(GitHub) v3.0.2](https://github.com/david082321/BiliRoaming-PHP-Server/releases/download/v3.0.2/Server_v3.0.2.zip)
+* [下载最新版](https://github.com/david082321/BiliRoaming-PHP-Server/releases/latest)
 
 * [下载历史版本](https://github.com/david082321/BiliRoaming-PHP-Server/releases)
 
