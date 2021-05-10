@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '3.0.3');
+define('VERSION', '3.0.4');
 // 加载配置
 include ("config.php");
 // 处理用户传入参数
@@ -126,13 +126,16 @@ if (SAVE_CACHE == 1 && $playurl == 1) {
 
 function get_webpage($url,$host="",$ip="") {
 	$ch = curl_init();
-	curl_setopt($ch,CURLOPT_URL,$url);
-	if (IP_RESOLVE == 1) { // 指定ip回源
-		curl_setopt($ch,CURLOPT_RESOLVE,[$host.":443:".$ip]);
+	curl_setopt($ch, CURLOPT_URL, $url);
+	if (SOCKS5_PROXY == 1) { // 指定socks5
+		curl_setopt($ch, CURLOPT_PROXY, SOCKS5_PROXY_IP);
 	}
-	curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
-	curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-	curl_setopt($ch,CURLOPT_HTTPHEADER, array(
+	if (IP_RESOLVE == 1) { // 指定ip回源
+		curl_setopt($ch, CURLOPT_RESOLVE,[$host.":443:".$ip]);
+	}
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 		'User-Agent: '.@$_SERVER["HTTP_USER_AGENT"]
 	));
 	$output = curl_exec($ch);
