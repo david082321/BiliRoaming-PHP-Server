@@ -1,9 +1,11 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '3.0.0');
+define('VERSION', '3.0.3');
 // 加载配置
 include ("config.php");
+// 处理用户传入参数
+include ("process.php");
 // 加上json的Header
 header('Content-Type: application/json; charset=utf-8');
 // 加上web的Header
@@ -21,12 +23,16 @@ $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
 // 判断接口区分app和web缓存
 $cache_type = 'app';//默认类型app
 if ($path == "/pgc/player/web/playurl") {
-    $cache_type = 'web';
+	$cache_type = 'web';
 }
 
 $query = $_SERVER['QUERY_STRING'];
-if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/intl/gateway/v2/ogv/view/app/season") {
+$query = str_replace("/&","",$query);
+if ($path == "/intl/gateway/v2/ogv/playurl") {
 	$host = CUSTOM_HOST_TH;
+} elseif ($path == "/intl/gateway/v2/ogv/view/app/season") {
+	$host = CUSTOM_HOST_TH;
+	$query = "appkey=7d089525d3611b1c&autoplay=0&build=1052002&c_locale=&channel=master&lang=&locale=zh_SG&mobi_app=bstar_a&platform=android&s_locale=zh_SG&season_id=".SS_ID."&sim_code=&spmid=&ts=".TS;
 } elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle") {
 	$host = CUSTOM_HOST_SUB;
 } elseif ($path == "/pgc/player/api/playurl" || $path == "/pgc/player/web/playurl") {

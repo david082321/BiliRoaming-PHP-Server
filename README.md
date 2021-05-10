@@ -6,7 +6,9 @@
 
 ## 下载：
 
-* [下载(GitHub) v3.0.0](https://github.com/david082321/BiliRoaming-PHP-Server/raw/main/Server_v3.0.0.zip)
+* [下载最新版](https://github.com/david082321/BiliRoaming-PHP-Server/releases/latest)
+
+* [下载历史版本](https://github.com/david082321/BiliRoaming-PHP-Server/releases)
 
 * ！！！重要！！！由于网页脚本的更新，为作缓存区分，v3.0.0 更新了数据库字段。从 1.x 或 2.x 升级的用户，请务必更新数据库。
 
@@ -123,14 +125,16 @@
 
 ├─cache.sql (导入MySQL用的)[仅缓存使用]
 
-├─config.php (用户设置)
+├─config.php (设置本程序各种参数) ＜──参数设置在这里
 
 ├─index.php (接受上面index.php) ＜──主要入口在这里
 
 ├─log.php (缓存用户)[仅缓存使用]
 
+├─process.php (处理用户传入参数)
+
 ├─replace.php (替换视频)
 
 ├─sign.php (重签名)[未公开源码]
 
-└─resign.php (替换access_key)[未公开源码]
+└─resign.php (替换访问密钥)[未公开源码]
