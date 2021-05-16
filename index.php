@@ -128,6 +128,7 @@ function get_webpage($url,$host="",$ip="") {
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
 	if (SOCKS5_PROXY == 1) { // 指定socks5
+		curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
 		curl_setopt($ch, CURLOPT_PROXY, SOCKS5_PROXY_IP);
 	}
 	if (IP_RESOLVE == 1) { // 指定ip回源
