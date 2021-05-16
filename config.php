@@ -67,7 +67,7 @@ define('CUSTOM_HOST_SUB', 'https://app.global.bilibili.com'); //泰区 搜索字
 
 // 指定socks5
 define('SOCKS5_PROXY', 0); // 开启功能。0 否, 1 是
-define('SOCKS5_PROXY_IP', "http://127.0.0.1:1234"); // 自行修改地址
+define('SOCKS5_PROXY_IP', "127.0.0.1:1234"); // 自行修改地址
 
 // 指定ip回源
 define('IP_RESOLVE', 0); // 开启功能。0 否, 1 是
