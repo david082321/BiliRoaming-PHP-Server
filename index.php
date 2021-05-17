@@ -127,9 +127,9 @@ if (SAVE_CACHE == 1 && $playurl == 1) {
 function get_webpage($url,$host="",$ip="") {
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
-	if (SOCKS5_PROXY == 1) { // 指定socks5
-		curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
-		curl_setopt($ch, CURLOPT_PROXY, SOCKS5_PROXY_IP);
+	if (PROXY_ON == 1) { // 指定代理
+		curl_setopt($ch, CURLOPT_PROXYTYPE, PROXY_TYPE);
+		curl_setopt($ch, CURLOPT_PROXY, PROXY_IP);
 	}
 	if (IP_RESOLVE == 1) { // 指定ip回源
 		curl_setopt($ch, CURLOPT_RESOLVE,[$host.":443:".$ip]);

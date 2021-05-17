@@ -21,7 +21,7 @@ function replace() {
 	}else if (REPLACE_TYPE == "xyy") {
 		$url = 'https://bili.tuturu.top/xyyjson.php?type='.$type;
 	}else{
-		$urls = array('https://black.qimo.ink/hlw.php?type=','https://black.qimo.ink/TandJ.php?type=','https://bili.tuturu.top/xyyjson.php?type=');
+		$urls = array('https://bili.tuturu.top/txbb.php?type=','https://black.qimo.ink/TandJ.php?type=','https://bili.tuturu.top/xyyjson.php?type=');
 		$url = $urls[array_rand($urls)].$type;
 	}
 	$output = get_webpage($url);
