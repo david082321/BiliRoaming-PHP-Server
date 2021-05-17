@@ -14,8 +14,8 @@ function replace() {
 		$type = "web";
 	}
 
-	if (REPLACE_TYPE == "hlw") {
-		$url = 'https://black.qimo.ink/hlw.php?type='.$type;
+	if (REPLACE_TYPE == "txbb") {
+		$url = 'https://bili.tuturu.top/txbb.php?type='.$type;
 	}else if (REPLACE_TYPE == "tom") {
 		$url = 'https://black.qimo.ink/TandJ.php?type='.$type;
 	}else if (REPLACE_TYPE == "xyy") {
