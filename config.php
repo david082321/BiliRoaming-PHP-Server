@@ -5,7 +5,7 @@ if(!defined('SYSTEM')) {exit(BLOCK_RETURN);} // 防止外部破解，此行勿�
 
 // 封锁
 define('BLOCK_TYPE','blacklist'); // 封锁类型：blacklist 黑名单, whitelist 本地白名单, 不是填写前面两个就是不封锁
-define('REPLACE_TYPE', 'tom'); // 是否替换视频(仅黑/白名单时生效)。hlw 葫芦娃, tom 猫和老鼠, xyy 喜羊羊, all 随机
+define('REPLACE_TYPE', 'tom'); // 是否替换视频(仅黑/白名单时生效)。txbb 天线宝宝, tom 猫和老鼠, xyy 喜羊羊, all 随机
 define('NEED_LOGIN', 0); //是否要登录用户才能用。0 否, 1 是
 define('BILIROAMING', 1); //是否要用哔哩漫游才能使用。0 否, 1 是
 define('WEB_ON', 0);//是否开启web接口 0 否, 1 是 目前Web接口不受哔哩漫游请求头影响，且不受服务器锁区影响（待更新）
@@ -66,8 +66,10 @@ define('CUSTOM_HOST_SUB', 'https://app.global.bilibili.com'); //泰区 搜索字
 // define('CUSTOM_HOST_TW', $tw_api[$tw_sum]); //随机调用TW 启用要注释上方默认api
 
 // 指定socks5
-define('SOCKS5_PROXY', 0); // 开启功能。0 否, 1 是
-define('SOCKS5_PROXY_IP', "http://127.0.0.1:1234"); // 自行修改地址
+define('PROXY_ON', 0); // 开启功能。0 否, 1 是
+//define('PROXYTYPE', "CURLPROXY_HTTP"); // 使用HTTP代理
+define('PROXY_TYPE', "CURLPROXY_SOCKS5"); // 使用SOCKS5代理
+define('PROXY_IP', "127.0.0.1:1234"); // 自行修改地址
 
 // 指定ip回源
 define('IP_RESOLVE', 0); // 开启功能。0 否, 1 是
