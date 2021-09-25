@@ -117,6 +117,12 @@
 
 │　└─web/playurl/index.php (转发到根目录的 index.php 处理)
 
+├─x/
+
+│　├─v2/search/type/index.php (转发到根目录的 index.php 处理)
+
+│　└─web-interface/search/type/index.php (转发到根目录的 index.php 处理)
+
 ├─auth.php (鉴权)
 
 ├─cache.php (缓存)[仅缓存使用]
