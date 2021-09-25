@@ -38,9 +38,9 @@ if ($path == "/intl/gateway/v2/ogv/playurl") {
 } elseif ($path == "/pgc/player/api/playurl" || $path == "/pgc/player/web/playurl" || $path == "/x/web-interface/search/type") {
 	if (AREA=="cn") {
 		$host = CUSTOM_HOST_CN;
-	} else if (AREA=="hk") {
+	} elseif (AREA=="hk") {
 		$host = CUSTOM_HOST_HK;
-	} else if (AREA=="tw") {
+	} elseif (AREA=="tw") {
 		$host = CUSTOM_HOST_TW;
 	} else {
 		$host = CUSTOM_HOST_DEFAULT;
@@ -75,9 +75,11 @@ if (BILIROAMING_VERSION == "" && BILIROAMING == 1 && $path != "/pgc/player/web/p
 }
 // 判断 playurl
 $playurl = 0;
-if ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/app/subtitle" && $path != "/intl/gateway/v2/ogv/view/app/season") {
+if ($path == "/x/v2/search/type" || $path == "/x/web-interface/search/type") {
+	$playurl = 3;
+} elseif ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/app/subtitle" && $path != "/intl/gateway/v2/ogv/view/app/season") {
 	$playurl = 1;
-} else if ($path == "/intl/gateway/v2/ogv/view/app/season") {
+} elseif ($path == "/intl/gateway/v2/ogv/view/app/season") {
 	$playurl = 2;
 }
 // 鉴权
@@ -98,7 +100,7 @@ if (SAVE_CACHE == 1 && $playurl == 1) {
 		exit($cache);
 	}
 // 获取缓存 (东南亚season)
-} else if (SAVE_CACHE == 1 && $playurl == 2) {
+} elseif (SAVE_CACHE == 1 && $playurl == 2) {
 	include ("cache_season.php");
 	$cache = get_cache_season();
 	if ($cache != "") {
