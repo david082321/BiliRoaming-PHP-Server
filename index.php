@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '3.0.5');
+define('VERSION', '3.0.6');
 // 加载配置
 include ("config.php");
 // 处理用户传入参数
@@ -35,7 +35,7 @@ if ($path == "/intl/gateway/v2/ogv/playurl") {
 	$query = "appkey=7d089525d3611b1c&autoplay=0&build=1052002&c_locale=&channel=master&lang=&locale=zh_SG&mobi_app=bstar_a&platform=android&s_locale=zh_SG&season_id=".SS_ID."&sim_code=&spmid=&ts=".TS;
 } elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle") {
 	$host = CUSTOM_HOST_SUB;
-} elseif ($path == "/pgc/player/api/playurl" || $path == "/pgc/player/web/playurl") {
+} elseif ($path == "/pgc/player/api/playurl" || $path == "/pgc/player/web/playurl" || $path == "/x/v2/search/type" || $path == "/x/web-interface/search/type") {
 	if (AREA=="cn") {
 		$host = CUSTOM_HOST_CN;
 	} else if (AREA=="hk") {
@@ -58,11 +58,11 @@ if ($path == "/intl/gateway/v2/ogv/playurl") {
 	exit(WELCOME);
 }
 // 判断服务器锁区 及 web接口
-if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/pgc/player/api/playurl") {
+if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/pgc/player/api/playurl" || $path == "/x/v2/search/type") {
 	if (WEB_ON == 0 && LOCK_AREA == 1 && !empty($SERVER_AREA) && !in_array(AREA, $SERVER_AREA)) {
 		exit(BLOCK_RETURN);
 	}
-}elseif ($path == "/pgc/player/web/playurl") {
+}elseif ($path == "/pgc/player/web/playurl" || $path == "/x/web-interface/search/type") {
 	if(WEB_ON == 0) {
 		exit(BLOCK_RETURN);
 	}
