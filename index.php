@@ -47,7 +47,7 @@ if ($path == "/intl/gateway/v2/ogv/playurl") {
 	}
 } elseif ($path == "/x/web-interface/search/type") {
 	$host = CUSTOM_HOST_SEARCH;
-} else if (WEB_ON == 1) {
+} elseif (WEB_ON == 1) {
 	if (CID == "" && EP_ID == "") {
 		// 欢迎语
 		exit(WELCOME);
@@ -64,8 +64,8 @@ if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/pgc/player/api/playurl
 	if (WEB_ON == 0 && LOCK_AREA == 1 && !empty($SERVER_AREA) && !in_array(AREA, $SERVER_AREA)) {
 		exit(BLOCK_RETURN);
 	}
-}elseif ($path == "/pgc/player/web/playurl" || $path == "/x/web-interface/search/type") {
-	if(WEB_ON == 0) {
+} elseif ($path == "/pgc/player/web/playurl" || $path == "/x/web-interface/search/type") {
+	if (WEB_ON == 0) {
 		exit(BLOCK_RETURN);
 	}
 }
@@ -122,7 +122,7 @@ print($output);
 // 写入缓存
 if (SAVE_CACHE == 1 && $playurl == 1) {
 	write_cache(); // 写入playurl
-} else if (SAVE_CACHE == 1 && $playurl == 2) {
+} elseif (SAVE_CACHE == 1 && $playurl == 2) {
 	write_cache_season(); //写入东南亚season
 }
 
