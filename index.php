@@ -58,11 +58,11 @@ if ($path == "/intl/gateway/v2/ogv/playurl") {
 	exit(WELCOME);
 }
 // 判断服务器锁区 及 web接口
-if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/pgc/player/api/playurl" || $path == "/x/v2/search/type" || $path == "/x/web-interface/search/type") {
+if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/pgc/player/api/playurl" || $path == "/x/v2/search/type") {
 	if (WEB_ON == 0 && LOCK_AREA == 1 && !empty($SERVER_AREA) && !in_array(AREA, $SERVER_AREA)) {
 		exit(BLOCK_RETURN);
 	}
-}elseif ($path == "/pgc/player/web/playurl") {
+}elseif ($path == "/pgc/player/web/playurl" || $path == "/x/web-interface/search/type") {
 	if(WEB_ON == 0) {
 		exit(BLOCK_RETURN);
 	}
