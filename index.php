@@ -35,7 +35,7 @@ if ($path == "/intl/gateway/v2/ogv/playurl") {
 	$query = "appkey=7d089525d3611b1c&autoplay=0&build=1052002&c_locale=&channel=master&lang=&locale=zh_SG&mobi_app=bstar_a&platform=android&s_locale=zh_SG&season_id=".SS_ID."&sim_code=&spmid=&ts=".TS;
 } elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle") {
 	$host = CUSTOM_HOST_SUB;
-} elseif ($path == "/pgc/player/api/playurl" || $path == "/pgc/player/web/playurl" || $path == "/x/v2/search/type") {
+} elseif ($path == "/pgc/player/api/playurl" || $path == "/pgc/player/web/playurl" || $path == "/x/web-interface/search/type") {
 	if (AREA=="cn") {
 		$host = CUSTOM_HOST_CN;
 	} else if (AREA=="hk") {
@@ -45,7 +45,7 @@ if ($path == "/intl/gateway/v2/ogv/playurl") {
 	} else {
 		$host = CUSTOM_HOST_DEFAULT;
 	}
-} elseif ($path == "/x/web-interface/search/type") {
+} elseif ($path == "/x/v2/search/type") {
 	$host = CUSTOM_HOST_SEARCH;
 } elseif (WEB_ON == 1) {
 	if (CID == "" && EP_ID == "") {
