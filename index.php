@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '3.0.5');
+define('VERSION', '3.0.6');
 // 加载配置
 include ("config.php");
 // 处理用户传入参数
