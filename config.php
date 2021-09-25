@@ -54,6 +54,7 @@ define('CUSTOM_HOST_DEFAULT', 'https://api.bilibili.com'); // 兼容未发送 ar
 define('CUSTOM_HOST_CN', 'https://api.bilibili.com'); // CN 解析api
 define('CUSTOM_HOST_HK', 'https://api.bilibili.com'); // HK 解析api
 define('CUSTOM_HOST_TW', 'https://api.bilibili.com'); // TW 解析api
+define('CUSTOM_HOST_SEARCH', 'https://app.bilibili.com'); // 搜索解析api
 define('CUSTOM_HOST_TH', 'https://api.global.bilibili.com'); //泰区 解析api
 define('CUSTOM_HOST_SUB', 'https://app.global.bilibili.com'); //泰区 搜索字幕用api
 
