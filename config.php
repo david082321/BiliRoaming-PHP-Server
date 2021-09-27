@@ -49,11 +49,17 @@ $SERVER_AREA = array(); // 空白，不锁区
 // 指定锁区（不论上面怎么设置，只要填这个，可以锁定指定的地区）
 $BAN_SERVER_AREA = array(); // 空白，不锁区
 
-// API相关
+// API相关(视频服务器)
 define('CUSTOM_HOST_DEFAULT', 'https://api.bilibili.com'); // 兼容未发送 area 参数的其他脚本
 define('CUSTOM_HOST_CN', 'https://api.bilibili.com'); // CN 解析api
 define('CUSTOM_HOST_HK', 'https://api.bilibili.com'); // HK 解析api
 define('CUSTOM_HOST_TW', 'https://api.bilibili.com'); // TW 解析api
+// API相关(搜索服务器)
+define('CUSTOM_HOST_SEARCH_DEFAULT', 'https://app.bilibili.com'); // 兼容未发送 area 参数的其他脚本
+define('CUSTOM_HOST_SEARCH_CN', 'https://app.bilibili.com'); // CN 搜索api
+define('CUSTOM_HOST_SEARCH_HK', 'https://app.bilibili.com'); // HK 搜索api
+define('CUSTOM_HOST_SEARCH_TW', 'https://app.bilibili.com'); // TW 搜索api
+// API相关(东南亚服务器)
 define('CUSTOM_HOST_TH', 'https://api.global.bilibili.com'); //泰区 解析api
 define('CUSTOM_HOST_SUB', 'https://app.global.bilibili.com'); //泰区 搜索字幕用api
 
