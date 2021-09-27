@@ -1,7 +1,7 @@
 <?php
 // 防止外部破解
 define('SYSTEM', TRUE);
-define('VERSION', '3.0.6');
+define('VERSION', '3.0.7');
 // 加载配置
 include ("config.php");
 // 处理用户传入参数
@@ -46,7 +46,15 @@ if ($path == "/intl/gateway/v2/ogv/playurl") {
 		$host = CUSTOM_HOST_DEFAULT;
 	}
 } elseif ($path == "/x/v2/search/type") {
-	$host = CUSTOM_HOST_SEARCH;
+	if (AREA=="cn") {
+		$host = CUSTOM_HOST_SEARCH_CN;
+	} elseif (AREA=="hk") {
+		$host = CUSTOM_HOST_SEARCH_HK;
+	} elseif (AREA=="tw") {
+		$host = CUSTOM_HOST_SEARCH_TW;
+	} else {
+		$host = CUSTOM_HOST_SEARCH_DEFAULT;
+	}
 } elseif (WEB_ON == 1) {
 	if (CID == "" && EP_ID == "") {
 		// 欢迎语
