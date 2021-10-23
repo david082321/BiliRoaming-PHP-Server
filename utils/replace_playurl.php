@@ -1,28 +1,38 @@
-<?php
+﻿<?php
 // 防止外部破解
 if(!defined('SYSTEM')) {exit(BLOCK_RETURN);}
 
-function replace() {
+function replace_playurl() {
 	global $host;
 	global $path;
 	// 判断来源
-	if ($path == "/intl/gateway/v2/ogv/playurl") {
-		$type = "intl";
-	}elseif ($path == "/pgc/player/api/playurl") {
-		$type = "main";
-	}elseif ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/app/subtitle") {
-		$type = "web";
+	switch ($path) {
+		case "/pgc/player/api/playurl": //APP playurl
+			$type = "main";
+			break;
+		case "/intl/gateway/v2/ogv/playurl": //东南亚APP playurl
+			$type = "intl";
+			break;
+		case "/pgc/player/web/playurl": //WEB playurl
+			$type = "web";
+			break;
+		default:
+			$type = "web";
 	}
 
-	if (REPLACE_TYPE == "txbb") {
-		$url = 'https://bili.tuturu.top/txbb.php?type='.$type;
-	}else if (REPLACE_TYPE == "tom") {
-		$url = 'https://black.qimo.ink/TandJ.php?type='.$type;
-	}else if (REPLACE_TYPE == "xyy") {
-		$url = 'https://bili.tuturu.top/xyyjson.php?type='.$type;
-	}else{
-		$urls = array('https://bili.tuturu.top/txbb.php?type=','https://black.qimo.ink/TandJ.php?type=','https://bili.tuturu.top/xyyjson.php?type=');
-		$url = $urls[array_rand($urls)].$type;
+	switch (REPLACE_TYPE) {
+		case "txbb":
+			$url = 'https://bili.tuturu.top/txbb.php?type='.$type;
+			break;
+		case "tom":
+			$url = 'https://black.qimo.ink/TandJ.php?type='.$type;
+			break;
+		case "xyy":
+			$url = 'https://bili.tuturu.top/xyyjson.php?type='.$type;
+			break;
+		default:
+			$urls = array('https://bili.tuturu.top/txbb.php?type=','https://black.qimo.ink/TandJ.php?type=','https://bili.tuturu.top/xyyjson.php?type=');
+			$url = $urls[array_rand($urls)].$type;
 	}
 	$output = get_webpage($url);
 
@@ -63,7 +73,7 @@ function replace() {
 			$array2['data']['video_info']['dash_audio'][$j]['backup_url'] = $a_backup_url;
 			$array2['data']['video_info']['dash_audio'][$j]['bandwidth'] = $a_bandwidth;
 		}
-	}elseif ($type == "main") {
+	} elseif ($type == "main") {
 		$array2 = json_decode($output2, true);
 		$array2['timelength'] = $timelength;
 

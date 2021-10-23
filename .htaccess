@@ -5,5 +5,7 @@
 	RewriteRule intl/gateway/v2/ogv/playurl intl/gateway/v2/ogv/playurl/index.php
 	RewriteRule intl/gateway/v2/ogv/view/app/season intl/gateway/v2/ogv/view/app/season/index.php
 	RewriteRule intl/gateway/v2/app/search/type intl/gateway/v2/app/search/type/index.php
-	RewriteRule intl/gateway/v2/app/subtitle intl/gateway/v2/app/subtitle/index.php
+	RewriteRule intl/gateway/v2/app/subtitle intl/gateway/v2/app/subtitle/index.php	
+	RewriteRule x/v2/search/type x/v2/search/type/index.php
+	RewriteRule x/web-interface/search/type x/web-interface/search/type/index.php
 </IfModule>

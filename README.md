@@ -61,6 +61,10 @@
 
     rewrite "^/intl/gateway/v2/ogv/view/app/season?(.*)$" /intl/gateway/v2/ogv/view/app/season/index.php?$1 last;
 
+    rewrite "^/x/v2/search/type?(.*)$" /x/v2/search/type/index.php?$1 last;
+
+    rewrite "^/x/web-interface/search/type?(.*)$" /x/web-interface/search/type/index.php?$1 last;
+
     }
 
 ## (非必要步骤) 缓存
@@ -71,7 +75,7 @@
 
 * 导入 cache.sql
 
-* ！！！重要！！！由于网页脚本的更新，为作缓存区分，v3.0.0 更新了数据库字段。从 1.x 或 2.x 升级的用户，请务必更新数据库。
+* ！！！重要！！！v4.0.0 更新了数据库字段。从 1.x 或 2.x 或 3.x 升级的用户，请务必更新数据库。
 
 ## (非必要步骤，实验性) 支持网页版油猴脚本
 
@@ -101,46 +105,62 @@
 
 │　├─app
 
-│　│　├─search/type/index.php (转发到根目录的 index.php 处理)
+│　│　├─search/type/index.php (东南亚APP 搜索)
 
-│　│　└─subtitle/index.php (转发到根目录的 index.php 处理)
+│　│　└─subtitle/index.php (东南亚APP 字幕)
 
 │　└─ogv
 
-│　　　├─playurl/index.php (转发到根目录的 index.php 处理)
+│　　　├─playurl/index.php (东南亚APP playurl)
 
-│　　　└─view/app/season/index.php (转发到根目录的 index.php 处理)
+│　　　└─view/app/season/index.php (东南亚APP season)
 
 ├─pgc/player/
 
-│　├─api/playurl/index.php (转发到根目录的 index.php 处理)
+│　├─api/playurl/index.php (APP playurl)
 
-│　└─web/playurl/index.php (转发到根目录的 index.php 处理)
+│　└─web/playurl/index.php (WEB playurl)
 
 ├─x/
 
-│　├─v2/search/type/index.php (转发到根目录的 index.php 处理)
+│　├─v2/search/type/index.php (APP 搜索)
 
-│　└─web-interface/search/type/index.php (转发到根目录的 index.php 处理)
+│　└─web-interface/search/type/index.php (WEB 搜索)
 
-├─auth.php (鉴权)
+├─utils/
 
-├─cache.php (缓存)[仅缓存使用]
+│　├─auth.php (鉴权)
 
-├─cache_season.php (缓存泰国/东南亚season)[仅缓存使用]
+│　├─cache.php (缓存playurl判断是否为大会员)[仅缓存使用]
+
+│　├─fuck_search.php (在搜索中添加提示)[未公开]
+
+│　├─fuck_sub.php (添加东南亚番剧字幕)[未公开]
+
+│　├─functions.php (功能函数合集)
+
+│　├─functions_cache.php (功能函数合集)[仅缓存使用]
+
+│　├─lock_area.php (锁区、web接口判断)
+
+│　├─log.php (缓存用户)[仅缓存使用]
+
+│　├─process.php (处理用户传入参数)
+
+│　├─refresh_token.php (自动刷新访问密钥)[未公开]
+
+│　├─replace.php (修改返回内容)
+
+│　├─replace_playurl.php (替换视频)
+
+│　├─resign.php (替换访问密钥)[未公开]
+
+│　└─version.php (版本信息、Header)
 
 ├─cache.sql (导入MySQL用的)[仅缓存使用]
 
 ├─config.php (设置本程序各种参数) ＜──参数设置在这里
 
-├─index.php (接受上面index.php) ＜──主要入口在这里
+├─hello.php (默认欢迎页面)
 
-├─log.php (缓存用户)[仅缓存使用]
-
-├─process.php (处理用户传入参数)
-
-├─replace.php (替换视频)
-
-├─sign.php (重签名)[未公开源码]
-
-└─resign.php (替换访问密钥)[未公开源码]
+└─index.php (WEB playurl、显示欢迎页)
