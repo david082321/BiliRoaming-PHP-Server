@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // 分类
 $type = 1;
 $cache_type = "web";
@@ -24,7 +24,7 @@ if ((CID != "" || EP_ID != "") && WEB_ON == 1) {
 	// 欢迎语
 	header('Content-Type: text/html; charset=utf-8');
 	if (WELCOME=="file"){
-		print(file_get_contents(WELCOME_FILE));
+		include(WELCOME_FILE);
 		exit();
 	} elseif (WELCOME=="text"){
 		exit(WELCOME_TEXT);

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // 防止外部破解
 if(!defined('SYSTEM')) {exit(BLOCK_RETURN);}
 

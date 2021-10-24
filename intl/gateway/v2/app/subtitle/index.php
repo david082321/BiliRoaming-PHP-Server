@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // 分类
 $type = 3;
 $cache_type = "app";

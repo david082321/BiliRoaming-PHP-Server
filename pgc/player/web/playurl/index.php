@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // 分类
 $type = 1;
 $cache_type = "web";
