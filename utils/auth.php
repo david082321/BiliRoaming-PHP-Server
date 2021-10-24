@@ -3,6 +3,11 @@
 if(!defined('SYSTEM')) {exit(BLOCK_RETURN);}
 
 if (ACCESS_KEY != "") { // access_key 存在
+	if (SAVE_CACHE == 1) { // 是否开启缓存
+		$uid = get_uid_fromsql(); // 从数据库获取
+	} else {
+		$uid = get_uid(); // 从API获取
+	}
 	if (BLOCK_TYPE == "blacklist") { // 黑名单鉴权
 		$url = "https://black.qimo.ink/?access_key=".ACCESS_KEY;
 		$out = get_webpage($url);
@@ -16,11 +21,6 @@ if (ACCESS_KEY != "") { // access_key 存在
 			}
 		}
 	} else if (BLOCK_TYPE == "whitelist") { // 白名单鉴权
-		if (SAVE_CACHE == 1 && $cache_type != "web") { // 是否开启缓存
-			$uid = get_uid_fromsql(); // 从数据库获取
-		} else {
-			$uid = get_uid(); // 从API获取
-		}
 		// 是否在白名单内
 		if (!in_array($uid, $WHITELIST) || $baned == 1 || $uid == 0) {
 			if (REPLACE_TYPE == "hlw" || REPLACE_TYPE == "tom" || REPLACE_TYPE == "xyy" || REPLACE_TYPE == "all") { // 替换成葫芦娃、猫和老鼠、喜羊羊、肥肠抱歉

@@ -14,6 +14,7 @@ function get_webpage($url,$host="",$ip="") {
 	}
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 		"User-Agent: ".@$_SERVER["HTTP_USER_AGENT"]
 	));
