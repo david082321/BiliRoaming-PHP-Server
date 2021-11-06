@@ -28,41 +28,46 @@ function refresh_userinfo() {
 	$uid = $out[0];
 	$due = $out[1];
 	if ($uid != "0") {
-		$sql = " UPDATE `keys` SET `add_time` = now(), `uid` = '".$uid."', `due_date` = '".$due."' WHERE `keys`.`access_key` = '".ACCESS_KEY."';";
+		$sql = " UPDATE `keys` SET `add_time` = now(), `uid` = '".$uid."', `due_date` = '".$due."', `expired` = '0' WHERE `keys`.`access_key` = '".ACCESS_KEY."';";
 		$dbh -> exec($sql);
 		if ((int)$due > time()*1000) {
 			$member_type = 2; // 大会员
 		} else {
 			$member_type = 1; // 不是大会员
 		}
+		$expired = 0;
 	} else {
 		$sql = " UPDATE `keys` SET `expired` = '1' WHERE `keys`.`access_key` = '".ACCESS_KEY."';";
 		$dbh -> exec($sql);
 		$member_type = 0; //未登录
+		$uid = 0;
+		$due = 0;
+		$expired = 1;
 	}
-	return $uid;
+	return [$uid, $due, $expired];
 }
 
 // 从缓存获取用户信息
 function get_userinfo_fromsql() {
 	global $dbh;
 	global $member_type;
-	$sqlco = "SELECT `uid`,`add_time`,`expired` FROM `keys` WHERE `access_key` = '".ACCESS_KEY."'";
+	$sqlco = "SELECT `uid`,`add_time`,`due_date`,`expired` FROM `keys` WHERE `access_key` = '".ACCESS_KEY."'";
 	$cres = $dbh -> query($sqlco);
 	$vnum = $cres -> fetch();
-	if (!$vnum){
+	if (!$vnum) {
 		$member_type = 0; //未登录
-		return ["0","0","0"];
+		return ["0","0","0","0"];
 	}
-	$out[0] = $vnum['uid'];
-	$out[1] = $vnum['add_time'];
-	$out[2] = $vnum['expired'];
-	if ((int)$out[2] > time()*1000) {
+	$uid = $vnum['uid'];
+	$add_time = $vnum['add_time'];
+	$due = $vnum['due_date'];
+	$expired = $vnum['expired'];
+	if ((int)$due > time()*1000) {
 		$member_type = 2; // 大会员
 	} else {
 		$member_type = 1; // 不是大会员
 	}
-	return $out;
+	return [$uid, $add_time, $due, $expired];
 }
 
 // 获取playurl缓存

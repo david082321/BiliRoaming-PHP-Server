@@ -23,7 +23,6 @@ if (ACCESS_KEY != "") {
 	include(ROOT_PATH."utils/resign.php"); // 替换access_key
 }
 if (SAVE_CACHE == 1) {
-	include (ROOT_PATH."utils/cache.php");
 	get_cache(); // 获取缓存
 }
 // 指定ip回源

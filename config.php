@@ -102,7 +102,7 @@ $hosts = array('workers.dev', 'workers.dev');
 
 // 其他
 define('WELCOME', "file"); // 首页画面。text 文字， file 加载文件
-define('WELCOME_TEXT', "Success!<br>Power by BiliRoaming-PHP-Server. Ver".VERSION); // 首页欢迎语
+define('WELCOME_TEXT', "Success! Power by BiliRoaming-PHP-Server."); // 首页欢迎语
 define('WELCOME_FILE', "hello.php"); // 首页文件
 
 // 【禁忌功能】替换访问密钥

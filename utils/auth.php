@@ -7,19 +7,26 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 	$out = get_userinfo_fromsql();
 	$uid = $out[0];
 	$add_time = $out[1];
-	if ($uid == "" || $uid == "0") {
+	$due_date = $out[2];
+	$expired = $out[3];
+	
+	if (($uid == "" || $uid == "0") && $expired == "0") {
 		$out = get_userinfo();
 		$uid = $out[0];
 		$due = $out[1];
-		if ($uid != "0") {
-			$sql = " INSERT INTO `keys` (`add_time`,`uid`,`access_key`,`due_date`) VALUES (now(),'$uid','".ACCESS_KEY."','$due')";
-			$dbh -> exec($sql);
-		} elseif (NEED_LOGIN == 1) {
-			$baned = 20;
-			block($baned);
-		}
-	} elseif (strtotime(time()) - strtotime($add_time) >= CACHE_TIME_USER) {
-		refresh_userinfo();
+		$expired = "0";
+	} elseif (time() - strtotime($add_time) >= CACHE_TIME_USER) {
+		$out = refresh_userinfo();
+		$uid = $out[0];
+		$due = $out[1];
+		$expired = $out[2];
+	}
+	if ($uid != "0") {
+		$sql = " INSERT INTO `keys` (`add_time`,`uid`,`access_key`,`due_date`) VALUES (now(),'$uid','".ACCESS_KEY."','$due')";
+		$dbh -> exec($sql);
+	} elseif (NEED_LOGIN == 1 || $expired == "1") {
+		$baned = 20;
+		block($baned);
 	}
 } elseif (ACCESS_KEY != "") {
 	$out = get_userinfo();
