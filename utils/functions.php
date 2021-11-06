@@ -8,7 +8,29 @@ function get_webpage($url,$host="",$ip="") {
 	curl_setopt($ch, CURLOPT_URL, $url);
 	if (PROXY_ON == 1) { // 指定代理
 		curl_setopt($ch, CURLOPT_PROXYTYPE, PROXY_TYPE);
-		curl_setopt($ch, CURLOPT_PROXY, PROXY_IP);
+		switch (AREA) {
+			case "cn":
+				curl_setopt($ch, CURLOPT_PROXY, PROXY_IP_CN);
+				break;
+			case "hk":
+				curl_setopt($ch, CURLOPT_PROXY, PROXY_IP_HK);
+				break;
+			case "tw":
+				curl_setopt($ch, CURLOPT_PROXY, PROXY_IP_TW);
+				break;
+			case "th":
+				curl_setopt($ch, CURLOPT_PROXY, PROXY_IP_TH);
+				break;
+			case "noarea":
+				curl_setopt($ch, CURLOPT_PROXY, PROXY_IP);
+				break;
+			default:
+				if ($host = CUSTOM_HOST_TH_TOKEN || $host = CUSTOM_HOST_TH_SEARCH || $host = CUSTOM_HOST_TH || $host = CUSTOM_HOST_TH_SUB) {
+					curl_setopt($ch, CURLOPT_PROXY, PROXY_IP_TH);
+				} else {
+					curl_setopt($ch, CURLOPT_PROXY, PROXY_IP);
+				}
+		}
 	}
 	if (IP_RESOLVE == 1) { // 指定ip回源
 		curl_setopt($ch, CURLOPT_RESOLVE,[$host.":443:".$ip]);
