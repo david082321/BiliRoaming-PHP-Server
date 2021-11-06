@@ -36,6 +36,6 @@
      -->
 </head>
 <body>
-	Success!<br>Power by <a href="https://github.com/david082321/BiliRoaming-PHP-Server">BiliRoaming-PHP-Server</a>. Ver<?php print(VERSION); ?>
+	Success!<br>Power by <a href="https://github.com/david082321/BiliRoaming-PHP-Server">BiliRoaming-PHP-Server</a>.<?php if(!defined('VERSION')) {exit();} print(" Ver.".VERSION); ?>
 </body>
 </html>
