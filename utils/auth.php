@@ -4,27 +4,36 @@ if(!defined('SYSTEM')) {exit();}
 
 // 判断登录状态
 if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
+	// 从数据库获取
 	$out = get_userinfo_fromsql();
 	$uid = $out[0];
 	$add_time = $out[1];
-	$due_date = $out[2];
+	$due = $out[2];
 	$expired = $out[3];
-	
-	if (($uid == "" || $uid == "0") && $expired == "0") {
+	// 判断是否不在数据库里
+	$insert = 0;
+	if ($add_time == "0") {
+		$insert = 1; // INSERT 添加内容
+	}
+	if ($uid == "0" && $expired == "0") {
 		$out = get_userinfo();
 		$uid = $out[0];
 		$due = $out[1];
 		$expired = "0";
+		if ($insert == 1 && $uid != "0") {
+			// 写入新 key
+			$sql = "INSERT INTO `keys` (`add_time`,`uid`,`access_key`,`due_date`) VALUES (now(),'$uid','".ACCESS_KEY."','$due')";
+			$dbh -> exec($sql);
+		}
 	} elseif (time() - strtotime($add_time) >= CACHE_TIME_USER) {
+		// 超时，开始刷新
 		$out = refresh_userinfo();
 		$uid = $out[0];
 		$due = $out[1];
 		$expired = $out[2];
 	}
-	if ($uid != "0") {
-		$sql = " INSERT INTO `keys` (`add_time`,`uid`,`access_key`,`due_date`) VALUES (now(),'$uid','".ACCESS_KEY."','$due')";
-		$dbh -> exec($sql);
-	} elseif (NEED_LOGIN == 1 || $expired == "1") {
+	// key已过期 或 服务器不允许未登录用户
+	if ($uid == "0" && (NEED_LOGIN == 1 || $expired == "1")) {
 		$baned = 20;
 		block($baned);
 	}
