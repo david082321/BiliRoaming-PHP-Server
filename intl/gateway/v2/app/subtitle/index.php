@@ -10,8 +10,6 @@ include(ROOT_PATH."utils/version.php");
 include (ROOT_PATH."utils/functions.php");
 // 处理用户传入参数
 include (ROOT_PATH."utils/process.php");
-// 缓存用
-//// （无）
 // 设置host
 $host = CUSTOM_HOST_TH_SUB;
 // 锁区、web接口、X-From-Biliroaming

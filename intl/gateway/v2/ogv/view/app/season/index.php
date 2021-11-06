@@ -8,20 +8,17 @@ include ($_SERVER['DOCUMENT_ROOT']."/config.php");
 include(ROOT_PATH."utils/version.php");
 // 加载functions
 include (ROOT_PATH."utils/functions.php");
-// 处理用户传入参数
-include (ROOT_PATH."utils/process.php");
-// 缓存用
 if (SAVE_CACHE == 1) {
 	include (ROOT_PATH."utils/functions_cache.php");
-	include (ROOT_PATH."utils/log.php");
 }
+// 处理用户传入参数
+include (ROOT_PATH."utils/process.php");
 // 设置host
 $host = CUSTOM_HOST_TH;
-// 特殊参数(移除，因为还有ep_id，而且目前没有检查参数)
-//$query = "appkey=7d089525d3611b1c&autoplay=0&build=1052002&c_locale=&channel=master&lang=&locale=zh_SG&mobi_app=bstar_a&platform=android&s_locale=zh_SG&season_id=".SS_ID."&sim_code=&spmid=&ts=".TS;
 // 锁区、web接口、X-From-Biliroaming
 include (ROOT_PATH."utils/lock_area.php");
 // 鉴权、替换access_key、获取缓存
+// include (ROOT_PATH."utils/auth.php"); // 鉴权
 if (SAVE_CACHE == 1) {
 	get_cache_season(); // 获取缓存
 }

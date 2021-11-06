@@ -1,6 +1,7 @@
 <?php
 // 防止外部破解
-if(!defined('SYSTEM')) {exit(BLOCK_RETURN);}
+if(!defined('SYSTEM')) {exit();}
+$member_type = 0; // 判断用户状态
 
 function get_webpage($url,$host="",$ip="") {
 	$ch = curl_init();
@@ -15,6 +16,7 @@ function get_webpage($url,$host="",$ip="") {
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_POST, false);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 		"User-Agent: ".@$_SERVER["HTTP_USER_AGENT"]
 	));
@@ -76,26 +78,27 @@ function get_host($type,$cache_type) {
 	return $host;
 }
 
-function get_uid() {
+// 获取用户信息
+function get_userinfo() {
+	global $member_type;
 	$sign = md5("access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS.APPSEC);
 	$url = "https://app.bilibili.com/x/v2/account/myinfo?access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS."&sign=".$sign;
 	$output = get_webpage($url);
 	$array = json_decode($output, true);
 	$code = $array['code'];
-	if ($code=="0") {
-		$uid = $array['data']['mid'];
-	}else{
-		$uid = "0";
+	if ($code == "0") {
+		$out[0] = $array['data']['mid'];
+		$out[1] = $array['data']['vip']['due_date'];
+		if ((int)$out[1] > time()*1000) {
+			$member_type = 2; // 大会员
+		} else {
+			$member_type = 1; // 不是大会员
+		}
+	} else {
+		$out[0] = "0";
+		$out[1] = "0";
+		$member_type = 0; //未登录
 	}
-	return $uid;
-}
-
-function get_uid_fromsql() {
-	global $dbh;
-	$sqlco = "SELECT `uid` FROM `keys` WHERE `access_key` = '".ACCESS_KEY."'";
-	$cres = $dbh -> query($sqlco);
-	$vnum = $cres -> fetch();
-	$uid = $vnum['uid'];
-	return $uid;
+	return $out;
 }
 ?>

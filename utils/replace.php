@@ -1,6 +1,6 @@
 <?php
 // 防止外部破解
-if(!defined('SYSTEM')) {exit(BLOCK_RETURN);}
+if(!defined('SYSTEM')) {exit();}
 
 // 替换内容
 $output = str_replace("\u0026","&",$output);

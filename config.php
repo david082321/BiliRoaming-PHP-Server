@@ -33,9 +33,10 @@ define('CACHE_TIME', 60*60*1.95); // Playurl缓存时长（秒），目前最长
 define('CACHE_TIME_SEASON', 60*60*1); // 泰国 season 的缓存时长（秒）
 // 发生错误时的缓存时长
 define('CACHE_TIME_10403', 60*60*24*14); // 返回10403（地区错误）时的缓存时长（秒）
-define('CACHE_TIME_412', 60*60*24*7); // 返回412（IP被风控）时的缓存时长（秒）
+define('CACHE_TIME_412', 60*60*24*7); // 返回412（服务器IP被风控）时的缓存时长（秒）
 define('CACHE_TIME_404', 60*60*24*1); // 返回404时的缓存时长（秒）
 define('CACHE_TIME_OTHER', 60*60*24*1); // 返回其他错误时的缓存时长（秒）
+define('CACHE_TIME_USER', 60*60*24*1); //缓存用户key的时长（秒）
 
 // MySQL数据库
 define('DB_HOST', 'localhost');
@@ -77,7 +78,8 @@ define('CUSTOM_HOST_TW_WEB_SEARCH', 'https://api.bilibili.com'); // TW 搜索api
 // API相关(东南亚服务器)
 define('CUSTOM_HOST_TH', 'https://api.global.bilibili.com'); // 泰区 解析api
 define('CUSTOM_HOST_TH_SEARCH', 'https://app.global.bilibili.com'); // 泰区 搜索api
-define('CUSTOM_HOST_TH_SUB', 'https://app.global.bilibili.com'); // 泰区 字幕用api
+define('CUSTOM_HOST_TH_SUB', 'https://app.global.bilibili.com'); // 泰区 字幕api
+define('CUSTOM_HOST_TH_TOKEN', 'https://passport.biliintl.com'); // 泰区 刷新TOKEN api
 
 // 自定义API,避免集中请求，降低风控几率
 //$hk_api = array('host1','host2','host3');// 可以自定义其他反代api,例如云函数,CFW
@@ -102,10 +104,11 @@ $hosts = array('workers.dev', 'workers.dev');
 define('WELCOME', "file"); // 首页画面。text 文字， file 加载文件
 define('WELCOME_TEXT', "Success!<br>Power by BiliRoaming-PHP-Server. Ver".VERSION); // 首页欢迎语
 define('WELCOME_FILE', "hello.php"); // 首页文件
-define('BLOCK_RETURN', '{"code":-10403,"message":"抱歉您已被封锁"}'); // 封锁返回内容
 
-// 这个参数，不懂就别改
-define('APPKEY', '1d8b6e7d45233436');
-define('APPSEC', '560c52ccd288fed045859ed18bffd973');
+// 【禁忌功能】替换访问密钥
+define('MAGIC_KEY', '123'); // 请用密码生成器，随机生成任意内容，然后把123改成你生成的内容。(建议长一点)
+define('RESIGN_CN', 0); // 替换成大会员。0 否, 1 是
+define('RESIGN_TH', 0); // 替换成泰国登录会员。0 否, 1 是
+define('RESIGN_TH_PAID', 0); // 替换成泰国付费会员。0 否, 1 是
 
 ?>

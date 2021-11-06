@@ -6,7 +6,7 @@ START TRANSACTION;
 
 CREATE TABLE `cache` (
   `id` int(10) UNSIGNED NOT NULL COMMENT 'id',
-  `add_time` int(11) NOT NULL COMMENT '添加时间',
+  `expired_time` int(11) NOT NULL COMMENT '到期时间',
   `area` varchar(10) DEFAULT NULL,
   `type` tinyint(4) NOT NULL,
   `cache_type` varchar(100) NOT NULL,
@@ -36,5 +36,20 @@ ALTER TABLE `keys`
   ADD KEY `add_time` (`add_time`);
 
 ALTER TABLE `keys`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id';
+
+CREATE TABLE `my_keys` (
+  `id` int(10) UNSIGNED NOT NULL COMMENT 'id',
+  `expired_time` int(11) NOT NULL COMMENT '到期时间',
+  `type` tinyint(4) NOT NULL COMMENT '类型',
+  `uid` int(20) DEFAULT NULL COMMENT '用户ID',
+  `access_token` varchar(100) NOT NULL,
+  `refresh_token` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='我的key';
+
+ALTER TABLE `my_keys`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `my_keys`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id';
 COMMIT;

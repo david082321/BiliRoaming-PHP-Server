@@ -49,17 +49,19 @@
 
     #...(中间略过，请加在配置文件最底下)...
 
-    rewrite "^/pgc/player/api/playurl?(.*)$" /pgc/player/api/playurl/index.php?$1 last;
-
-    rewrite "^/pgc/player/web/playurl?(.*)$" /pgc/player/web/playurl/index.php?$1 last;
-
-    rewrite "^/intl/gateway/v2/ogv/playurl?(.*)$" /intl/gateway/v2/ogv/playurl/index.php?$1 last;
-
     rewrite "^/intl/gateway/v2/app/search/type?(.*)$" /intl/gateway/v2/app/search/type/index.php?$1 last;
 
     rewrite "^/intl/gateway/v2/app/subtitle?(.*)$" /intl/gateway/v2/app/subtitle/index.php?$1 last;
 
+    rewrite "^/intl/gateway/v2/ogv/playurl?(.*)$" /intl/gateway/v2/ogv/playurl/index.php?$1 last;
+
     rewrite "^/intl/gateway/v2/ogv/view/app/season?(.*)$" /intl/gateway/v2/ogv/view/app/season/index.php?$1 last;
+
+    rewrite "^/pgc/player/api/playurl?(.*)$" /pgc/player/api/playurl/index.php?$1 last;
+
+    rewrite "^/pgc/player/web/playurl?(.*)$" /pgc/player/web/playurl/index.php?$1 last;
+
+    rewrite "^/x/intl/passport-login/oauth2/refresh_token?(.*)$" /x/intl/passport-login/oauth2/refresh_token/index.php?$1 last;
 
     rewrite "^/x/v2/search/type?(.*)$" /x/v2/search/type/index.php?$1 last;
 
@@ -123,6 +125,8 @@
 
 ├─x/
 
+│　├─intl/passport-login/oauth2/refresh_token/index.php (东南亚APP refresh_token)
+
 │　├─v2/search/type/index.php (APP 搜索)
 
 │　└─web-interface/search/type/index.php (WEB 搜索)
@@ -130,8 +134,6 @@
 ├─utils/
 
 │　├─auth.php (鉴权)
-
-│　├─cache.php (缓存playurl判断是否为大会员)[仅缓存使用]
 
 │　├─fuck_search.php (在搜索中添加提示)[未公开]
 
@@ -141,13 +143,15 @@
 
 │　├─functions_cache.php (功能函数合集)[仅缓存使用]
 
-│　├─lock_area.php (锁区、web接口判断)
+│　├─functions_cache_key.php (功能函数合集)[仅缓存使用][未公开]
 
-│　├─log.php (缓存用户)[仅缓存使用]
+│　├─lock_area.php (锁区、web接口判断)
 
 │　├─process.php (处理用户传入参数)
 
 │　├─refresh_token.php (自动刷新访问密钥)[未公开]
+
+│　├─refresh_token_th.php (自动刷新访问密钥)[未公开]
 
 │　├─replace.php (修改返回内容)
 
@@ -156,6 +160,10 @@
 │　├─resign.php (替换访问密钥)[未公开]
 
 │　└─version.php (版本信息、Header)
+
+├─.htaccess (防止重复的 301 转址)
+
+├─add_key.php (添加访问密钥)[仅缓存使用][未公开]
 
 ├─cache.sql (导入MySQL用的)[仅缓存使用]
 

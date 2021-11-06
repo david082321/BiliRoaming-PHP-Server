@@ -8,13 +8,11 @@ include ($_SERVER['DOCUMENT_ROOT']."/config.php");
 include(ROOT_PATH."utils/version.php");
 // 加载functions
 include (ROOT_PATH."utils/functions.php");
-// 处理用户传入参数
-include (ROOT_PATH."utils/process.php");
-// 缓存用
 if (SAVE_CACHE == 1) {
 	include (ROOT_PATH."utils/functions_cache.php");
-	include (ROOT_PATH."utils/log.php");
 }
+// 处理用户传入参数
+include (ROOT_PATH."utils/process.php");
 // 设置host
 $host = get_host($type,$cache_type);
 // 锁区、web接口、X-From-Biliroaming
