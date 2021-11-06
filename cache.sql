@@ -16,8 +16,7 @@ CREATE TABLE `cache` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='缓存';
 
 ALTER TABLE `cache`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `add_time` (`add_time`);
+  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cache`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id';
@@ -32,8 +31,7 @@ CREATE TABLE `keys` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='访客表';
 
 ALTER TABLE `keys`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `add_time` (`add_time`);
+  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `keys`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id';
