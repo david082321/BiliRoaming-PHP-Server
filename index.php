@@ -1,119 +1,42 @@
 <?php
-// 防止外部破解
-define('SYSTEM', TRUE);
-define('VERSION', '3.0.8');
+// 分类
+$type = 1;
+$cache_type = "web";
 // 加载配置
-include ("config.php");
-// 处理用户传入参数
-include ("process.php");
-// 加上json的Header
-header('Content-Type: application/json; charset=utf-8');
-// 加上web的Header
-if (WEB_ON == 1){
-	header("Access-Control-Allow-Origin: https://www.bilibili.com");
-	header("Access-Control-Allow-Credentials: true");
-}
-// 缓存用
+include ($_SERVER['DOCUMENT_ROOT']."/config.php");
+// 加载版本
+include(ROOT_PATH."utils/version.php");
+// 加载functions
+include (ROOT_PATH."utils/functions.php");
 if (SAVE_CACHE == 1) {
-	include ("log.php");
+	include (ROOT_PATH."utils/functions_cache.php");
 }
-// 判断要转发的内容
-$path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
-
-// 判断接口区分app和web缓存
-$cache_type = 'app';//默认类型app
-if ($path == "/pgc/player/web/playurl") {
-	$cache_type = 'web';
-}
-
-$query = $_SERVER['QUERY_STRING'];
-$query = str_replace("/&","",$query);
-if ($path == "/intl/gateway/v2/ogv/playurl") {
-	$host = CUSTOM_HOST_TH;
-} elseif ($path == "/intl/gateway/v2/ogv/view/app/season") {
-	$host = CUSTOM_HOST_TH;
-	$query = "appkey=7d089525d3611b1c&autoplay=0&build=1052002&c_locale=&channel=master&lang=&locale=zh_SG&mobi_app=bstar_a&platform=android&s_locale=zh_SG&season_id=".SS_ID."&sim_code=&spmid=&ts=".TS;
-} elseif ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle") {
-	$host = CUSTOM_HOST_SUB;
-} elseif ($path == "/pgc/player/api/playurl" || $path == "/pgc/player/web/playurl" || $path == "/x/web-interface/search/type") {
-	if (AREA=="cn") {
-		$host = CUSTOM_HOST_CN;
-	} elseif (AREA=="hk") {
-		$host = CUSTOM_HOST_HK;
-	} elseif (AREA=="tw") {
-		$host = CUSTOM_HOST_TW;
-	} else {
-		$host = CUSTOM_HOST_DEFAULT;
-	}
-} elseif ($path == "/x/v2/search/type") {
-	if (AREA=="cn") {
-		$host = CUSTOM_HOST_SEARCH_CN;
-	} elseif (AREA=="hk") {
-		$host = CUSTOM_HOST_SEARCH_HK;
-	} elseif (AREA=="tw") {
-		$host = CUSTOM_HOST_SEARCH_TW;
-	} else {
-		$host = CUSTOM_HOST_SEARCH_DEFAULT;
-	}
-} elseif (WEB_ON == 1) {
-	if (CID == "" && EP_ID == "") {
-		// 欢迎语
-		exit(WELCOME);
-	}
+// 处理用户传入参数
+include (ROOT_PATH."utils/process.php");
+// 设置host
+if ((CID != "" || EP_ID != "") && WEB_ON == 1) {
 	// Web接口
-	$host = CUSTOM_HOST_DEFAULT;
 	$path = "/pgc/player/web/playurl";
+	$host = get_host($type,$cache_type);
 } else {
 	// 欢迎语
-	exit(WELCOME);
-}
-// 判断服务器锁区 及 web接口
-if ($path == "/intl/gateway/v2/ogv/playurl" || $path == "/pgc/player/api/playurl" || $path == "/x/v2/search/type") {
-	if (WEB_ON == 0 && LOCK_AREA == 1 && !empty($SERVER_AREA) && !in_array(AREA, $SERVER_AREA)) {
-		exit(BLOCK_RETURN);
-	}
-} elseif ($path == "/pgc/player/web/playurl" || $path == "/x/web-interface/search/type") {
-	if (WEB_ON == 0) {
-		exit(BLOCK_RETURN);
+	header('Content-Type: text/html; charset=utf-8');
+	if (WELCOME=="file"){
+		include(WELCOME_FILE);
+		exit();
+	} elseif (WELCOME=="text"){
+		exit(WELCOME_TEXT);
 	}
 }
-// 模块请求都会带上X-From-Biliroaming的请求头，为了防止被盗用，可以加上请求头判断，WEB接口暂不限制
-if (BILIROAMING_VERSION == "" && BILIROAMING == 1 && $path != "/pgc/player/web/playurl" && $path != "/intl/gateway/v2/ogv/view/app/season") {
-	exit(BLOCK_RETURN);
+// 锁区、web接口、X-From-Biliroaming
+include (ROOT_PATH."utils/lock_area.php");
+// 鉴权、替换access_key、获取缓存
+include (ROOT_PATH."utils/auth.php"); // 鉴权
+if (ACCESS_KEY != "") {
+	include(ROOT_PATH."utils/resign.php"); // 替换access_key
 }
-// 判断 playurl
-$playurl = 0;
-if ($path == "/x/v2/search/type" || $path == "/x/web-interface/search/type") {
-	$playurl = 3;
-} elseif ($path != "/intl/gateway/v2/app/search/type" && $path != "/intl/gateway/v2/app/subtitle" && $path != "/intl/gateway/v2/ogv/view/app/season") {
-	$playurl = 1;
-} elseif ($path == "/intl/gateway/v2/ogv/view/app/season") {
-	$playurl = 2;
-}
-// 鉴权
-if ($playurl == 1) { //playurl
-	include ("auth.php");
-} elseif ($path == "/intl/gateway/v2/app/subtitle" && $baned == 1) { //泰国字幕
-	exit(BLOCK_RETURN);
-}
-// 替换access_key
-if (ACCESS_KEY != "" && $playurl == 1) {
-	//include("resign.php");
-}
-// 获取缓存 (playurl)
-if (SAVE_CACHE == 1 && $playurl == 1) {
-	include ("cache.php");
-	$cache = get_cache();
-	if ($cache != "") {
-		exit($cache);
-	}
-// 获取缓存 (东南亚season)
-} elseif (SAVE_CACHE == 1 && $playurl == 2) {
-	include ("cache_season.php");
-	$cache = get_cache_season();
-	if ($cache != "") {
-		exit($cache);
-	}
+if (SAVE_CACHE == 1) {
+	get_cache(); // 获取缓存
 }
 // 指定ip回源
 if (IP_RESOLVE == 1) {
@@ -127,32 +50,12 @@ if (IP_RESOLVE == 1) {
 } else {
 	$output = get_webpage($url);
 }
-$output = str_replace("\u0026","&",$output);
+// 替换内容
+include (ROOT_PATH."utils/replace.php");
+// 返回内容给用户
 print($output);
 // 写入缓存
-if (SAVE_CACHE == 1 && $playurl == 1) {
+if (SAVE_CACHE == 1) {
 	write_cache(); // 写入playurl
-} elseif (SAVE_CACHE == 1 && $playurl == 2) {
-	write_cache_season(); //写入东南亚season
-}
-
-function get_webpage($url,$host="",$ip="") {
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	if (PROXY_ON == 1) { // 指定代理
-		curl_setopt($ch, CURLOPT_PROXYTYPE, PROXY_TYPE);
-		curl_setopt($ch, CURLOPT_PROXY, PROXY_IP);
-	}
-	if (IP_RESOLVE == 1) { // 指定ip回源
-		curl_setopt($ch, CURLOPT_RESOLVE,[$host.":443:".$ip]);
-	}
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-		'User-Agent: '.@$_SERVER["HTTP_USER_AGENT"]
-	));
-	$output = curl_exec($ch);
-	curl_close($ch);
-	return $output;
 }
 ?>
