@@ -149,15 +149,15 @@ function write_cache() {
 function get_cache_season() {
 	global $dbh;
 	global $member_type;
+	global $cache_type;
 	global $refresh_cache_season;
 	if (EP_ID != ""){
-		$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = 'season' AND `type` = '0' AND `cache_type` = 'season' AND `cid` = '0' AND `ep_id` = '".EP_ID."'";
+		$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".AREA."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '0' AND `ep_id` = '".EP_ID."'";
 	} elseif (SS_ID != "") {
-		$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = 'season' AND `type` = '0' AND `cache_type` = 'season' AND `cid` = '".SS_ID."' AND `ep_id` = '0'";
+		$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".AREA."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".SS_ID."' AND `ep_id` = '0'";
 	} else {
 		return "";
 	}
-	//$sqlco = "SELECT * FROM `cache` WHERE `area` = 'season' AND `type` = '0' AND `cache_type` = 'season' AND `cid` = '".SS_ID."' AND `ep_id` = '".EP_ID."'";
 	$cres = $dbh -> query($sqlco);
 	$vnum = $cres -> fetch();
 	if (!$vnum){
@@ -185,6 +185,7 @@ function get_cache_season() {
 function write_cache_season() {
 	global $dbh;
 	global $output;
+	global $cache_type;
 	global $refresh_cache_season;
 	$ts = time();
 	$array = json_decode($output, true);
@@ -214,10 +215,10 @@ function write_cache_season() {
 	} else {
 		return "no cache";
 	}
-	$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','season','0','season','".$ss_id."','".$ep_id."','".$output."')";
+	$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','season_".$cache_type."','".$ss_id."','".$ep_id."','".$output."')";
 	// 刷新缓存
 	if ($refresh_cache_season == 1) {
-		$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `cache_type` = 'season' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
+		$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
 	}
 	$dbh -> exec($sql);
 }
