@@ -151,17 +151,37 @@ function get_cache_season() {
 	global $member_type;
 	global $cache_type;
 	global $refresh_cache_season;
+	
+	if (AREA == "th"){
+		$area = "th"; //泰区
+	} else {
+		$area = "main"; //主站
+	}
 	if (EP_ID != ""){
-		$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".AREA."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '0' AND `ep_id` = '".EP_ID."'";
+		$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".$area."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '0' AND `ep_id` = '".EP_ID."'";
 	} elseif (SS_ID != "") {
-		$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".AREA."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".SS_ID."' AND `ep_id` = '0'";
+		$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".$area."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".SS_ID."' AND `ep_id` = '0'";
 	} else {
 		return "";
 	}
 	$cres = $dbh -> query($sqlco);
 	$vnum = $cres -> fetch();
 	if (!$vnum){
-		return "";
+		//给主站的一次机会获取自身 AREA 可能 code!=0 的缓存
+		if ($area == "main"){
+			if (EP_ID != ""){
+				$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".AREA."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '0' AND `ep_id` = '".EP_ID."'";
+			} elseif (SS_ID != "") {
+				$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".AREA."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".SS_ID."' AND `ep_id` = '0'";
+			}
+			$cres = $dbh -> query($sqlco);
+			$vnum = $cres -> fetch();
+			if (!$vnum){
+				return "";
+			}
+		} else {
+			return "";
+		}
 	}
 	@$cache = $vnum['cache'];
 	@$expired_time = $vnum['expired_time'];
@@ -215,12 +235,27 @@ function write_cache_season() {
 	} else {
 		return "no cache";
 	}
-	$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','season_".$cache_type."','".$ss_id."','".$ep_id."','".$output."')";
+	if (AREA == "th"){
+		$area = "th"; //泰区
+	} else {
+		$area = "main"; //主站
+	}
+	$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".$area."','0','season_".$cache_type."','".$ss_id."','".$ep_id."','".$output."')";
 	// 刷新缓存
 	if ($refresh_cache_season == 1) {
-		$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
+		$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".$area."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
 	}
 	$dbh -> exec($sql);
+	
+	// 写入自身 AREA 当 code!=0 的缓存
+	if ($area = "main" && $code != 0) {
+		$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','season_".$cache_type."','".$ss_id."','".$ep_id."','".$output."')";
+		// 刷新缓存
+		if ($refresh_cache_season == 1) {
+			$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
+		}
+		$dbh -> exec($sql);
+	}
 }
 
 ?>
