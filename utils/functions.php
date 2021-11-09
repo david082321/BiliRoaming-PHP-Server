@@ -92,7 +92,26 @@ function get_host($type,$cache_type) {
 						break;
 					default:
 						$host = CUSTOM_HOST_DEFAULT_WEB_SEARCH;
-				}				
+				}
+			}
+			break;
+		case 2: // season
+			if ($cache_type == "web"){
+				switch (AREA) {
+					case "cn":
+						$host = CUSTOM_HOST_CN;
+						break;
+					case "tw":
+						$host = CUSTOM_HOST_TW;
+						break;
+					case "hk":
+						$host = CUSTOM_HOST_HK;
+						break;
+					default:
+						$host = CUSTOM_HOST_DEFAULT;
+				}
+			} else {
+				$host = CUSTOM_HOST_TH;
 			}
 			break;
 		default:
