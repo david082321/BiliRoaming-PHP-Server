@@ -138,12 +138,14 @@ function write_cache() {
 		default:
 			$ts = $ts + CACHE_TIME_OTHER;
 	}
-	$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','".$member_type."','".$cache_type."','".CID."','".EP_ID."','".$output."')";
-	// 刷新缓存
-	if ($refresh_cache == 1) {
+	if ($code !== "") { //没有获取到code不写入缓存
+		$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','".$member_type."','".$cache_type."','".CID."','".EP_ID."','".$output."')";
+		// 刷新缓存
+		if ($refresh_cache == 1) {
 		$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `type` = '".$member_type."' AND `cache_type` = '".$cache_type."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."';";
-	}
-	$dbh -> exec($sql);
+		}
+		$dbh -> exec($sql);
+	} 	
 }
 
 // 获取season缓存
@@ -268,7 +270,7 @@ function write_cache_season() {
 			$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".$area."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
 		}
 		$dbh -> exec($sql);
-	} else {		
+	} else if($code !== ""){		
 		// 缓存到自身 AREA 里面
 		$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','season_".$cache_type."','".$ss_id."','".$ep_id."','".$output."')";
 		// 刷新缓存
