@@ -139,12 +139,12 @@ function write_cache() {
 			$ts = $ts + CACHE_TIME_OTHER;
 	}
 	if ($code !== "") { //没有获取到code不写入缓存
-	    $sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','".$member_type."','".$cache_type."','".CID."','".EP_ID."','".$output."')";
-	// 刷新缓存
-	if ($refresh_cache == 1) {
+		$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','".$member_type."','".$cache_type."','".CID."','".EP_ID."','".$output."')";
+		// 刷新缓存
+		if ($refresh_cache == 1) {
 		$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `type` = '".$member_type."' AND `cache_type` = '".$cache_type."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."';";
-	}
-	$dbh -> exec($sql);
+		}
+		$dbh -> exec($sql);
 	} 	
 }
 
