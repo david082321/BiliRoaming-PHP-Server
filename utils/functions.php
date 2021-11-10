@@ -21,9 +21,6 @@ function get_webpage($url,$host="",$ip="") {
 			case "th":
 				curl_setopt($ch, CURLOPT_PROXY, PROXY_IP_TH);
 				break;
-			case "noarea":
-				curl_setopt($ch, CURLOPT_PROXY, PROXY_IP);
-				break;
 			default:
 				if ($host = CUSTOM_HOST_TH_TOKEN || $host = CUSTOM_HOST_TH_SEARCH || $host = CUSTOM_HOST_TH || $host = CUSTOM_HOST_TH_SUB) {
 					curl_setopt($ch, CURLOPT_PROXY, PROXY_IP_TH);
