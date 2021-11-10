@@ -262,7 +262,7 @@ function write_cache_season() {
 		$area = "main"; //主站
 	}
 	
-	if ($code == 0 && $area = "main") {
+	if ($code == 0 && $area == "main") {
 		// 当 code==0 缓存成 area=main
 		$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".$area."','0','season_".$cache_type."','".$ss_id."','".$ep_id."','".$output."')";
 		// 刷新缓存
@@ -277,8 +277,8 @@ function write_cache_season() {
 		if ($refresh_cache_season == 1) {
 			$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
 		}
-		$dbh -> exec($sql);
 	}
+	$dbh -> exec($sql);
 }
 
 ?>
