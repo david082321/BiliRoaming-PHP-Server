@@ -17,21 +17,21 @@ if (BILIROAMING_VERSION == '') {
 		$baned = 10;
 		block($baned);
 	}
-	if (@$_GET['area'] == '' || @$_GET['area'] == 'false') { //web脚本,以及泰区相关AREA定义为TH
+	if (@$_GET['area'] == '' || @$_GET['area'] == 'false') { //web脚本
 		if ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle" || $path == "/intl/gateway/v2/ogv/view/app/season") {
 			define('AREA', 'th');
 		} else {
 			define('AREA', 'noarea');
 		}
+	}
 } else if (@$_GET['area'] == '') { //适配老漫游版本
-	define('AREA', 'oldversion');
+	if ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle" || $path == "/intl/gateway/v2/ogv/view/app/season") {
+		define('AREA', 'th');
+	} else {
+		define('AREA', 'oldversion');
+	}
 } else {
 	define('AREA', @$_GET['area']);
-}
-if (@$_GET['ts'] == '') {
-	define('TS', time());
-}else{
-	define('TS', @$_GET['ts']);
 }
 if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
 	$baned = 11;
