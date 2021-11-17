@@ -269,7 +269,6 @@ function write_cache_season() {
 		if ($refresh_cache_season_main == 1) {
 			$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".$area."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
 		}
-		$dbh -> exec($sql);
 	} else if($code !== ""){		
 		// 缓存到自身 AREA 里面
 		$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','season_".$cache_type."','".$ss_id."','".$ep_id."','".$output."')";
