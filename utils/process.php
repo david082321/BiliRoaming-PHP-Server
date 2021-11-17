@@ -33,6 +33,11 @@ if (BILIROAMING_VERSION == '') {
 } else {
 	define('AREA', @$_GET['area']);
 }
+if (@$_GET['ts'] == '') {
+	define('TS', time());
+}else{
+	define('TS', @$_GET['ts']);
+}
 if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
 	$baned = 11;
 	block($baned);
