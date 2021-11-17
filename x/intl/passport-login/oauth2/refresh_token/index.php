@@ -24,7 +24,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_POST, true);
 if (PROXY_ON == 1) {
 	curl_setopt($ch, CURLOPT_PROXYTYPE, PROXY_TYPE);
-	curl_setopt($ch, CURLOPT_PROXY, PROXY_IP);
+	curl_setopt($ch, CURLOPT_PROXY, PROXY_IP_TH);
 }
 if (IP_RESOLVE == 1) {
 	curl_setopt($ch, CURLOPT_RESOLVE, [$host.":443:".$ip]);
