@@ -11,10 +11,6 @@ switch ($type) {
 		}
 		break;
 	case 1: // playurl
-		if ($cache_type == "app" && AREA == "th") {
-			$output = str_replace('"need_vip":true','"need_vip":false',$output); //然而这个替换似乎没用，是客户端本地验证
-			$output = str_replace('"need_login":true','"need_login":false',$output);
-		}
 		break;
 	case 2: // 东南亚APP season
 		include (ROOT_PATH."utils/fuck_sub.php"); // 添加中文字幕
