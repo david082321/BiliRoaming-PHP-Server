@@ -17,13 +17,20 @@ if (BILIROAMING_VERSION == '') {
 		$baned = 10;
 		block($baned);
 	}
-	if (@$_GET['area'] == '' || @$_GET['area'] == 'false') { //web脚本
-		define('AREA', 'noarea');
+	if (@$_GET['area'] == '' || @$_GET['area'] == 'false') { //web脚本,兼容泰区无area情况
+		if ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle" || $path == "/intl/gateway/v2/ogv/view/app/season") {
+			define('AREA', 'th');
+		} else {
+			define('AREA', 'noarea');
 	} else {
 		define('AREA', @$_GET['area']);
 	}
-} else if (@$_GET['area'] == '') { //适配老漫游版本
-	define('AREA', 'oldversion');
+} else if (@$_GET['area'] == '') { //适配老漫游版本，兼容泰区无area情况
+	if ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle" || $path == "/intl/gateway/v2/ogv/view/app/season") {
+		define('AREA', 'th');
+	} else {
+		define('AREA', 'oldversion');
+	}
 } else {
 	define('AREA', @$_GET['area']);
 }
