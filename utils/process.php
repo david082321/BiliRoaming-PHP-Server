@@ -22,6 +22,7 @@ if (BILIROAMING_VERSION == '') {
 			define('AREA', 'th');
 		} else {
 			define('AREA', 'noarea');
+		}
 	} else {
 		define('AREA', @$_GET['area']);
 	}
