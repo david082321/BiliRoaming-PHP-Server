@@ -10,6 +10,7 @@ define('ACCESS_KEY', @$_GET['access_key']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
 define('SS_ID', @$_GET['season_id']);
+define('QN', @$_GET['qn']);
 define('BILIROAMING_VERSION', @$_SERVER['HTTP_X_FROM_BILIROAMING']);
 $baned = 0;
 if (BILIROAMING_VERSION == '') {

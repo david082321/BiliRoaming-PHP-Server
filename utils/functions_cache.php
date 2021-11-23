@@ -89,6 +89,10 @@ function get_cache() {
 	$cache = str_replace("u0026", "&", $cache);
 	$cache = str_replace("\r", "\\r", $cache);
 	$cache = str_replace("\n", "\\n", $cache);
+	if (QN != "" && $cache_type == "app") {
+			$cache = str_replace('"data":{"video_info":{"quality":','"data":{"video_info":{"quality":'.QN.',"quality_fuck":',$cache);
+			$cache = str_replace('"data":{"playurl":{"quality":','"data":{"playurl":{"quality":'.QN.',"quality_fuck":',$cache);
+	}
 	if ($cache != "") {
 		if (time() <= (int)$expired_time) {
 			exit($cache);
