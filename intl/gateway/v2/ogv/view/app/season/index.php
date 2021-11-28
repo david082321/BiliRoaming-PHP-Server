@@ -18,7 +18,9 @@ $host = CUSTOM_HOST_TH;
 // 锁区、web接口、X-From-Biliroaming
 include (ROOT_PATH."utils/lock_area.php");
 // 鉴权、替换access_key、获取缓存
-// include (ROOT_PATH."utils/auth.php"); // 鉴权
+if ($baned == 1) {
+	block();
+}
 if (SAVE_CACHE == 1) {
 	get_cache_season(); // 获取缓存
 }
