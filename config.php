@@ -6,12 +6,13 @@ define('SYSTEM', TRUE);
 define('ROOT_PATH',$_SERVER['DOCUMENT_ROOT'].'/');
 
 // 封锁
-define('BLOCK_TYPE', 'blacklist'); // 封锁类型：blacklist 黑名单, whitelist 本地白名单, 不是填写前面两个就是不封锁
+define('BLOCK_TYPE', 'blacklist'); // 封锁类型：blacklist 在线黑名单, whitelist 在线白名单, local_blacklist 本地黑名单, local_whitelist 本地白名單, 不是填写前面几个就是不封锁
 define('REPLACE_TYPE', 'tom'); // 是否替换视频(仅黑/白名单时生效)。txbb 天线宝宝, tom 猫和老鼠, xyy 喜羊羊, all 随机
 define('NEED_LOGIN', 0); // 是否要登录用户才能用。0 否, 1 是
 define('BILIROAMING', 1); // 是否要用哔哩漫游才能使用。0 否, 1 是
 define('WEB_ON', 0); // 是否开启web接口 0 否, 1 是 目前Web接口不受哔哩漫游请求头影响，且不受服务器锁区影响（待更新）
 define('LOCK_AREA', 0); // 服务器锁区，须设置$SERVER_AREA。0 否, 1 是
+$BLACKLIST = array('1', '2', '3'); // 本地黑名单，填写 uid，可自行添加、删除，注意使用英文,和'
 $WHITELIST = array('1', '2', '3'); // 本地白名单，填写 uid，可自行添加、删除，注意使用英文,和'
 
 // 封锁指定epid视频
@@ -30,12 +31,12 @@ $cid_list = array();
 // 缓存
 define('SAVE_CACHE', 0); // 开启缓存，须配置MySQL数据库。0 否, 1 是
 define('CACHE_TIME', 60*60*1.95); // Playurl缓存时长（秒），目前最长可到14400秒，建议7200秒以下(部分视频只有2小时)
-define('CACHE_TIME_SEASON', 60*60*1); // 泰国 season 的缓存时长（秒）
+define('CACHE_TIME_SEASON', 60*60*0.5); // 泰国 season 的缓存时长（秒）
 // 发生错误时的缓存时长
 define('CACHE_TIME_10403', 60*60*24*14); // 返回10403（地区错误）时的缓存时长（秒）
 define('CACHE_TIME_412', 60*60*24*7); // 返回412（服务器IP被风控）时的缓存时长（秒）
 define('CACHE_TIME_404', 60*60*24*1); // 返回404时的缓存时长（秒）
-define('CACHE_TIME_OTHER', 60*60*24*1); // 返回其他错误时的缓存时长（秒）
+define('CACHE_TIME_OTHER', 60*60*1); // 返回其他错误时的缓存时长（秒）
 define('CACHE_TIME_USER', 60*60*24*1); //缓存用户key的时长（秒）
 
 // MySQL数据库

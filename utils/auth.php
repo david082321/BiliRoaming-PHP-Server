@@ -49,35 +49,62 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 
 // 开始鉴权
 if (ACCESS_KEY != "") { // access_key 存在
-	if (BLOCK_TYPE == "blacklist") { // 黑名单鉴权
-		$url = "https://black.qimo.ink/?access_key=".ACCESS_KEY;
-		$out = get_webpage($url);
-		// 如果是黑名单
-		if ($out == "ban" || $baned == 1) {
-			if (REPLACE_TYPE == "hlw" || REPLACE_TYPE == "tom" || REPLACE_TYPE == "xyy" || REPLACE_TYPE == "all") { // 替换成葫芦娃、猫和老鼠、喜羊羊
-				include (ROOT_PATH."utils/replace_playurl.php");
-				replace_playurl();
-			} else {
-				$baned = 21;
-				block($baned);
-			}
+	// resign.php 可能会用到
+	$is_blacklist = false;
+	$is_whitelist = false;
+	if (BLOCK_TYPE == "blacklist" || BLOCK_TYPE == "whitelist") {
+		$url = "https://black.qimo.ink/status.php?access_key=".ACCESS_KEY;
+		$status = json_decode(get_webpage($url), true);
+		$code = $status['code'];
+		if ((string)$code == "0") {
+			$is_blacklist = $status['data']['is_blacklist'];
+			$is_whitelist = $status['data']['is_whitelist'];
+			//$reason = $status['data']['reason'];
 		}
-	} else if (BLOCK_TYPE == "whitelist") { // 白名单鉴权
-		// 是否在白名单内
-		if (!in_array($uid, $WHITELIST) || $baned == 1 || $uid == 0) {
-			if (REPLACE_TYPE == "hlw" || REPLACE_TYPE == "tom" || REPLACE_TYPE == "xyy" || REPLACE_TYPE == "all") { // 替换成葫芦娃、猫和老鼠、喜羊羊、肥肠抱歉
-				include (ROOT_PATH."utils/replace_playurl.php");
-				replace_playurl();
-			} else {
-				$baned = 22;
-				block($baned);
+	}
+	$is_baned = false;
+	switch (BLOCK_TYPE) {
+		case "blacklist": // 在线黑名单
+			if ($is_blacklist) {
+				$is_baned = true;
+				$baned = 21;
 			}
+			break;
+		case "whitelist": // 在线白名单
+			if (!$is_whitelist) {
+				$is_baned = true;
+				$baned = 22;
+			}
+			break;
+		case "local_blacklist": // 本地黑名单
+			if (in_array($uid, $BLACKLIST)) {
+				$is_baned = true;
+				$baned = 21;
+			}
+			break;
+		case "local_whitelist": // 本地白名单
+			if (!in_array($uid, $WHITELIST)) {
+				$is_baned = true;
+				$baned = 22;
+			}
+			break;
+		default:
+			// pass
+	}
+	// 开始ban
+	$support_replace_type = array("hlw","tom","xyy","all"); // 允许替换的类型
+	if ($is_baned) {
+		if (in_array(REPLACE_TYPE, $support_replace_type)) {
+			include (ROOT_PATH."utils/replace_playurl.php");
+			replace_playurl();
+		} else {
+			block($baned);
 		}
 	}
 } else {  // access_key 不存在
 	if (CID == "13073143" || CID == "120453316") { // 漫游测速
 		//pass
-	} else if (BLOCK_TYPE == "whitelist" || NEED_LOGIN == 1) { // 白名单模式 或 黑名单模式+需要登录
+	} else if (BLOCK_TYPE == "whitelist" || BLOCK_TYPE == "local_whitelist" || NEED_LOGIN == 1) { // 白名单模式 或 黑名单模式+需要登录
 		$baned = 23;
 		block($baned);
 	}
