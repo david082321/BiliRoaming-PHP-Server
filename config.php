@@ -79,7 +79,7 @@ define('CUSTOM_HOST_TW_WEB_SEARCH', 'https://api.bilibili.com'); // TW 搜索api
 // API相关(东南亚服务器)
 define('CUSTOM_HOST_TH', 'https://app.biliintl.com'); // 泰区 解析api
 define('CUSTOM_HOST_TH_SEARCH', 'https://app.biliintl.com'); // 泰区 搜索api
-define('CUSTOM_HOST_TH_SUB', 'https://app.biliintl.com'); // 泰区 字幕api
+define('CUSTOM_HOST_TH_SUB', 'https://api.bilibili.tv'); // 泰区 字幕api
 define('CUSTOM_HOST_TH_TOKEN', 'https://passport.biliintl.com'); // 泰区 刷新TOKEN api
 
 // 自定义API,避免集中请求，降低风控几率
