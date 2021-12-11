@@ -20,20 +20,7 @@ function replace_playurl() {
 			$type = "web";
 	}
 
-	switch (REPLACE_TYPE) {
-		case "txbb":
-			$url = 'https://bili.tuturu.top/txbb.php?type='.$type;
-			break;
-		case "tom":
-			$url = 'https://black.qimo.ink/TandJ.php?type='.$type;
-			break;
-		case "xyy":
-			$url = 'https://bili.tuturu.top/xyyjson.php?type='.$type;
-			break;
-		default:
-			$urls = array('https://bili.tuturu.top/txbb.php?type=','https://black.qimo.ink/TandJ.php?type=','https://bili.tuturu.top/xyyjson.php?type=');
-			$url = $urls[array_rand($urls)].$type;
-	}
+	$url = 'https://bili.tuturu.top/cid_rand.php?type='.$type;
 	$output = get_webpage($url);
 
 	// 分析 output
