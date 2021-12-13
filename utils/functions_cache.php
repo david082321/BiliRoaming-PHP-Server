@@ -89,7 +89,7 @@ function get_cache() {
 	$cache = str_replace("u0026", "&", $cache);
 	$cache = str_replace("\r", "\\r", $cache);
 	$cache = str_replace("\n", "\\n", $cache);
-	if (QN != "" && $cache_type == "app") {
+	if (QN != "" && ($cache_type == "app" || $cache_type == "appV2")) {
 			$cache = str_replace('"data":{"video_info":{"quality":','"data":{"video_info":{"quality":'.QN.',"quality_fuck":',$cache);
 			$cache = str_replace('"data":{"playurl":{"quality":','"data":{"playurl":{"quality":'.QN.',"quality_fuck":',$cache);
 	}
@@ -142,7 +142,7 @@ function write_cache() {
 		default:
 			$ts = $ts + CACHE_TIME_OTHER;
 	}
-	if ($output !== "") { //没有获取到code不写入缓存
+	if ($output !== "") { //没有获取到输出内容不写入缓存
 		$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','".$member_type."','".$cache_type."','".CID."','".EP_ID."','".$output."')";
 		// 刷新缓存
 		if ($refresh_cache == 1) {
@@ -399,7 +399,7 @@ function write_cache_subtitle() {
 		default:
 			$ts = $ts + CACHE_TIME_OTHER;
 	}
-$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','subtitle_".$cache_type."','0','".EP_ID."','".$output."')";
+	$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','subtitle_".$cache_type."','0','".EP_ID."','".$output."')";
 	// 刷新缓存
 	if ($refresh_cache_subtitle == 1) {
 		$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `cache_type` = 'subtitle_".$cache_type."' AND `ep_id` = '".EP_ID."';";
