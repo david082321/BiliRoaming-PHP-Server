@@ -92,7 +92,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 			// pass
 	}
 	// 开始ban
-	$support_replace_type = array("hlw","tom","xyy","all"); // 允许替换的类型
+	$support_replace_type = array("hlw","tom","txbb","xyy","all","random"); // 允许替换的类型（兼容旧版config）
 	if ($is_baned) {
 		if (in_array(REPLACE_TYPE, $support_replace_type)) {
 			include (ROOT_PATH."utils/replace_playurl.php");

@@ -7,7 +7,7 @@ define('ROOT_PATH',$_SERVER['DOCUMENT_ROOT'].'/');
 
 // 封锁
 define('BLOCK_TYPE', 'blacklist'); // 封锁类型：blacklist 在线黑名单, whitelist 在线白名单, local_blacklist 本地黑名单, local_whitelist 本地白名單, 不是填写前面几个就是不封锁
-define('REPLACE_TYPE', 'tom'); // 是否替换视频(仅黑/白名单时生效)。txbb 天线宝宝, tom 猫和老鼠, xyy 喜羊羊, all 随机
+define('REPLACE_TYPE', 'random'); // 是否替换视频(仅黑/白名单时生效)。random 随机番剧（海尔兄弟，喜羊羊，猫和老鼠，大耳朵图图等等）
 define('NEED_LOGIN', 0); // 是否要登录用户才能用。0 否, 1 是
 define('BILIROAMING', 1); // 是否要用哔哩漫游才能使用。0 否, 1 是
 define('WEB_ON', 0); // 是否开启web接口 0 否, 1 是 目前Web接口不受哔哩漫游请求头影响，且不受服务器锁区影响（待更新）
@@ -77,9 +77,10 @@ define('CUSTOM_HOST_HK_WEB_SEARCH', 'https://api.bilibili.com'); // HK 搜索api
 define('CUSTOM_HOST_TW_WEB_SEARCH', 'https://api.bilibili.com'); // TW 搜索api
 
 // API相关(东南亚服务器)
-define('CUSTOM_HOST_TH', 'https://api.global.bilibili.com'); // 泰区 解析api
-define('CUSTOM_HOST_TH_SEARCH', 'https://app.global.bilibili.com'); // 泰区 搜索api
-define('CUSTOM_HOST_TH_SUB', 'https://app.global.bilibili.com'); // 泰区 字幕api
+define('CUSTOM_HOST_TH', 'https://app.biliintl.com'); // 泰区 解析api
+define('CUSTOM_HOST_TH_SEARCH', 'https://app.biliintl.com'); // 泰区 搜索api
+define('CUSTOM_HOST_TH_SUB', 'https://app.biliintl.com'); // 泰区 字幕api
+define('CUSTOM_HOST_TH_WEBSUB', 'https://api.bilibili.tv'); // 泰区 字幕api
 define('CUSTOM_HOST_TH_TOKEN', 'https://passport.biliintl.com'); // 泰区 刷新TOKEN api
 
 // 自定义API,避免集中请求，降低风控几率

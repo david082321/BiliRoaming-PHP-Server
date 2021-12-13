@@ -13,13 +13,14 @@ define('SS_ID', @$_GET['season_id']);
 define('QN', @$_GET['qn']);
 define('BILIROAMING_VERSION', @$_SERVER['HTTP_X_FROM_BILIROAMING']);
 $baned = 0;
+$th_paths = array("/intl/gateway/v2/app/search/type","/intl/gateway/v2/app/search/v2","/intl/gateway/v2/app/subtitle","/intl/gateway/web/v2/subtitle","/intl/gateway/v2/ogv/view/app/season","/intl/gateway/v2/ogv/view/app/season2","/intl/gateway/v2/ogv/playurl");
 if (BILIROAMING_VERSION == '') {
 	if (BILIROAMING == 1 && WEB_ON == 0) { //仅限漫游用户，且未开放web脚本
 		$baned = 10;
 		block($baned);
 	}
 	if (@$_GET['area'] == '' || @$_GET['area'] == 'false') { //web脚本,兼容泰区无area情况
-		if ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle" || $path == "/intl/gateway/v2/ogv/view/app/season") {
+		if (in_array($path, $th_paths)) {
 			define('AREA', 'th');
 		} else {
 			define('AREA', 'noarea');
@@ -28,7 +29,8 @@ if (BILIROAMING_VERSION == '') {
 		define('AREA', @$_GET['area']);
 	}
 } else if (@$_GET['area'] == '') { //适配老漫游版本，兼容泰区无area情况
-	if ($path == "/intl/gateway/v2/app/search/type" || $path == "/intl/gateway/v2/app/subtitle" || $path == "/intl/gateway/v2/ogv/view/app/season") {
+	
+	if (in_array($path, $th_paths)) {
 		define('AREA', 'th');
 	} else {
 		define('AREA', 'oldversion');
