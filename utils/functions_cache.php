@@ -399,7 +399,7 @@ function write_cache_subtitle() {
 		default:
 			$ts = $ts + CACHE_TIME_OTHER;
 	}
-	$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type_".$cache_type."`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','subtitle','0','".EP_ID."','".$output."')";
+	$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','subtitle_".$cache_type."','0','".EP_ID."','".$output."')";
 	// 刷新缓存
 	if ($refresh_cache_subtitle == 1) {
 		$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `cache_type` = 'subtitle_".$cache_type."' AND `ep_id` = '".EP_ID."';";
