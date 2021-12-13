@@ -142,7 +142,7 @@ function write_cache() {
 		default:
 			$ts = $ts + CACHE_TIME_OTHER;
 	}
-	if ($code !== "") { //没有获取到code不写入缓存
+	if ($output !== "") { //没有获取到输出内容不写入缓存
 		$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','".$member_type."','".$cache_type."','".CID."','".EP_ID."','".$output."')";
 		// 刷新缓存
 		if ($refresh_cache == 1) {
@@ -277,7 +277,7 @@ function write_cache_season() {
 			$items = $array['result']['modules'][0]['data']['episodes'];
 			for ($i=0; $i<count($items); $i++) {
 				$ep_id = $items[$i]['id'];
-				$sqlco = "SELECT `expired_time`,`cid` FROM `cache` WHERE `area` = '".$area."' AND `cache_type` = 'subtitle' AND `ep_id` = '".$ep_id."'";
+				$sqlco = "SELECT `expired_time`,`cid` FROM `cache` WHERE `area` = '".$area."' AND `cache_type` = 'subtitle_".$cache_type."' AND `ep_id` = '".$ep_id."'";
 				$cres = $dbh -> query($sqlco);
 				$vnum = $cres -> fetch();
 				if ($vnum) {
@@ -299,9 +299,9 @@ function write_cache_season() {
 				}
 				$sub = json_encode($sub_json, JSON_UNESCAPED_UNICODE);
 				if (!$refresh_cache_subtitle) {
-					$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','subtitle','".$ss_id."','".$ep_id."','".$sub."')";
+					$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','subtitle_".$cache_type."','".$ss_id."','".$ep_id."','".$sub."')";
 				} else {
-					$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$sub."', `cid` = '".$ss_id."' WHERE `area` = '".AREA."' AND `cache_type` = 'subtitle' AND `ep_id` = '".$ep_id."';";
+					$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$sub."', `cid` = '".$ss_id."' WHERE `area` = '".AREA."' AND `cache_type` = 'subtitle_".$cache_type."' AND `ep_id` = '".$ep_id."';";
 				}
 				$dbh -> exec($sql);
 				
