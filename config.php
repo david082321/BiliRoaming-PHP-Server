@@ -14,6 +14,7 @@ define('WEB_ON', 0); // 是否开启web接口 0 否, 1 是 目前Web接口不受
 define('LOCK_AREA', 0); // 服务器锁区，须设置$SERVER_AREA。0 否, 1 是
 $BLACKLIST = array('1', '2', '3'); // 本地黑名单，填写 uid，可自行添加、删除，注意使用英文,和'
 $WHITELIST = array('1', '2', '3'); // 本地白名单，填写 uid，可自行添加、删除，注意使用英文,和'
+define('ROAMING_MIN_VER', 0); // 设置最低允许漫游版本，详情看哔哩漫游仓库 versionCode
 
 // 封锁指定epid视频
 define('BAN_EP', 0); // 是否开启ban特定视频

@@ -34,16 +34,14 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 	}
 	// key已过期 或 服务器不允许未登录用户
 	if ($uid == "0" && (NEED_LOGIN == 1 || $expired == "1")) {
-		$baned = 20;
-		block($baned);
+		block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)");
 	}
 } elseif (ACCESS_KEY != "") {
 	$out = get_userinfo();
 	$uid = $out[0];
 	$due = $out[1];
 	if ($uid == "0" && NEED_LOGIN == 1) {
-		$baned = 20;
-		block($baned);
+		block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)");
 	}
 }
 
@@ -68,24 +66,28 @@ if (ACCESS_KEY != "") { // access_key 存在
 			if ($is_blacklist) {
 				$is_baned = true;
 				$baned = 21;
+				$reason = "uid黑名单";
 			}
 			break;
 		case "whitelist": // 在线白名单
 			if (!$is_whitelist) {
 				$is_baned = true;
 				$baned = 22;
+				$reason = "uid不在白名单";
 			}
 			break;
 		case "local_blacklist": // 本地黑名单
 			if (in_array($uid, $BLACKLIST)) {
 				$is_baned = true;
 				$baned = 21;
+				$reason = "uid黑名单";
 			}
 			break;
 		case "local_whitelist": // 本地白名单
 			if (!in_array($uid, $WHITELIST)) {
 				$is_baned = true;
 				$baned = 22;
+				$reason = "uid不在白名单";
 			}
 			break;
 		default:
@@ -98,15 +100,14 @@ if (ACCESS_KEY != "") { // access_key 存在
 			include (ROOT_PATH."utils/replace_playurl.php");
 			replace_playurl();
 		} else {
-			block($baned);
+			block($baned, $reason);
 		}
 	}
 } else {  // access_key 不存在
 	if (CID == "13073143" || CID == "120453316") { // 漫游测速
 		//pass
 	} else if (BLOCK_TYPE == "whitelist" || BLOCK_TYPE == "local_whitelist" || NEED_LOGIN == 1) { // 白名单模式 或 黑名单模式+需要登录
-		$baned = 23;
-		block($baned);
+		block(23, "未提供访问密钥(漫游需要登录、脚本需要授权)");
 	}
 }
 ?>
