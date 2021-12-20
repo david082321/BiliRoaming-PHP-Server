@@ -50,14 +50,26 @@ if (ACCESS_KEY != "") { // access_key 存在
 	// resign.php 可能会用到
 	$is_blacklist = false;
 	$is_whitelist = false;
+	
 	if (BLOCK_TYPE == "blacklist" || BLOCK_TYPE == "whitelist") {
-		$url = "https://black.qimo.ink/status.php?access_key=".ACCESS_KEY;
-		$status = json_decode(get_webpage($url), true);
-		$code = $status['code'];
-		if ((string)$code == "0") {
-			$is_blacklist = $status['data']['is_blacklist'];
-			$is_whitelist = $status['data']['is_whitelist'];
-			//$reason = $status['data']['reason'];
+		if (SAVE_CACHE == 1) {
+			// 获取黑白名单缓存
+			$out = get_cache_blacklist();
+			$is_blacklist = $out[0];
+			$is_whitelist = $out[1];
+		}
+		if ((SAVE_CACHE == 1 && $is_blacklist == "⑨") || SAVE_CACHE == 0) {
+			$url = "https://black.qimo.ink/status.php?access_key=".ACCESS_KEY;
+			$status = json_decode(get_webpage($url), true);
+			$code = $status['code'];
+			if ((string)$code == "0") {
+				$is_blacklist = $status['data']['is_blacklist'];
+				$is_whitelist = $status['data']['is_whitelist'];
+				//$reason = $status['data']['reason'];
+				if (SAVE_CACHE == 1) {
+					write_cache_blacklist(); // 写入缓存
+				}
+			}
 		}
 	}
 	$is_baned = false;

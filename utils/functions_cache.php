@@ -20,6 +20,7 @@ try {
 $refresh_cache = 0;
 $refresh_cache_season = 0;
 $refresh_cache_subtitle = 0;
+$refresh_cache_status = 0;
 
 // 刷新用户信息的缓存
 function refresh_userinfo() {
@@ -364,7 +365,7 @@ function write_cache_subtitle() {
 	global $output;
 	global $cache_type;
 	global $refresh_cache_subtitle;
-	
+
 	if (EP_ID == "") {
 		return "no cache";
 	}
@@ -407,6 +408,55 @@ function write_cache_subtitle() {
 	// 刷新缓存
 	if ($refresh_cache_subtitle == 1) {
 		$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `cache_type` = 'subtitle_".$cache_type."' AND `ep_id` = '".EP_ID."';";
+	}
+	$dbh -> exec($sql);
+}
+
+// 获取黑白名单缓存
+function get_cache_blacklist() {
+	global $dbh;
+	global $uid;
+	global $refresh_cache_status;
+	$sqlco = "SELECT * FROM `status` WHERE `uid` = '".$uid."'";
+	$cres = $dbh -> query($sqlco);
+	$vnum = $cres -> fetch();
+	if (!$vnum) {
+		return ["⑨","⑨"];
+	}
+	//$uid = $vnum['uid'];
+	$expired_time = $vnum['expired_time'];
+	$is_blacklist = $vnum['is_blacklist'];
+	$is_whitelist = $vnum['is_whitelist'];
+	//$reason = $vnum['reason'];
+	if (time() > (int)$expired_time) {
+		$refresh_cache_status = 1; // 刷新缓存
+		return ["⑨","⑨"];
+	}
+	return [$is_blacklist, $is_whitelist];
+}
+
+// 写入黑白名单缓存
+function write_cache_blacklist() {
+	global $dbh;
+	global $uid;
+	global $is_blacklist;
+	global $is_whitelist;
+	global $refresh_cache_status;
+	if ($is_blacklist) {
+		$is_blacklist = 1;
+	} else {
+		$is_blacklist = 0;
+	}
+	if ($is_whitelist) {
+		$is_whitelist = 1;
+	} else {
+		$is_whitelist = 0;
+	}
+	$ts = time() + CACHE_TIME_BLACKLIST;
+	$sql = "INSERT INTO `status` (`expired_time`,`uid`,`is_blacklist`,`is_whitelist`) VALUES ('".$ts."','".$uid."','".$is_blacklist."','".$is_whitelist."')";
+	// 刷新缓存
+	if ($refresh_cache_status == 1) {
+		$sql = "UPDATE `cache` SET `expired_time` = '".$ts."' WHERE `uid` = '".$uid."' AND `is_blacklist` = '".$is_blacklist."' AND `is_whitelist` = '".$is_whitelist."';";
 	}
 	$dbh -> exec($sql);
 }

@@ -39,6 +39,7 @@ define('CACHE_TIME_412', 60*60*24*7); // 返回412（服务器IP被风控）时�
 define('CACHE_TIME_404', 60*60*24*1); // 返回404时的缓存时长（秒）
 define('CACHE_TIME_OTHER', 60*60*1); // 返回其他错误时的缓存时长（秒）
 define('CACHE_TIME_USER', 60*60*24*1); //缓存用户key的时长（秒）
+define('CACHE_TIME_BLACKLIST', 60*15); //缓存黑白名单的时长（秒）
 
 // MySQL数据库
 define('DB_HOST', 'localhost');
