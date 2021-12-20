@@ -456,7 +456,7 @@ function write_cache_blacklist() {
 	$sql = "INSERT INTO `status` (`expired_time`,`uid`,`is_blacklist`,`is_whitelist`) VALUES ('".$ts."','".$uid."','".$is_blacklist."','".$is_whitelist."')";
 	// 刷新缓存
 	if ($refresh_cache_status == 1) {
-		$sql = "UPDATE `cache` SET `expired_time` = '".$ts."' WHERE `uid` = '".$uid."' AND `is_blacklist` = '".$is_blacklist."' AND `is_whitelist` = '".$is_whitelist."';";
+		$sql = "UPDATE `status` SET `expired_time` = '".$ts."', `is_blacklist` = '".$is_blacklist."', `is_whitelist` = '".$is_whitelist."' WHERE `uid` = '".$uid."';";
 	}
 	$dbh -> exec($sql);
 }

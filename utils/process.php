@@ -18,7 +18,7 @@ $th_paths = array("/intl/gateway/v2/app/search/type","/intl/gateway/v2/app/searc
 $get_area = @$_GET['area'];
 if (BILIROAMING_VERSION == '' && BILIROAMING_VERSION_CODE == '') {
 	if (BILIROAMING == 1 && WEB_ON == 0) { //仅限漫游用户，且未开放web脚本
-		block(10, "服务器限漫游使用");
+		block(10, "此服务器限漫游使用");
 	}
 	if ($get_area == '' || $get_area == 'false') { //web脚本,兼容泰区无area情况
 		if (in_array($path, $th_paths)) {
@@ -52,13 +52,13 @@ if (@$_GET['ts'] == '') {
 	define('TS', @$_GET['ts']);
 }
 if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
-	block(11, "ep_id黑名单");
+	block(11, "服务器禁止解锁此视频，请改用其他解析服务器");
 }
 if (in_array(CID, $cid_list) && BAN_CID == 1) {
-	block(12, "cid黑名单");
+	block(12, "服务器禁止解锁此视频，请改用其他解析服务器");
 }
 if (in_array(AREA, $BAN_SERVER_AREA)) {
-	block(13, "area黑名单");
+	block(13, "不支持解锁地区(".AREA.")，请检查漫游解析服务器设置");
 }
 
 function block($code, $reason){
