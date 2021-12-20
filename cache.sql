@@ -50,4 +50,20 @@ ALTER TABLE `my_keys`
 
 ALTER TABLE `my_keys`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id';
+
+CREATE TABLE `status` (
+  `id` int(11) NOT NULL COMMENT 'id',
+  `expired_time` int(11) NOT NULL COMMENT '到期时间',
+  `uid` int(20) NOT NULL COMMENT '用户id',
+  `is_blacklist` tinyint(1) NOT NULL,
+  `is_whitelist` tinyint(1) NOT NULL,
+  `reason` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='黑白名单';
+
+ALTER TABLE `status`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `status`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id';
+
 COMMIT;

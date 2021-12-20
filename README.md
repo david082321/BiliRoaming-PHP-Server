@@ -10,7 +10,7 @@
 
 * [下载历史版本](https://github.com/david082321/BiliRoaming-PHP-Server/releases)
 
-* ！！！重要！！！由于网页脚本的更新，为作缓存区分，v3.0.0 更新了数据库字段。从 1.x 或 2.x 升级的用户，请务必更新数据库。
+* ！！！⚠重要⚠！！！v4.1.0 更新了数据库字段。从旧版升级的用户，请务必更新数据库。
 
 ## 用法：
 
@@ -51,15 +51,21 @@
 
     rewrite "^/intl/gateway/v2/app/search/type?(.*)$" /intl/gateway/v2/app/search/type/index.php?$1 last;
 
+    rewrite "^/intl/gateway/v2/app/search/v2?(.*)$" /intl/gateway/v2/app/search/v2/index.php?$1 last;
+
     rewrite "^/intl/gateway/v2/app/subtitle?(.*)$" /intl/gateway/v2/app/subtitle/index.php?$1 last;
 
     rewrite "^/intl/gateway/v2/ogv/playurl?(.*)$" /intl/gateway/v2/ogv/playurl/index.php?$1 last;
 
     rewrite "^/intl/gateway/v2/ogv/view/app/season?(.*)$" /intl/gateway/v2/ogv/view/app/season/index.php?$1 last;
 
+    rewrite "^/intl/gateway/v2/ogv/view/app/season2?(.*)$" /intl/gateway/v2/ogv/view/app/season2/index.php?$1 last;
+
     rewrite "^/pgc/player/api/playurl?(.*)$" /pgc/player/api/playurl/index.php?$1 last;
 
     rewrite "^/pgc/player/web/playurl?(.*)$" /pgc/player/web/playurl/index.php?$1 last;
+
+    rewrite "^/pgc/view/web/season?(.*)$" /pgc/view/web/season/index.php?$1 last;
 
     rewrite "^/x/intl/passport-login/oauth2/refresh_token?(.*)$" /x/intl/passport-login/oauth2/refresh_token/index.php?$1 last;
 
@@ -107,21 +113,33 @@
 
 │　├─app
 
-│　│　├─search/type/index.php (东南亚APP 搜索)
+│　│　└─search
 
-│　│　└─subtitle/index.php (东南亚APP 字幕)
+│　│　　├─type/index.php (东南亚APP 搜索)
+
+│　│　　└─v2/index.php (东南亚APP 搜索)
+
+│　└─subtitle/index.php (东南亚APP 字幕)
 
 │　└─ogv
 
 │　　　├─playurl/index.php (东南亚APP playurl)
 
-│　　　└─view/app/season/index.php (东南亚APP season)
+│　　　├─view/app/season/index.php (东南亚APP season)
 
-├─pgc/player/
+│　　　└─view/app/season2/index.php (东南亚APP season)
 
-│　├─api/playurl/index.php (APP playurl)
+├─pgc
 
-│　└─web/playurl/index.php (WEB playurl)
+│　├─player
+
+│　│　├─api/playurl/index.php (APP playurl)
+
+│　│　└─web/playurl/index.php (WEB playurl)
+
+│　└─view
+
+│　　　└─web/season/index.php (WEB season)
 
 ├─x/
 
