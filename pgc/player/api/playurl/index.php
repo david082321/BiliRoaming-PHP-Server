@@ -5,7 +5,7 @@ $cache_type = "app";
 // 加载配置
 include ($_SERVER['DOCUMENT_ROOT']."/config.php");
 // 加载版本
-include (ROOT_PATH."utils/version.php");
+include(ROOT_PATH."utils/version.php");
 // 加载functions
 include (ROOT_PATH."utils/functions.php");
 if (SAVE_CACHE == 1) {
@@ -20,7 +20,7 @@ include (ROOT_PATH."utils/lock_area.php");
 // 鉴权、替换access_key、获取缓存
 include (ROOT_PATH."utils/auth.php"); // 鉴权
 if (ACCESS_KEY != "") {
-	include (ROOT_PATH."utils/resign.php"); // 替换access_key
+	include(ROOT_PATH."utils/resign.php"); // 替换access_key
 }
 if (SAVE_CACHE == 1) {
 	get_cache(); // 获取缓存
