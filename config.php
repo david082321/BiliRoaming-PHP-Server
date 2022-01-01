@@ -119,4 +119,9 @@ define('RESIGN_CN', 0); // 替换成大会员。0 否, 1 是
 define('RESIGN_TH', 0); // 替换成泰国登录会员。0 否, 1 是
 define('RESIGN_TH_PAID', 0); // 替换成泰国付费会员。0 否, 1 是
 
+//telegram_bot 412提醒
+define('TG_NOTIFY',0); // 是否开启TG提醒。 0 否 , 1 是
+define('TG_BOT_KEY',''); // 找BotFather要
+define('TG_CHAT_ID',''); // TG的chat_id具体怎么获取自行百度
+define('TG_BOT_API','https://api.telegram.org'); // 服务器在国内可以自行反代
 ?>

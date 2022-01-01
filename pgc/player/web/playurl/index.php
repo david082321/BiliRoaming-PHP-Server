@@ -37,6 +37,13 @@ if (IP_RESOLVE == 1) {
 } else {
 	$output = get_webpage($url);
 }
+// 412提醒
+if (TG_NOTIFY == 1) {
+	$status = json_decode($output, true);
+	if ($status['code'] == -412) {
+		file_get_contents(TG_BOT_API.'/'.TG_BOT_KEY.'/sendMessage?chat_id='.TG_CHAT_ID.'&text=破服务器412啦，地区:' . $get_area);
+	}
+}
 // 替换内容
 include (ROOT_PATH."utils/replace.php");
 // 返回内容给用户
