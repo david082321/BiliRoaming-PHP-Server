@@ -38,27 +38,7 @@ if (IP_RESOLVE == 1) {
 	$output = get_webpage($url);
 }
 // 412提醒
-if (TG_NOTIFY == 1) {
-	$status = json_decode($output, true);
-	if(SAVE_CACHE == 0){
-		if ($status['code'] == -412) {
-			file_get_contents(TG_BOT_API.'/'.TG_BOT_KEY.'/sendMessage?chat_id='.TG_CHAT_ID.'&text=破服务器412啦，地区:' . $get_area);
-		}
-	} else {
-		$latest_code = read_status();
-		if($latest_code != $status['code']){
-			if($status['code'] == -412){
-				file_get_contents(TG_BOT_API.'/'.TG_BOT_KEY.'/sendMessage?chat_id='.TG_CHAT_ID.'&text=破服务器412啦，地区:' . $get_area);
-				write_status($status['code']);
-			} else {
-				if($latest_code == -412){
-					file_get_contents(TG_BOT_API.'/'.TG_BOT_KEY.'/sendMessage?chat_id='.TG_CHAT_ID.'&text=破服务器恢复啦，地区:' . $get_area);
-				}
-				write_status(0);
-			}
-		}
-	}
-}
+check_412($output,$get_area);
 // 替换内容
 include (ROOT_PATH."utils/replace.php");
 // 返回内容给用户
