@@ -460,4 +460,46 @@ function write_cache_blacklist() {
 	}
 	$dbh -> exec($sql);
 }
+//读取上次解析状态
+function read_status($area){
+	global $dbh;
+	$result = $dbh -> query("SHOW TABLES LIKE 'status_code'");
+	$row = $result -> fetchAll();
+	//判断表是否存在
+	if ( count($row) == '1' ) {
+		$sqlco = "SELECT `code` FROM `status_code` WHERE `area` = '".$area."'";
+		$result = $dbh -> query($sqlco);
+		$code = $result -> fetch();
+		return $code['code'];
+	} else {
+		return 0;
+	}
+}
+//写入此次解析状态
+function write_status($code,$area) {
+	global $dbh;
+	$result = $dbh -> query("SHOW TABLES LIKE 'status_code'");
+	$row = $result -> fetchAll();
+	//判断表是否存在
+	if ( count($row) == '1' ) {
+    	$sql = "UPDATE `status_code` SET `time` = '".time()."', `code` = '".$code."' WHERE `area` = '".$area."';";
+		$dbh -> exec($sql);
+	} else {
+    	$sql = "CREATE TABLE status_code (
+		id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+		area VARCHAR(10),
+		code VARCHAR(10),
+		time INT
+		)";
+		$dbh -> exec($sql);
+		$sql = "INSERT INTO `status_code` (`area`,`code`,`time`) VALUES ('cn','".$code."','".time()."')";
+		$dbh -> exec($sql);
+		$sql = "INSERT INTO `status_code` (`area`,`code`,`time`) VALUES ('hk','".$code."','".time()."')";
+		$dbh -> exec($sql);
+		$sql = "INSERT INTO `status_code` (`area`,`code`,`time`) VALUES ('tw','".$code."','".time()."')";
+		$dbh -> exec($sql);
+		$sql = "INSERT INTO `status_code` (`area`,`code`,`time`) VALUES ('th','".$code."','".time()."')";
+		$dbh -> exec($sql);
+	}
+}
 ?>
