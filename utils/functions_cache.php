@@ -463,13 +463,13 @@ function write_cache_blacklist() {
 //读取上次解析状态
 function read_status(){
 	global $dbh;
-	$result = $dbh->query("SHOW TABLES LIKE 'status_code'");
-	$row = $result->fetchAll();
+	$result = $dbh -> query("SHOW TABLES LIKE 'status_code'");
+	$row = $result -> fetchAll();
 	//判断表是否存在
 	if ( count($row) == '1' ) {
 		$sqlco = "SELECT `code` FROM `status_code` WHERE `id` = '1'";
 		$result = $dbh -> query($sqlco);
-		$code = $result->fetch();
+		$code = $result -> fetch();
 		return $code['code'];
 	} else {
 		return 0;
@@ -478,8 +478,8 @@ function read_status(){
 //写入此次解析状态
 function write_status($code) {
 	global $dbh;
-	$result = $dbh->query("SHOW TABLES LIKE 'status_code'");
-	$row = $result->fetchAll();
+	$result = $dbh -> query("SHOW TABLES LIKE 'status_code'");
+	$row = $result -> fetchAll();
 	//判断表是否存在
 	if ( count($row) == '1' ) {
     	$sql = "UPDATE `status_code` SET `time` = '".time()."', `code` = '".$code."' WHERE `id` = '1';";
@@ -490,7 +490,7 @@ function write_status($code) {
 		code VARCHAR(10),
 		time INT
 		)";
-		$dbh->exec($sql);
+		$dbh -> exec($sql);
 		$sql = "INSERT INTO `status_code` (`code`,`time`) VALUES ('".$code."','".time()."')";
 		$dbh -> exec($sql);
 	}
