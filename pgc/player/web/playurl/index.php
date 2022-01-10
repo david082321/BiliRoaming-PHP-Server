@@ -37,6 +37,8 @@ if (IP_RESOLVE == 1) {
 } else {
 	$output = get_webpage($url);
 }
+// 412提醒
+check_412($output,$get_area);
 // 替换内容
 include (ROOT_PATH."utils/replace.php");
 // 返回内容给用户
