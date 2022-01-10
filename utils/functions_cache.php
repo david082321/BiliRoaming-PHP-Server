@@ -432,7 +432,7 @@ function get_cache_blacklist() {
 		$refresh_cache_status = 1; // 刷新缓存
 		return ["⑨","⑨"];
 	}
-	return [$is_blacklist, $is_whitelist];
+	return [$is_blacklist, $is_whitelist, $ban_reason];
 }
 
 // 写入黑白名单缓存
