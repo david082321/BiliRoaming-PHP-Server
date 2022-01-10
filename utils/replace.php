@@ -6,10 +6,8 @@ if(!defined('SYSTEM')) {exit();}
 $output = str_replace("\u0026","&",$output);
 switch ($type) {
 	case 0: // 搜索
-		if ($cache_type == "app") {
+		if ($cache_type != "web") {
 			include (ROOT_PATH."utils/fuck_search.php"); // 搜索结果添加提示
-		} elseif ($cache_type == "web") {
-		    include (ROOT_PATH."utils/fuck_search_web.php");
 		}
 		break;
 	case 1: // playurl
