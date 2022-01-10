@@ -58,6 +58,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 			$out = get_cache_blacklist();
 			$is_blacklist = $out[0];
 			$is_whitelist = $out[1];
+			$ban_reason = $out[2];
 		}
 		if ((SAVE_CACHE == 1 && $is_blacklist == "⑨") || SAVE_CACHE == 0) {
 			$url = "https://black.qimo.ink/status.php?access_key=".ACCESS_KEY;
