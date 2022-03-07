@@ -6,7 +6,7 @@ define('SYSTEM', TRUE);
 define('ROOT_PATH',$_SERVER['DOCUMENT_ROOT'].'/');
 
 // 封锁
-define('BLOCK_TYPE', 'none'); // 封锁类型：blacklist 在线黑名单, whitelist 在线白名单, local_blacklist 本地黑名单, local_whitelist 本地白名單, 不是填写前面几个就是不封锁
+define('BLOCK_TYPE', 'blacklist'); // 封锁类型：blacklist 在线黑名单, whitelist 在线白名单, local_blacklist 本地黑名单, local_whitelist 本地白名單, 不是填写前面几个就是不封锁
 define('REPLACE_TYPE', 'none'); // 是否替换视频(仅黑/白名单时生效)。random 随机番剧（海尔兄弟，喜羊羊，猫和老鼠，大耳朵图图等等）
 define('NEED_LOGIN', 0); // 是否要登录用户才能用。0 否, 1 是
 define('BILIROAMING', 1); // 是否要用哔哩漫游才能使用。0 否, 1 是

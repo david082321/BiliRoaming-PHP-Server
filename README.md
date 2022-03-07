@@ -18,6 +18,8 @@
 
 * 默认为「在线黑名单」模式，若要切换到其他模式，请看底下说明。
 
+* 注意：在线黑名单，需要授权才能使用。[加TG群了解更多。](https://t.me/biliroaming_chat)
+
 ## 示例：
 
 ![示例](https://i.loli.net/2021/01/10/VwJ5D1GoRBbyfmq.jpg)
