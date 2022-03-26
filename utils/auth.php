@@ -80,28 +80,28 @@ if (ACCESS_KEY != "") { // access_key 存在
 			if ($is_blacklist) {
 				$is_baned = true;
 				$baned = 21;
-				$reason = "uid黑名单：".$ban_reason;
+				$reason = $uid." 在黑名单：".$ban_reason;
 			}
 			break;
 		case "whitelist": // 在线白名单
 			if (!$is_whitelist) {
 				$is_baned = true;
 				$baned = 22;
-				$reason = "uid不在白名单";
+				$reason = $uid." 不在白名单";
 			}
 			break;
 		case "local_blacklist": // 本地黑名单
 			if (in_array($uid, $BLACKLIST)) {
 				$is_baned = true;
 				$baned = 21;
-				$reason = "uid黑名单：".$ban_reason;
+				$reason = $uid." 在黑名单：".$ban_reason;
 			}
 			break;
 		case "local_whitelist": // 本地白名单
 			if (!in_array($uid, $WHITELIST)) {
 				$is_baned = true;
 				$baned = 22;
-				$reason = "uid不在白名单";
+				$reason = $uid." 不在白名单";
 			}
 			break;
 		default:
