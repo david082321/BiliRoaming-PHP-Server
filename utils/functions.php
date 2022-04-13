@@ -174,7 +174,8 @@ function add_query($sign_type, $query, $add_query) {
 	unset($query_arr["sign"]);
 	$query_arr["appkey"] = $appkey;
 	ksort($query_arr);
-	$sign = md5(http_build_query($query_arr).$appsec);
+	$query_new = http_build_query($query_arr);
+	$sign = md5($query_new.$appsec);
 	return $query_new."&sign=".$sign;
 }
 ?>
