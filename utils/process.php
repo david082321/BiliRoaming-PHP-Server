@@ -63,6 +63,6 @@ if (in_array(AREA, $BAN_SERVER_AREA)) {
 
 function block($code, $reason){
 	http_response_code(200); // B站就是都返回200
-	exit('{"code":-'.$code.',"message":"'.$reason.'"}');
+	exit('{"code":-'.$code.',"message":"'.$reason.'('.$code.')"}');
 }
 ?>
