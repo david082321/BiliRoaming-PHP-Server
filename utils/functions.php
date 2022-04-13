@@ -135,6 +135,7 @@ function get_userinfo() {
 	}
 	return $out;
 }
+
 function check_412($output,$get_area){// 412提醒
 	if (TG_NOTIFY == 1) {
 		$status = json_decode($output, true);
@@ -157,5 +158,23 @@ function check_412($output,$get_area){// 412提醒
 			}
 		}
 	}
+}
+
+function add_query($sign_type, $query, $add_query) {
+	if ($sign_type == "th") {
+		$appkey = APPKEY_TH;
+		$appsec = APPSEC_TH;
+	} else {
+		$appkey = APPKEY;
+		$appsec = APPSEC;
+	}
+	parse_str($query, $query_arr);
+	parse_str($add_query, $query_arr2);
+	$query_arr = array_merge($query_arr, $query_arr2);
+	unset($query_arr["sign"]);
+	$query_arr["appkey"] = $appkey;
+	ksort($query_arr);
+	$sign = md5(http_build_query($query_arr).$appsec);
+	return $query_new."&sign=".$sign;
 }
 ?>

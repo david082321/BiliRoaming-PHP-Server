@@ -21,6 +21,8 @@ if (IP_RESOLVE == 1) {
 	$host = $hosts[array_rand($hosts)];
 	$ip = $ips[array_rand($ips)];
 }
+// 加入必要参数
+$query = add_query("cn", $query, "build=6400000&highlight=1&mobi_app=android&platform=android&ts=".time());
 // 转发到指定服务器
 $url = $host.$path."?".$query;
 if (IP_RESOLVE == 1) {

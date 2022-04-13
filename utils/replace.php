@@ -19,5 +19,7 @@ switch ($type) {
 		break;
 	case 3: // 东南亚APP 字幕
 		break;
+	case 4: // 东南亚APP episode
+		break;
 }
 ?>

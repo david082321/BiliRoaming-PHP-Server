@@ -63,6 +63,8 @@
 
     rewrite "^/intl/gateway/v2/ogv/view/app/season2?(.*)$" /intl/gateway/v2/ogv/view/app/season2/index.php?$1 last;
 
+    rewrite "^/intl/gateway/v2/ogv/view/app/episode?(.*)$" /intl/gateway/v2/ogv/view/app/episode/index.php?$1 last;
+
     rewrite "^/pgc/player/api/playurl?(.*)$" /pgc/player/api/playurl/index.php?$1 last;
 
     rewrite "^/pgc/player/web/playurl?(.*)$" /pgc/player/web/playurl/index.php?$1 last;
@@ -126,6 +128,8 @@
 │　└─ogv
 
 │　　　├─playurl/index.php (东南亚APP playurl)
+
+│　　　├─view/app/episode/index.php (东南亚APP episode)
 
 │　　　├─view/app/season/index.php (东南亚APP season)
 
