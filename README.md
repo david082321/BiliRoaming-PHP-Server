@@ -196,3 +196,9 @@
 ├─hello.php (默认欢迎页面)
 
 └─index.php (WEB playurl、显示欢迎页)
+
+# 友链
+
+* https://github.com/JasonKhew96/biliroaming-go-server
+
+* 动手能力强的可以用这个，服务器回应的速度比我这个快多了。
