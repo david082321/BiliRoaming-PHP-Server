@@ -7,12 +7,12 @@ $path = explode('/index.php', $_SERVER['PHP_SELF'])[0];
 $query = str_replace("&&", "",str_replace("/&", "", $_SERVER['QUERY_STRING']));
 // 修复参数开头为 & 的问题
 if (substr($query,0,1) == "&") {
-    $query = substr($query,1);
+	$query = substr($query,1);
 }
 // 日志参数
 if (SAVE_LOG == 1) {
-    define('PATH', $path);
-    define('QUERY', $query);
+	define('PATH', $path);
+	define('QUERY', $query);
 }
 
 define('ACCESS_KEY', @$_GET['access_key']);
@@ -27,7 +27,7 @@ $th_paths = array("/intl/gateway/v2/app/search/type","/intl/gateway/v2/app/searc
 $get_area = @$_GET['area'];
 if (BILIROAMING_VERSION == '' && BILIROAMING_VERSION_CODE == '') {
 	if (BILIROAMING == 1 && WEB_ON == 0 && $path!="") { // 仅限漫游用户，且未开放web脚本
-	    define('AREA', $get_area);
+		define('AREA', $get_area);
 		block(10, "本服务器限漫游使用");
 	}
 	if ($get_area == '' || $get_area == 'false') { // web脚本,兼容泰区无area情况
@@ -76,15 +76,15 @@ if (in_array(AREA, $BAN_SERVER_AREA)) {
 
 // 写入日志（非 playurl）
 if (SAVE_LOG == 1 && $type != 1) {
-    write_log();
+	write_log();
 }
 
 function block($code, $reason){
 	// 写入日志
-    if (SAVE_LOG == 1 && $code <= 20) {
-        define('BAN_CODE', $code);
-        write_log();
-    }
+	if (SAVE_LOG == 1 && $code <= 20) {
+		define('BAN_CODE', $code);
+		write_log();
+	}
 	// 返回内容
 	http_response_code(200); // B站就是都返回200
 	exit('{"code":-'.$code.',"message":"'.$reason.'('.$code.')"}');

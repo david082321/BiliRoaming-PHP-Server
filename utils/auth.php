@@ -109,9 +109,9 @@ if (ACCESS_KEY != "") { // access_key 存在
 	}
 	// 写入日志
 	if (SAVE_LOG == 1 && $type != 1) {
-	    define('BAN_CODE', $baned);
-	    define('UID', $uid);
-        write_log();
+		define('BAN_CODE', $baned);
+		define('UID', $uid);
+		write_log();
 	}
 	// 开始ban
 	$support_replace_type = array("hlw","tom","txbb","xyy","all","random"); // 允许替换的类型（兼容旧版config）

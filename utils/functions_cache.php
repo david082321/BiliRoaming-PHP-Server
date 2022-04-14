@@ -356,7 +356,7 @@ function get_cache_subtitle() {
 			}
 		}
 	return "";
-    }
+	}
 }
 
 // 写入subtitle缓存
@@ -484,10 +484,10 @@ function write_status($code,$area) {
 	$row = $result -> fetchAll();
 	//判断表是否存在
 	if ( count($row) == '1' ) {
-    	$sql = "UPDATE `status_code` SET `time` = '".time()."', `code` = '".$code."' WHERE `area` = '".$area."';";
+		$sql = "UPDATE `status_code` SET `time` = '".time()."', `code` = '".$code."' WHERE `area` = '".$area."';";
 		$dbh -> exec($sql);
 	} else {
-    	$sql = "CREATE TABLE status_code (
+		$sql = "CREATE TABLE status_code (
 		id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 		area VARCHAR(10),
 		code VARCHAR(10),
