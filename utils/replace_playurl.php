@@ -47,7 +47,7 @@ function replace_playurl() {
 		// 替换视频
 		// 好像是count不到正确数量，不晓得有没有人会改的
 		//$v_count = count($array2['data']['video_info']['stream_list']);
-		for($j=0;$j<5;$j++) {
+		for ($j=0;$j<5;$j++) {
 			$array2['data']['video_info']['stream_list'][$j]['dash_video']['base_url'] = $base_url;
 			$array2['data']['video_info']['stream_list'][$j]['dash_video']['backup_url'] = $backup_url;
 			$array2['data']['video_info']['stream_list'][$j]['dash_video']['bandwidth'] = $bandwidth;
@@ -55,7 +55,7 @@ function replace_playurl() {
 
 		// 替换音频
 		//$a_count = count($array2['data']['video_info']['dash_audio']);
-		for($j=0;$j<3;$j++) {
+		for ($j=0;$j<3;$j++) {
 			$array2['data']['video_info']['dash_audio'][$j]['base_url'] = $a_base_url;
 			$array2['data']['video_info']['dash_audio'][$j]['backup_url'] = $a_backup_url;
 			$array2['data']['video_info']['dash_audio'][$j]['bandwidth'] = $a_bandwidth;
@@ -67,7 +67,7 @@ function replace_playurl() {
 		// 替换视频
 		$video = $array2['dash']['video'];
 		$count3 = count($video);
-		for($j=0;$j<$count3;$j++) {
+		for ($j=0;$j<$count3;$j++) {
 			$array2['dash']['video'][$j]['base_url'] = $base_url;
 			$array2['dash']['video'][$j]['backup_url'] = $backup_url;
 			$array2['dash']['video'][$j]['bandwidth'] = $bandwidth;
@@ -76,7 +76,7 @@ function replace_playurl() {
 		// 替换音频
 		$audio = $array2['dash']['audio'];
 		$count4 = count($audio);
-		for($j=0;$j<$count4;$j++) {
+		for ($j=0;$j<$count4;$j++) {
 			$array2['dash']['audio'][$j]['base_url'] = $a_base_url;
 			$array2['dash']['audio'][$j]['backup_url'] = $a_backup_url;
 			$array2['dash']['audio'][$j]['bandwidth'] = $a_bandwidth;

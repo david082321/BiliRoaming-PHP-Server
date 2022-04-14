@@ -29,7 +29,7 @@ if (BILIROAMING_VERSION == '' && BILIROAMING_VERSION_CODE == '') {
 	} else {
 		define('AREA', $get_area);
 	}
-} else if (BILIROAMING_VERSION != '' && BILIROAMING_VERSION_CODE != '') {
+} elseif (BILIROAMING_VERSION != '' && BILIROAMING_VERSION_CODE != '') {
 	if ((int)BILIROAMING_VERSION_CODE < ROAMING_MIN_VER) {
 		block(14, "哔哩漫游模块版本过低");
 	}
@@ -48,7 +48,7 @@ if (BILIROAMING_VERSION == '' && BILIROAMING_VERSION_CODE == '') {
 }
 if (@$_GET['ts'] == '') {
 	define('TS', time());
-}else{
+} else {
 	define('TS', @$_GET['ts']);
 }
 if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {

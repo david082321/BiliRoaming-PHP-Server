@@ -120,7 +120,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 } else {  // access_key 不存在
 	if (CID == "13073143" || CID == "120453316") { // 漫游测速
 		//pass
-	} else if (BLOCK_TYPE == "whitelist" || BLOCK_TYPE == "local_whitelist" || NEED_LOGIN == 1) { // 白名单模式 或 黑名单模式+需要登录
+	} elseif (BLOCK_TYPE == "whitelist" || BLOCK_TYPE == "local_whitelist" || NEED_LOGIN == 1) { // 白名单模式 或 黑名单模式+需要登录
 		block(23, "未提供访问密钥(漫游需要登录、脚本需要授权)");
 	}
 }

@@ -10,7 +10,7 @@ $dbh = 'mysql:host='.$db_host.';'.'dbname='.$db_name;
 try {
 	$dbh = new PDO($dbh, $db_user, $db_pass);
 	//echo '连接成功';
-}catch(PDOException $e) {
+} catch(PDOException $e) {
 	//pass
 	//echo $e;
 	echo '数据库连接失敗';
@@ -262,7 +262,7 @@ function write_cache_season() {
 		if ($refresh_cache_season == 1) {
 			$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".$area."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
 		}
-	} else if ($code !== "") {
+	} elseif ($code !== "") {
 		// 修复转义问题
 		$output = str_replace("\\", "\\\\", $output);
 		// 缓存到自身 AREA 里面
