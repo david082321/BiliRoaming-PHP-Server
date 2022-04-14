@@ -17,7 +17,7 @@ $baned = 0;
 $th_paths = array("/intl/gateway/v2/app/search/type","/intl/gateway/v2/app/search/v2","/intl/gateway/v2/app/subtitle","/intl/gateway/web/v2/subtitle","/intl/gateway/v2/ogv/view/app/season","/intl/gateway/v2/ogv/view/app/season2","/intl/gateway/v2/ogv/playurl","/intl/gateway/v2/ogv/view/app/episode");
 $get_area = @$_GET['area'];
 if (BILIROAMING_VERSION == '' && BILIROAMING_VERSION_CODE == '') {
-	if (BILIROAMING == 1 && WEB_ON == 0) { //仅限漫游用户，且未开放web脚本
+	if (BILIROAMING == 1 && WEB_ON == 0 && $path!="") { //仅限漫游用户，且未开放web脚本
 		block(10, "本服务器限漫游使用");
 	}
 	if ($get_area == '' || $get_area == 'false') { //web脚本,兼容泰区无area情况
