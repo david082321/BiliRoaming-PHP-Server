@@ -508,8 +508,17 @@ function write_status($code,$area) {
 // 写入日志
 function write_log() {
 	global $dbh;
+	if (!empty($_SERVER["HTTP_CF_CONNECTING_IP"])){
+		$ip = $_SERVER["HTTP_CF_CONNECTING_IP"];
+	} elseif (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+		$ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+	} elseif (!empty($_SERVER["HTTP_CLIENT_IP"])){
+		$ip = $_SERVER["HTTP_CLIENT_IP"];
+	} else {
+		$ip = $_SERVER["REMOTE_ADDR"];
+	}
 	$ts = time();
-	$sql = "INSERT INTO `log` (`time`,`area`,`version`,`version_code`,`access_key`,`uid`,`ban_code`,`path`,`query`) VALUES (now(),'".AREA."','".BILIROAMING_VERSION."','".BILIROAMING_VERSION_CODE."','".ACCESS_KEY."','".UID."','".BAN_CODE."','".PATH."','".QUERY."')";
+	$sql = "INSERT INTO `log` (`time`,`ip`,`area`,`version`,`version_code`,`access_key`,`uid`,`ban_code`,`path`,`query`) VALUES (now(),'".$ip."','".AREA."','".BILIROAMING_VERSION."','".BILIROAMING_VERSION_CODE."','".ACCESS_KEY."','".UID."','".BAN_CODE."','".PATH."','".QUERY."')";
 	$dbh -> exec($sql);
 }
 ?>

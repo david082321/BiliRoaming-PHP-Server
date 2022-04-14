@@ -69,6 +69,7 @@ ALTER TABLE `status`
 CREATE TABLE `log` (
   `id` int(10) UNSIGNED NOT NULL COMMENT 'id',
   `time` datetime NOT NULL COMMENT '添加时间',
+  `ip` tinytext,
   `area` tinytext COMMENT '地区',
   `version` tinytext COMMENT '漫游版本号',
   `version_code` smallint(6) DEFAULT '0' COMMENT '漫游版本编号',
