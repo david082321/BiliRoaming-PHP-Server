@@ -476,6 +476,7 @@ function read_status($area){
 		return 0;
 	}
 }
+
 //写入此次解析状态
 function write_status($code,$area) {
 	global $dbh;
@@ -502,5 +503,13 @@ function write_status($code,$area) {
 		$sql = "INSERT INTO `status_code` (`area`,`code`,`time`) VALUES ('th','".$code."','".time()."')";
 		$dbh -> exec($sql);
 	}
+}
+
+// 写入日志
+function write_log() {
+	global $dbh;
+	$ts = time();
+	$sql = "INSERT INTO `log` (`time`,`area`,`version`,`version_code`,`access_key`,`uid`,`ban_code`,`path`,`query`) VALUES (now(),'".AREA."','".BILIROAMING_VERSION."','".BILIROAMING_VERSION_CODE."','".ACCESS_KEY."','".UID."','".BAN_CODE."','".PATH."','".QUERY."')";
+	$dbh -> exec($sql);
 }
 ?>
