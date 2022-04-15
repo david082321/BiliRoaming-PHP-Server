@@ -159,35 +159,35 @@
 
 │　├─auth.php (鉴权)
 
-│　├─fuck_search.php (在搜索中添加提示)[未公开]
+│　├─fuck_search.php (在搜索中添加提示)
 
-│　├─fuck_sub.php (添加东南亚番剧字幕)[未公开]
+│　├─fuck_sub.php (添加东南亚番剧字幕)
 
 │　├─functions.php (功能函数合集)
 
 │　├─functions_cache.php (功能函数合集)[仅缓存使用]
 
-│　├─functions_cache_key.php (功能函数合集)[仅缓存使用][未公开]
+│　├─functions_cache_key.php (功能函数合集)[仅缓存使用]
 
 │　├─lock_area.php (锁区、web接口判断)
 
 │　├─process.php (处理用户传入参数)
 
-│　├─refresh_token.php (自动刷新访问密钥)[未公开]
+│　├─refresh_token.php (自动刷新访问密钥)
 
-│　├─refresh_token_th.php (自动刷新访问密钥)[未公开]
+│　├─refresh_token_th.php (自动刷新访问密钥)
 
 │　├─replace.php (修改返回内容)
 
 │　├─replace_playurl.php (替换视频)
 
-│　├─resign.php (替换访问密钥)[未公开]
+│　├─resign.php (替换访问密钥)
 
 │　└─version.php (版本信息、Header)
 
 ├─.htaccess (防止重复的 301 转址)
 
-├─add_key.php (添加访问密钥)[仅缓存使用][未公开]
+├─add_key.php (添加访问密钥)[仅缓存使用]
 
 ├─cache.sql (导入MySQL用的)[仅缓存使用]
 

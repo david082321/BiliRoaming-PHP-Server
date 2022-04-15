@@ -121,6 +121,10 @@ define('RESIGN_CN', 0); // 替换成大会员。0 否, 1 是
 define('RESIGN_TH', 0); // 替换成泰国登录会员。0 否, 1 是
 define('RESIGN_TH_PAID', 0); // 替换成泰国付费会员。0 否, 1 是
 
+// 【禁忌功能】替换字幕（泰区）
+define('SUBTITLE_API', 'https://example.com/path?season_id='); // 换成可用的API
+define('SUBTITLE_TEAM_NAME', '蒙古上单字幕组'); // 字幕组名称
+
 //telegram_bot 412提醒
 define('TG_NOTIFY',0); // 是否开启TG提醒。 0 否 , 1 是
 define('TG_BOT_KEY',''); // 找BotFather要
