@@ -76,6 +76,7 @@ if (in_array(AREA, $BAN_SERVER_AREA)) {
 
 // 写入日志（非 playurl）
 if (SAVE_LOG == 1 && $type != 1) {
+	include_once(ROOT_PATH."utils/functions_cache.php");
 	write_log();
 }
 
@@ -83,6 +84,7 @@ function block($code, $reason){
 	// 写入日志
 	if (SAVE_LOG == 1 && $code <= 20) {
 		define('BAN_CODE', $code);
+		include_once(ROOT_PATH."utils/functions_cache.php");
 		write_log();
 	}
 	// 返回内容
