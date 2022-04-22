@@ -37,11 +37,14 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 		block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)");
 	}
 } elseif (ACCESS_KEY != "") {
-	$out = get_userinfo();
-	$uid = $out[0];
-	$due = $out[1];
-	if ($uid == "0" && NEED_LOGIN == 1) {
-		block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)");
+	// 有 access_key 但没开缓存，只会在需要时检查用户
+	if (NEED_LOGIN == 1 || (BLOCK_TYPE == "blacklist" || BLOCK_TYPE == "whitelist" || BLOCK_TYPE == "local_blacklist" || BLOCK_TYPE == "local_whitelist" )) {
+		$out = get_userinfo();
+		$uid = $out[0];
+		$due = $out[1];
+		if ($uid == "0") {
+			block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)");
+		}
 	}
 }
 
@@ -125,7 +128,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 	}
 } else {  // access_key 不存在
 	if (CID == "13073143" || CID == "120453316") { // 漫游测速
-		//pass
+		// pass
 	} elseif (BLOCK_TYPE == "whitelist" || BLOCK_TYPE == "local_whitelist" || NEED_LOGIN == 1) { // 白名单模式 或 黑名单模式+需要登录
 		block(23, "未提供访问密钥(漫游需要登录、脚本需要授权)");
 	}
