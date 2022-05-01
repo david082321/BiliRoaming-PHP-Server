@@ -517,8 +517,13 @@ function write_log() {
 	} else {
 		$ip = $_SERVER["REMOTE_ADDR"];
 	}
+	if (BILIROAMING_VERSION_CODE==""){
+		$version_code = "0";
+	} else {
+		$version_code = BILIROAMING_VERSION_CODE;
+	}
 	$ts = time();
-	$sql = "INSERT INTO `log` (`time`,`ip`,`area`,`version`,`version_code`,`access_key`,`uid`,`ban_code`,`path`,`query`) VALUES (now(),'".$ip."','".AREA."','".BILIROAMING_VERSION."','".BILIROAMING_VERSION_CODE."','".ACCESS_KEY."','".UID."','".BAN_CODE."','".PATH."','".QUERY."')";
+	$sql = "INSERT INTO `log` (`time`,`ip`,`area`,`version`,`version_code`,`access_key`,`uid`,`ban_code`,`path`,`query`) VALUES (now(),'".$ip."','".AREA."','".BILIROAMING_VERSION."','".$version_code."','".ACCESS_KEY."','".UID."','".BAN_CODE."','".PATH."','".QUERY."')";
 	$dbh -> exec($sql);
 }
 ?>
