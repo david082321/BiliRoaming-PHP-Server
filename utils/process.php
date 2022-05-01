@@ -76,6 +76,8 @@ if (in_array(AREA, $BAN_SERVER_AREA)) {
 
 // 写入日志（非 playurl）
 if (SAVE_LOG == 1 && $type != 1) {
+	define('UID', '0');
+	define('BAN_CODE', '0');
 	include_once(ROOT_PATH."utils/functions_cache.php");
 	write_log();
 }
