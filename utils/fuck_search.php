@@ -32,7 +32,7 @@
 	@$exp_str = $array['data']['exp_str'];
 	@$total = $array['data']['total'];
 	@$pages = $array['data']['pages'];
-	$items_old = $array['data']['items'];
+	@$items_old = $array['data']['items'];
 	$items_new= trim(json_encode($items_old, 320),'[]');
 	$items = str_replace('["追番","已追番"]','{"0":"追番","1":"已追番"}',$items_new);
 	$items0 = '{"title":"'.$set_title.'","cover":"'.$set_cover.'","uri":"'.$set_uri.'","param":"1","goto":"bangumi","ptime":1500000000,"season_id":1,"season_type":1,"season_type_name":"番剧","media_type":1,"style":"'.$set_style.'","styles":"'.$set_style.'","cv":"","rating":'.$set_rating.',"vote":'.$set_vote.',"area":"漫游","staff":"无","is_selection":1,"badge":"公告","episodes":[{"position":1,"uri":"https://www.bilibili.com/video/av928861104","param":"1","index":"1"}],"label":"'.$set_label.'","watch_button":{"title":"'.$set_watch_button_title.'","link":"'.$set_watch_button_link.'"},"follow_button":{"icon":"http://i0.hdslb.com/bfs/bangumi/154b6898d2b2c20c21ccef9e41fcf809b518ebb4.png","texts":{"0":"'.$set_follow_button_title.'","1":"'.$set_unfollow_button_title.'"},"status_report":"bangumi"},"selection_style":"'.$set_selection_style.'","episodes_new":['.$set_episodes.'],"badges":[{"text":"'.$set_badges.'","text_color":"#FFFFFF","text_color_night":"#E5E5E5","bg_color":"#00C0FF","bg_color_night":"#0B91BE","bg_style":1}]}';
