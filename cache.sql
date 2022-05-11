@@ -52,7 +52,7 @@ ALTER TABLE `my_keys`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id';
 
 CREATE TABLE `status` (
-  `id` int(11) NOT NULL COMMENT 'id',
+  `id` int(10) NOT NULL COMMENT 'id',
   `expired_time` int(11) NOT NULL COMMENT '到期时间',
   `uid` int(20) NOT NULL COMMENT '用户id',
   `is_blacklist` tinyint(1) NOT NULL,
@@ -64,6 +64,26 @@ ALTER TABLE `status`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `status`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id';
+
+CREATE TABLE `log` (
+  `id` int(10) UNSIGNED NOT NULL COMMENT 'id',
+  `time` datetime NOT NULL COMMENT '添加时间',
+  `ip` tinytext,
+  `area` tinytext COMMENT '地区',
+  `version` tinytext COMMENT '漫游版本号',
+  `version_code` smallint(6) DEFAULT '0' COMMENT '漫游版本编号',
+  `access_key` tinytext,
+  `uid` int(11) DEFAULT '0',
+  `ban_code` tinyint(4) DEFAULT '0' COMMENT '封禁代号',
+  `path` text COMMENT '请求路径',
+  `query` mediumtext COMMENT '请求参数'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='日志';
+
+ALTER TABLE `log`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `log`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id';
 
 COMMIT;

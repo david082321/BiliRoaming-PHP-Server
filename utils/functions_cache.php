@@ -10,7 +10,7 @@ $dbh = 'mysql:host='.$db_host.';'.'dbname='.$db_name;
 try {
 	$dbh = new PDO($dbh, $db_user, $db_pass);
 	//echo '连接成功';
-}catch(PDOException $e) {
+} catch(PDOException $e) {
 	//pass
 	//echo $e;
 	echo '数据库连接失敗';
@@ -262,7 +262,7 @@ function write_cache_season() {
 		if ($refresh_cache_season == 1) {
 			$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".$area."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
 		}
-	} else if ($code !== "") {
+	} elseif ($code !== "") {
 		// 修复转义问题
 		$output = str_replace("\\", "\\\\", $output);
 		// 缓存到自身 AREA 里面
@@ -356,7 +356,7 @@ function get_cache_subtitle() {
 			}
 		}
 	return "";
-    }
+	}
 }
 
 // 写入subtitle缓存
@@ -476,6 +476,7 @@ function read_status($area){
 		return 0;
 	}
 }
+
 //写入此次解析状态
 function write_status($code,$area) {
 	global $dbh;
@@ -483,10 +484,10 @@ function write_status($code,$area) {
 	$row = $result -> fetchAll();
 	//判断表是否存在
 	if ( count($row) == '1' ) {
-    	$sql = "UPDATE `status_code` SET `time` = '".time()."', `code` = '".$code."' WHERE `area` = '".$area."';";
+		$sql = "UPDATE `status_code` SET `time` = '".time()."', `code` = '".$code."' WHERE `area` = '".$area."';";
 		$dbh -> exec($sql);
 	} else {
-    	$sql = "CREATE TABLE status_code (
+		$sql = "CREATE TABLE status_code (
 		id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 		area VARCHAR(10),
 		code VARCHAR(10),
@@ -502,5 +503,27 @@ function write_status($code,$area) {
 		$sql = "INSERT INTO `status_code` (`area`,`code`,`time`) VALUES ('th','".$code."','".time()."')";
 		$dbh -> exec($sql);
 	}
+}
+
+// 写入日志
+function write_log() {
+	global $dbh;
+	if (!empty($_SERVER["HTTP_CF_CONNECTING_IP"])){
+		$ip = $_SERVER["HTTP_CF_CONNECTING_IP"];
+	} elseif (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+		$ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+	} elseif (!empty($_SERVER["HTTP_CLIENT_IP"])){
+		$ip = $_SERVER["HTTP_CLIENT_IP"];
+	} else {
+		$ip = $_SERVER["REMOTE_ADDR"];
+	}
+	if (BILIROAMING_VERSION_CODE==""){
+		$version_code = "0";
+	} else {
+		$version_code = BILIROAMING_VERSION_CODE;
+	}
+	$ts = time();
+	$sql = "INSERT INTO `log` (`time`,`ip`,`area`,`version`,`version_code`,`access_key`,`uid`,`ban_code`,`path`,`query`) VALUES (now(),'".$ip."','".AREA."','".BILIROAMING_VERSION."','".$version_code."','".ACCESS_KEY."','".UID."','".BAN_CODE."','".PATH."','".QUERY."')";
+	$dbh -> exec($sql);
 }
 ?>

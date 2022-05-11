@@ -15,6 +15,7 @@ define('LOCK_AREA', 0); // 服务器锁区，须设置$SERVER_AREA。0 否, 1 �
 $BLACKLIST = array('1', '2', '3'); // 本地黑名单，填写 uid，可自行添加、删除，注意使用英文,和'
 $WHITELIST = array('1', '2', '3'); // 本地白名单，填写 uid，可自行添加、删除，注意使用英文,和'
 define('ROAMING_MIN_VER', 0); // 设置最低允许漫游版本，详情看哔哩漫游仓库 versionCode
+define('ROAMING_MAX_VER', 0); // 0 表示不限制，设置最高允许漫游版本，详情看哔哩漫游仓库 versionCode
 
 // 封锁指定epid视频
 define('BAN_EP', 0); // 是否开启ban特定视频
@@ -40,6 +41,7 @@ define('CACHE_TIME_404', 60*60*24); // 返回404时的缓存时长（秒）
 define('CACHE_TIME_OTHER', 60*60*24); // 返回其他错误时的缓存时长（秒）
 define('CACHE_TIME_USER', 60*60*24); //缓存用户key的时长（秒）
 define('CACHE_TIME_BLACKLIST', 60*15); //缓存黑白名单的时长（秒）
+define('SAVE_LOG', 0); // 开启日志，须配置MySQL数据库，不会自动清除，空间满了请自行手动清除。0 否, 1 是
 
 // MySQL数据库
 define('DB_HOST', 'localhost');
@@ -108,6 +110,11 @@ define('IP_RESOLVE', 0); // 开启功能。0 否, 1 是
 $ips = array('172.0.0.1', '192.168.0.1', '1.2.3.4');
 $hosts = array('workers.dev', 'workers.dev');
 
+// 替换泰区 aid (评论投币) / cid (弹幕)
+// 目前仍有 bug，等待 https://github.com/JasonKhew96/biliroaming-go-server 修复
+define('TH_AID', 0);
+define('TH_CID', 0);
+
 // 其他
 define('WELCOME', "file"); // 首页画面。text 文字， file 加载文件
 define('WELCOME_TEXT', "Success! Power by BiliRoaming-PHP-Server."); // 首页欢迎语
@@ -118,6 +125,10 @@ define('MAGIC_KEY', '123'); // 请用密码生成器，随机生成任意内容�
 define('RESIGN_CN', 0); // 替换成大会员。0 否, 1 是
 define('RESIGN_TH', 0); // 替换成泰国登录会员。0 否, 1 是
 define('RESIGN_TH_PAID', 0); // 替换成泰国付费会员。0 否, 1 是
+
+// 【禁忌功能】替换字幕（泰区）
+define('SUBTITLE_API', 'https://example.com/path?season_id='); // 换成可用的API
+define('SUBTITLE_TEAM_NAME', '蒙古上单字幕组'); // 字幕组名称
 
 //telegram_bot 412提醒
 define('TG_NOTIFY',0); // 是否开启TG提醒。 0 否 , 1 是

@@ -10,13 +10,15 @@
 
 * [下载历史版本](https://github.com/david082321/BiliRoaming-PHP-Server/releases)
 
-* ！！！⚠重要⚠！！！v4.1.0 更新了数据库字段。从旧版升级的用户，请务必更新数据库。
+* ！！！⚠重要⚠！！！v4.2.2 更新了数据库。如果你有開啟緩存功能，请务必更新数据库。
 
 ## 用法：
 
 * 直接放到网站根目录，例如 wwwroot 或 public_html 或 private_html
 
 * 默认为「在线黑名单」模式，若要切换到其他模式，请看底下说明。
+
+* 注意：在线黑名单，需要授权才能使用。[加TG群了解更多。](https://t.me/biliroaming_chat)
 
 ## 示例：
 
@@ -27,11 +29,11 @@
 
 ------
 
-## (非必要步骤) 切换到其他模式
+## (非必要步骤) 修改黑白名单模式、修改其他设置
 
 * 默认为「在线黑名单」模式，若您想使用「本地黑名单」或是「黑名单-替换国产动画」或是「在线白名单」或是「本地白名单」或是「无任何限制」等其他模式，请手动修改 config.php
 
-* 每行后面都有注释提供参考
+* config.php 每个修改项目，后面都有注释提供参考
 
 ## (非必要步骤) 防止重复的 301 转址
 
@@ -60,6 +62,8 @@
     rewrite "^/intl/gateway/v2/ogv/view/app/season?(.*)$" /intl/gateway/v2/ogv/view/app/season/index.php?$1 last;
 
     rewrite "^/intl/gateway/v2/ogv/view/app/season2?(.*)$" /intl/gateway/v2/ogv/view/app/season2/index.php?$1 last;
+
+    rewrite "^/intl/gateway/v2/ogv/view/app/episode?(.*)$" /intl/gateway/v2/ogv/view/app/episode/index.php?$1 last;
 
     rewrite "^/pgc/player/api/playurl?(.*)$" /pgc/player/api/playurl/index.php?$1 last;
 
@@ -125,6 +129,8 @@
 
 │　　　├─playurl/index.php (东南亚APP playurl)
 
+│　　　├─view/app/episode/index.php (东南亚APP episode)
+
 │　　　├─view/app/season/index.php (东南亚APP season)
 
 │　　　└─view/app/season2/index.php (东南亚APP season)
@@ -153,35 +159,35 @@
 
 │　├─auth.php (鉴权)
 
-│　├─fuck_search.php (在搜索中添加提示)[未公开]
+│　├─fuck_search.php (在搜索中添加提示)
 
-│　├─fuck_sub.php (添加东南亚番剧字幕)[未公开]
+│　├─fuck_sub.php (添加东南亚番剧字幕)
 
 │　├─functions.php (功能函数合集)
 
 │　├─functions_cache.php (功能函数合集)[仅缓存使用]
 
-│　├─functions_cache_key.php (功能函数合集)[仅缓存使用][未公开]
+│　├─functions_cache_key.php (功能函数合集)[仅缓存使用]
 
 │　├─lock_area.php (锁区、web接口判断)
 
 │　├─process.php (处理用户传入参数)
 
-│　├─refresh_token.php (自动刷新访问密钥)[未公开]
+│　├─refresh_token.php (自动刷新访问密钥)
 
-│　├─refresh_token_th.php (自动刷新访问密钥)[未公开]
+│　├─refresh_token_th.php (自动刷新访问密钥)
 
 │　├─replace.php (修改返回内容)
 
 │　├─replace_playurl.php (替换视频)
 
-│　├─resign.php (替换访问密钥)[未公开]
+│　├─resign.php (替换访问密钥)
 
 │　└─version.php (版本信息、Header)
 
 ├─.htaccess (防止重复的 301 转址)
 
-├─add_key.php (添加访问密钥)[仅缓存使用][未公开]
+├─add_key.php (添加访问密钥)[仅缓存使用]
 
 ├─cache.sql (导入MySQL用的)[仅缓存使用]
 
@@ -190,3 +196,9 @@
 ├─hello.php (默认欢迎页面)
 
 └─index.php (WEB playurl、显示欢迎页)
+
+# 友链
+
+* https://github.com/JasonKhew96/biliroaming-go-server
+
+* 动手能力强的可以用这个，服务器回应的速度比我这个快多了。

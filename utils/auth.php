@@ -34,14 +34,19 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 	}
 	// key已过期 或 服务器不允许未登录用户
 	if ($uid == "0" && (NEED_LOGIN == 1 || $expired == "1")) {
+		define('UID', $uid);
 		block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)");
 	}
 } elseif (ACCESS_KEY != "") {
-	$out = get_userinfo();
-	$uid = $out[0];
-	$due = $out[1];
-	if ($uid == "0" && NEED_LOGIN == 1) {
-		block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)");
+	// 有 access_key 但没开缓存，只会在需要时检查用户
+	if (NEED_LOGIN == 1 || (BLOCK_TYPE == "blacklist" || BLOCK_TYPE == "whitelist" || BLOCK_TYPE == "local_blacklist" || BLOCK_TYPE == "local_whitelist" )) {
+		$out = get_userinfo();
+		$uid = $out[0];
+		$due = $out[1];
+		if ($uid == "0") {
+			define('UID', $uid);
+			block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)");
+		}
 	}
 }
 
@@ -80,32 +85,38 @@ if (ACCESS_KEY != "") { // access_key 存在
 			if ($is_blacklist) {
 				$is_baned = true;
 				$baned = 21;
-				$reason = "uid黑名单：".$ban_reason;
+				$reason = $uid." 在黑名单：".$ban_reason;
 			}
 			break;
 		case "whitelist": // 在线白名单
 			if (!$is_whitelist) {
 				$is_baned = true;
 				$baned = 22;
-				$reason = "uid不在白名单";
+				$reason = $uid." 不在白名单";
 			}
 			break;
 		case "local_blacklist": // 本地黑名单
 			if (in_array($uid, $BLACKLIST)) {
 				$is_baned = true;
 				$baned = 21;
-				$reason = "uid黑名单：".$ban_reason;
+				$reason = $uid." 在黑名单：".$ban_reason;
 			}
 			break;
 		case "local_whitelist": // 本地白名单
 			if (!in_array($uid, $WHITELIST)) {
 				$is_baned = true;
 				$baned = 22;
-				$reason = "uid不在白名单";
+				$reason = $uid." 不在白名单";
 			}
 			break;
 		default:
 			// pass
+	}
+	// 写入日志
+	if (SAVE_LOG == 1 && $type != 1) {
+		define('BAN_CODE', $baned);
+		define('UID', $uid);
+		write_log();
 	}
 	// 开始ban
 	$support_replace_type = array("hlw","tom","txbb","xyy","all","random"); // 允许替换的类型（兼容旧版config）
@@ -119,8 +130,9 @@ if (ACCESS_KEY != "") { // access_key 存在
 	}
 } else {  // access_key 不存在
 	if (CID == "13073143" || CID == "120453316") { // 漫游测速
-		//pass
-	} else if (BLOCK_TYPE == "whitelist" || BLOCK_TYPE == "local_whitelist" || NEED_LOGIN == 1) { // 白名单模式 或 黑名单模式+需要登录
+		// pass
+	} elseif (BLOCK_TYPE == "whitelist" || BLOCK_TYPE == "local_whitelist" || NEED_LOGIN == 1) { // 白名单模式 或 黑名单模式+需要登录
+		define('UID', 0);
 		block(23, "未提供访问密钥(漫游需要登录、脚本需要授权)");
 	}
 }
