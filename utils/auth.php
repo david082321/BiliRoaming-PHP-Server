@@ -63,12 +63,12 @@ if (ACCESS_KEY != "") { // access_key 存在
 			$out = get_cache_blacklist();
 			$is_blacklist = $out[0];
 			$is_whitelist = $out[1];
-			$ban_reason = $out[2];
+			@$ban_reason = $out[2];
 		}
 		if ((SAVE_CACHE == 1 && $is_blacklist == "⑨") || SAVE_CACHE == 0) {
 			$url = "https://black.qimo.ink/status.php?access_key=".ACCESS_KEY;
 			$status = json_decode(get_webpage($url), true);
-			$code = $status['code'];
+			@$code = $status['code'];
 			if ((string)$code == "0") {
 				$is_blacklist = $status['data']['is_blacklist'];
 				$is_whitelist = $status['data']['is_whitelist'];
@@ -76,6 +76,11 @@ if (ACCESS_KEY != "") { // access_key 存在
 				if (SAVE_CACHE == 1) {
 					write_cache_blacklist(); // 写入缓存
 				}
+			} else if (BLACKLIST_ERROR == 1) {
+				block(24, "黑名单服务器连接异常，请联系服务器提供者，或是等待修复。");
+			} else {
+				$is_blacklist = false;
+				$is_whitelist = false;
 			}
 		}
 	}
