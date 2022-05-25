@@ -111,10 +111,8 @@ define('IP_RESOLVE', 0); // 开启功能。0 否, 1 是
 $ips = array('172.0.0.1', '192.168.0.1', '1.2.3.4');
 $hosts = array('workers.dev', 'workers.dev');
 
-// 替换泰区 aid (评论投币) / cid (弹幕)
-// 目前仍有 bug，等待 https://github.com/JasonKhew96/biliroaming-go-server 修复
+// 替换泰区 aid (评论投币)
 define('TH_AID', 0);
-define('TH_CID', 0);
 
 // 其他
 define('WELCOME', "file"); // 首页画面。text 文字， file 加载文件
