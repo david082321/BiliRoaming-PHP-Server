@@ -16,7 +16,7 @@ $BLACKLIST = array('1', '2', '3'); // 本地黑名单，填写 uid，可自行�
 $WHITELIST = array('1', '2', '3'); // 本地白名单，填写 uid，可自行添加、删除，注意使用英文,和'
 define('ROAMING_MIN_VER', 0); // 设置最低允许漫游版本，详情看哔哩漫游仓库 versionCode
 define('ROAMING_MAX_VER', 0); // 0 表示不限制，设置最高允许漫游版本，详情看哔哩漫游仓库 versionCode
-define('BLACKLIST_ERROR', 1); // 当使用在线黑/白名单，但是黑名单服务器发生错误时，强制返回黑名单，并提示错误。1 启用, 0 禁用
+define('BLACKLIST_ERROR', 1); // 在线黑名单服务器发生错误的处理方式。2 全部拉黑并提示错误, 1 改用本地黑白名单, 0 不拉黑任何人也不提示
 
 // 封锁指定epid视频
 define('BAN_EP', 0); // 是否开启ban特定视频
