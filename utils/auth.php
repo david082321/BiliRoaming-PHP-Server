@@ -56,6 +56,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 	$is_blacklist = false;
 	$is_whitelist = false;
 	$ban_reason = "";
+	define('UID', $uid);
 	
 	if (BLOCK_TYPE == "blacklist" || BLOCK_TYPE == "whitelist") {
 		if (SAVE_CACHE == 1) {
@@ -66,7 +67,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 			@$ban_reason = $out[2];
 		}
 		if ((SAVE_CACHE == 1 && $is_blacklist == "⑨") || SAVE_CACHE == 0) {
-			$url = "https://black.qimo.ink/status.php?access_key=".ACCESS_KEY;
+			$url = "https://black.qimo.ink/status.php?uid=".UID;
 			$status = json_decode(get_webpage($url), true);
 			@$code = $status['code'];
 			if ((string)$code == "0") {
@@ -76,8 +77,14 @@ if (ACCESS_KEY != "") { // access_key 存在
 				if (SAVE_CACHE == 1) {
 					write_cache_blacklist(); // 写入缓存
 				}
-			} else if (BLACKLIST_ERROR == 1) {
+			} else if (BLACKLIST_ERROR == 2) {
 				block(24, "黑名单服务器连接异常，请联系服务器提供者，或是等待修复。");
+			} else if (BLACKLIST_ERROR == 1) {
+				if (in_array($uid, $BLACKLIST)) {
+					$is_blacklist = true;
+				} else if (in_array($uid, $WHITELIST)) {
+					$is_whitelist = true;
+				}
 			} else {
 				$is_blacklist = false;
 				$is_whitelist = false;
@@ -106,12 +113,17 @@ if (ACCESS_KEY != "") { // access_key 存在
 				$baned = 21;
 				$reason = $uid." 在黑名单：".$ban_reason;
 			}
+			if (in_array($uid, $WHITELIST)) {
+				$is_whitelist = true;
+			}
 			break;
 		case "local_whitelist": // 本地白名单
 			if (!in_array($uid, $WHITELIST)) {
 				$is_baned = true;
 				$baned = 22;
 				$reason = $uid." 不在白名单";
+			} else {
+				$is_whitelist = true;
 			}
 			break;
 		default:
@@ -120,7 +132,6 @@ if (ACCESS_KEY != "") { // access_key 存在
 	// 写入日志
 	if (SAVE_LOG == 1 && $type != 1) {
 		define('BAN_CODE', $baned);
-		define('UID', $uid);
 		write_log();
 	}
 	// 开始ban
