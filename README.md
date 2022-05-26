@@ -96,6 +96,7 @@ server {
 
 # 文件功能介绍
 
+```
 ├─intl/gateway/v2
 │　├─app
 │　│　└─search
@@ -138,6 +139,7 @@ server {
 ├─config.php (设置本程序各种参数) ＜──参数设置在这里
 ├─hello.php (默认欢迎页面)
 └─index.php (WEB playurl、显示欢迎页)
+```
 
 # 友链
 
