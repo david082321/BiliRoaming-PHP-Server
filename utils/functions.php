@@ -136,7 +136,8 @@ function get_userinfo() {
 	return $out;
 }
 
-function check_412($output,$get_area){// 412提醒
+// 412 提醒
+function check_412($output,$get_area){
 	if (TG_NOTIFY == 1) {
 		$status = json_decode($output, true);
 		if(SAVE_CACHE == 0){
@@ -160,14 +161,14 @@ function check_412($output,$get_area){// 412提醒
 	}
 }
 
-function add_query($sign_type, $query, $add_query) {
-	if ($sign_type == "th") {
-		$appkey = APPKEY_TH;
-		$appsec = APPSEC_TH;
-	} else {
-		$appkey = APPKEY;
-		$appsec = APPSEC;
-	}
+// appsec 查表
+function appkey2sec($appkey) {
+	return $appkey2sec[$appkey];
+}
+
+// 强制添加参数
+function add_query($appkey, $query, $add_query) {
+	$appsec = appkey2sec($appkey);
 	parse_str($query, $query_arr);
 	parse_str($add_query, $query_arr2);
 	$query_arr = array_merge($query_arr, $query_arr2);
@@ -175,7 +176,30 @@ function add_query($sign_type, $query, $add_query) {
 	$query_arr["appkey"] = $appkey;
 	ksort($query_arr);
 	$query_new = http_build_query($query_arr);
+	if ($appsec == "") {
+		return $query_new;
+	}
 	$sign = md5($query_new.$appsec);
 	return $query_new."&sign=".$sign;
 }
+
+// 验证 sign
+function check_sign($appkey, $sign, $query) {
+	$appsec = appkey2sec($appkey);
+	if ($appsec == "") {
+		define('UID', '0');
+		block(40, "参数appkey错误");
+	}
+	parse_str($query, $query_arr);
+	// 去除 sign
+	unset($query_arr["sign"]);
+	// 按 key 排序
+	ksort($query_arr);
+	$query_new = http_build_query($query_arr);
+	if ($sign != md5($query_new.$appsec)) {
+		define('UID', '0');
+		block(41, "参数sign错误");
+	}
+}
+
 ?>

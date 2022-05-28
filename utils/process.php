@@ -15,6 +15,7 @@ if (SAVE_LOG == 1) {
 	define('QUERY', $query);
 }
 
+define('APPKEY', @$_GET['appkey']);
 define('ACCESS_KEY', @$_GET['access_key']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
@@ -72,6 +73,14 @@ if (in_array(CID, $cid_list) && BAN_CID == 1) {
 }
 if (in_array(AREA, $BAN_SERVER_AREA)) {
 	block(13, "不支持解锁「".AREA."」地区，请将「".AREA."」改用其他解析服务器");
+}
+
+// 验证 sign（playurl）
+if ($type == 1) {
+	$sign = @$_GET['sign'];
+	if (APPKEY != "" && $sign != "" && TS != "") {
+		check_sign(APPKEY, $sign, $query);
+	}
 }
 
 // 写入日志（非 playurl）
