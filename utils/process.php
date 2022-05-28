@@ -60,10 +60,14 @@ if (BILIROAMING_VERSION == '' && BILIROAMING_VERSION_CODE == '') {
 } else {
 	block(15, "错误请求头");
 }
-if (@$_GET['ts'] == '') {
+$ts = @$_GET['ts'];
+if ($ts == '') {
 	define('TS', time());
 } else {
-	define('TS', @$_GET['ts']);
+	if ($ts < time()-60 || $ts > time()+60) {
+		block(17, "参数ts错误");
+	}
+	define('TS', $ts);
 }
 if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
 	block(11, "禁止解锁此视频，请改用其他解析服务器");
@@ -85,7 +89,6 @@ if ($type == 1) {
 
 // 写入日志（非 playurl）
 if (SAVE_LOG == 1 && $type != 1) {
-	define('UID', '0');
 	define('BAN_CODE', '0');
 	include_once(ROOT_PATH."utils/functions_cache.php");
 	write_log();
@@ -100,6 +103,6 @@ function block($code, $reason){
 	}
 	// 返回内容
 	http_response_code(200); // B站就是都返回200
-	exit('{"code":-'.$code.',"message":"'.$reason.'('.$code.')"}');
+	exit('{"code":-'.$code.',"message":"'.$reason.'(E='.$code.')"}');
 }
 ?>

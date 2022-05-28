@@ -522,6 +522,9 @@ function write_log() {
 	} else {
 		$version_code = BILIROAMING_VERSION_CODE;
 	}
+	if (!defined('UID')) {
+		define('UID', '0');
+	}
 	$ts = time();
 	$sql = "INSERT INTO `log` (`time`,`ip`,`area`,`version`,`version_code`,`access_key`,`uid`,`ban_code`,`path`,`query`) VALUES (now(),'".$ip."','".AREA."','".BILIROAMING_VERSION."','".$version_code."','".ACCESS_KEY."','".UID."','".BAN_CODE."','".PATH."','".QUERY."')";
 	$dbh -> exec($sql);
