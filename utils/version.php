@@ -10,10 +10,6 @@ header("Access-Control-Allow-Origin: https://www.bilibili.com");
 header("Access-Control-Allow-Credentials: true");
 
 // 这些参数，不懂就别改
-define('APPKEY', '1d8b6e7d45233436');
-define('APPSEC', '560c52ccd288fed045859ed18bffd973');
-define('APPKEY_TH', '7d089525d3611b1c');
-define('APPSEC_TH', 'acd495b248ec528c2eed1e862d393126');
 $appkey2sec = array("9d5889cf67e615cd" => "8fd9bb32efea8cef801fd895bef2713d", // Ai4cCreatorAndroid
 	"1d8b6e7d45233436" => "560c52ccd288fed045859ed18bffd973", // Android
 	"07da50c9a0bf829f" => "25bdede4e1581c836cab73a48790ca6e", // AndroidB

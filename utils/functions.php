@@ -168,7 +168,6 @@ function appkey2sec($appkey) {
 
 // 强制添加参数
 function add_query($appkey, $query, $add_query) {
-	$appsec = appkey2sec($appkey);
 	parse_str($query, $query_arr);
 	parse_str($add_query, $query_arr2);
 	$query_arr = array_merge($query_arr, $query_arr2);
@@ -180,6 +179,7 @@ function add_query($appkey, $query, $add_query) {
 		return $query_new;
 	}
 	$sign = md5($query_new.$appsec);
+	$appsec = appkey2sec($appkey);
 	return $query_new."&sign=".$sign;
 }
 
