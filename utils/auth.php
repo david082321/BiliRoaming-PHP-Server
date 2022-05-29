@@ -53,7 +53,6 @@ if (ACCESS_KEY != "") { // access_key 存在
 	// resign.php 可能会用到
 	$is_blacklist = false;
 	$is_whitelist = false;
-	$ban_reason = "";
 	define('UID', $uid);
 	
 	if (BLOCK_TYPE == "blacklist" || BLOCK_TYPE == "whitelist") {
@@ -62,7 +61,6 @@ if (ACCESS_KEY != "") { // access_key 存在
 			$out = get_cache_blacklist();
 			$is_blacklist = $out[0];
 			$is_whitelist = $out[1];
-			@$ban_reason = $out[2];
 		}
 		if ((SAVE_CACHE == 1 && $is_blacklist == "⑨") || SAVE_CACHE == 0) {
 			$url = "https://black.qimo.ink/status.php?uid=".UID;
@@ -71,7 +69,6 @@ if (ACCESS_KEY != "") { // access_key 存在
 			if ((string)$code == "0") {
 				$is_blacklist = $status['data']['is_blacklist'];
 				$is_whitelist = $status['data']['is_whitelist'];
-				$ban_reason = $status['data']['reason'];
 				if (SAVE_CACHE == 1) {
 					write_cache_blacklist(); // 写入缓存
 				}
@@ -83,9 +80,6 @@ if (ACCESS_KEY != "") { // access_key 存在
 				} else if (in_array($uid, $WHITELIST)) {
 					$is_whitelist = true;
 				}
-			} else {
-				$is_blacklist = false;
-				$is_whitelist = false;
 			}
 		}
 	}
@@ -95,7 +89,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 			if ($is_blacklist) {
 				$is_baned = true;
 				$baned = 21;
-				$reason = $uid." 在黑名单：".$ban_reason;
+				$reason = $uid." 在黑名单";
 			}
 			break;
 		case "whitelist": // 在线白名单
@@ -109,7 +103,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 			if (in_array($uid, $BLACKLIST)) {
 				$is_baned = true;
 				$baned = 21;
-				$reason = $uid." 在黑名单：".$ban_reason;
+				$reason = $uid." 在黑名单";
 			}
 			if (in_array($uid, $WHITELIST)) {
 				$is_whitelist = true;
