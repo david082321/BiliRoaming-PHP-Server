@@ -16,6 +16,7 @@ $BLACKLIST = array('1', '2', '3'); // 本地黑名单，填写 uid，可自行�
 $WHITELIST = array('1', '2', '3'); // 本地白名单，填写 uid，可自行添加、删除，注意使用英文,和'
 define('ROAMING_MIN_VER', 0); // 设置最低允许漫游版本，详情看哔哩漫游仓库 versionCode
 define('ROAMING_MAX_VER', 0); // 0 表示不限制，设置最高允许漫游版本，详情看哔哩漫游仓库 versionCode
+define('BLACKLIST_ERROR', 1); // 在线黑名单服务器发生错误的处理方式。2 全部拉黑并提示错误, 1 改用本地黑白名单, 0 不拉黑任何人也不提示
 
 // 封锁指定epid视频
 define('BAN_EP', 0); // 是否开启ban特定视频
@@ -110,14 +111,12 @@ define('IP_RESOLVE', 0); // 开启功能。0 否, 1 是
 $ips = array('172.0.0.1', '192.168.0.1', '1.2.3.4');
 $hosts = array('workers.dev', 'workers.dev');
 
-// 替换泰区 aid (评论投币) / cid (弹幕)
-// 目前仍有 bug，等待 https://github.com/JasonKhew96/biliroaming-go-server 修复
+// 替换泰区 aid (评论投币)
 define('TH_AID', 0);
-define('TH_CID', 0);
 
 // 其他
 define('WELCOME', "file"); // 首页画面。text 文字， file 加载文件
-define('WELCOME_TEXT', "Success! Power by BiliRoaming-PHP-Server."); // 首页欢迎语
+define('WELCOME_TEXT', "Success! Powered by BiliRoaming-PHP-Server."); // 首页欢迎语
 define('WELCOME_FILE', "hello.php"); // 首页文件
 
 // 【禁忌功能】替换访问密钥

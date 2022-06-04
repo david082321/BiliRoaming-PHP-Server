@@ -2,11 +2,10 @@
 	$array = json_decode($output, true);
 	$code = $array['code'];
 	if ($code == "0" || $code == 0) {
-		// 替换 aid 及 cid
+		// 替换 aid
 		$episodes_items = $array['result']['modules'][0]['data']['episodes'];
 		for ($i=0; $i<count($episodes_items); $i++) {
 			$array['result']['modules'][0]['data']['episodes'][$i]['aid'] = TH_AID;
-			$array['result']['modules'][0]['data']['episodes'][$i]['cid'] = TH_CID;
 		}
 		// 判断 season 内容
 		if (count($array['result']) > 0) {

@@ -15,6 +15,7 @@ if (SAVE_LOG == 1) {
 	define('QUERY', $query);
 }
 
+define('APPKEY', @$_GET['appkey']);
 define('ACCESS_KEY', @$_GET['access_key']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
@@ -59,10 +60,14 @@ if (BILIROAMING_VERSION == '' && BILIROAMING_VERSION_CODE == '') {
 } else {
 	block(15, "错误请求头");
 }
-if (@$_GET['ts'] == '') {
+$ts = @$_GET['ts'];
+if ($ts == '') {
 	define('TS', time());
 } else {
-	define('TS', @$_GET['ts']);
+	if ($ts < time()-60 || $ts > time()+60) {
+		block(17, "参数ts错误");
+	}
+	define('TS', $ts);
 }
 if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
 	block(11, "禁止解锁此视频，请改用其他解析服务器");
@@ -74,9 +79,16 @@ if (in_array(AREA, $BAN_SERVER_AREA)) {
 	block(13, "不支持解锁「".AREA."」地区，请将「".AREA."」改用其他解析服务器");
 }
 
+// 验证 sign（playurl）
+if ($type == 1) {
+	$sign = @$_GET['sign'];
+	if (APPKEY != "" && $sign != "" && TS != "") {
+		check_sign(APPKEY, $sign, $query);
+	}
+}
+
 // 写入日志（非 playurl）
 if (SAVE_LOG == 1 && $type != 1) {
-	define('UID', '0');
 	define('BAN_CODE', '0');
 	include_once(ROOT_PATH."utils/functions_cache.php");
 	write_log();
@@ -91,6 +103,6 @@ function block($code, $reason){
 	}
 	// 返回内容
 	http_response_code(200); // B站就是都返回200
-	exit('{"code":-'.$code.',"message":"'.$reason.'('.$code.')"}');
+	exit('{"code":-'.$code.',"message":"'.$reason.'(E='.$code.')"}');
 }
 ?>

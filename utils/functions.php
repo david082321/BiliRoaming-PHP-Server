@@ -115,7 +115,8 @@ function get_host($type,$cache_type) {
 // 获取用户信息
 function get_userinfo() {
 	global $member_type;
-	$sign = md5("access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS.APPSEC);
+	$appsec = appkey2sec(APPKEY);
+	$sign = md5("access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS.$appsec);
 	$url = "https://app.bilibili.com/x/v2/account/myinfo?access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS."&sign=".$sign;
 	$output = get_webpage($url);
 	$array = json_decode($output, true);
@@ -136,7 +137,8 @@ function get_userinfo() {
 	return $out;
 }
 
-function check_412($output,$get_area){// 412提醒
+// 412 提醒
+function check_412($output,$get_area){
 	if (TG_NOTIFY == 1) {
 		$status = json_decode($output, true);
 		if(SAVE_CACHE == 0){
@@ -160,14 +162,26 @@ function check_412($output,$get_area){// 412提醒
 	}
 }
 
-function add_query($sign_type, $query, $add_query) {
-	if ($sign_type == "th") {
-		$appkey = APPKEY_TH;
-		$appsec = APPSEC_TH;
-	} else {
-		$appkey = APPKEY;
-		$appsec = APPSEC;
-	}
+// appsec 查表
+function appkey2sec($appkey) {
+	$appkey2sec = array("9d5889cf67e615cd" => "8fd9bb32efea8cef801fd895bef2713d", // Ai4cCreatorAndroid
+		"1d8b6e7d45233436" => "560c52ccd288fed045859ed18bffd973", // Android
+		"07da50c9a0bf829f" => "25bdede4e1581c836cab73a48790ca6e", // AndroidB
+		"8d23902c1688a798" => "710f0212e62bd499b8d3ac6e1db9302a", // AndroidBiliThings
+		"dfca71928277209b" => "b5475a8825547a4fc26c7d518eaaa02e", // AndroidHD
+		"bb3101000e232e27" => "36efcfed79309338ced0380abd824ac1", // AndroidI
+		"4c6e1021617d40d9" => "e559a59044eb2701b7a8628c86aa12ae", // AndroidMallTicket
+		"c034e8b74130a886" => "e4e8966b1e71847dc4a3830f2d078523", // AndroidOttSdk
+		"4409e2ce8ffd12b8" => "59b43e04ad6965f34319062b478f83dd", // AndroidTV
+		"37207f2beaebf8d7" => "e988e794d4d4b6dd43bc0e89d6e90c43", // BiliLink
+		"9a75abf7de2d8947" => "35ca1c82be6c2c242ecc04d88c735f31", // BiliScan
+		"7d089525d3611b1c" => "acd495b248ec528c2eed1e862d393126", // BstarA
+	);
+	return $appkey2sec[$appkey];
+}
+
+// 强制添加参数
+function add_query($appkey, $query, $add_query) {
 	parse_str($query, $query_arr);
 	parse_str($add_query, $query_arr2);
 	$query_arr = array_merge($query_arr, $query_arr2);
@@ -175,7 +189,28 @@ function add_query($sign_type, $query, $add_query) {
 	$query_arr["appkey"] = $appkey;
 	ksort($query_arr);
 	$query_new = http_build_query($query_arr);
+	$appsec = appkey2sec($appkey);
+	if ($appsec == "") {
+		return $query_new;
+	}
 	$sign = md5($query_new.$appsec);
 	return $query_new."&sign=".$sign;
+}
+
+// 验证 sign
+function check_sign($appkey, $sign, $query) {
+	$appsec = appkey2sec($appkey);
+	if ($appsec == "") {
+		block(40, "参数appkey错误");
+	}
+	parse_str($query, $query_arr);
+	// 去除 sign
+	unset($query_arr["sign"]);
+	// 按 key 排序
+	ksort($query_arr);
+	$query_new = http_build_query($query_arr);
+	if ($sign != md5($query_new.$appsec)) {		
+		block(41, "参数sign错误");
+	}
 }
 ?>

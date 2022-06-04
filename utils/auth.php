@@ -34,7 +34,6 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 	}
 	// key已过期 或 服务器不允许未登录用户
 	if ($uid == "0" && (NEED_LOGIN == 1 || $expired == "1")) {
-		define('UID', $uid);
 		block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)");
 	}
 } elseif (ACCESS_KEY != "") {
@@ -44,7 +43,6 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 		$uid = $out[0];
 		$due = $out[1];
 		if ($uid == "0") {
-			define('UID', $uid);
 			block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)");
 		}
 	}
@@ -55,7 +53,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 	// resign.php 可能会用到
 	$is_blacklist = false;
 	$is_whitelist = false;
-	$ban_reason = "";
+	define('UID', $uid);
 	
 	if (BLOCK_TYPE == "blacklist" || BLOCK_TYPE == "whitelist") {
 		if (SAVE_CACHE == 1) {
@@ -63,18 +61,24 @@ if (ACCESS_KEY != "") { // access_key 存在
 			$out = get_cache_blacklist();
 			$is_blacklist = $out[0];
 			$is_whitelist = $out[1];
-			$ban_reason = $out[2];
 		}
 		if ((SAVE_CACHE == 1 && $is_blacklist == "⑨") || SAVE_CACHE == 0) {
-			$url = "https://black.qimo.ink/status.php?access_key=".ACCESS_KEY;
+			$url = "https://black.qimo.ink/status.php?uid=".UID;
 			$status = json_decode(get_webpage($url), true);
-			$code = $status['code'];
+			@$code = $status['code'];
 			if ((string)$code == "0") {
 				$is_blacklist = $status['data']['is_blacklist'];
 				$is_whitelist = $status['data']['is_whitelist'];
-				$ban_reason = $status['data']['reason'];
 				if (SAVE_CACHE == 1) {
 					write_cache_blacklist(); // 写入缓存
+				}
+			} else if (BLACKLIST_ERROR == 2) {
+				block(24, "黑名单服务器连接异常，请联系服务器提供者，或是等待修复。");
+			} else if (BLACKLIST_ERROR == 1) {
+				if (in_array($uid, $BLACKLIST)) {
+					$is_blacklist = true;
+				} else if (in_array($uid, $WHITELIST)) {
+					$is_whitelist = true;
 				}
 			}
 		}
@@ -85,7 +89,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 			if ($is_blacklist) {
 				$is_baned = true;
 				$baned = 21;
-				$reason = $uid." 在黑名单：".$ban_reason;
+				$reason = $uid." 在黑名单";
 			}
 			break;
 		case "whitelist": // 在线白名单
@@ -99,7 +103,10 @@ if (ACCESS_KEY != "") { // access_key 存在
 			if (in_array($uid, $BLACKLIST)) {
 				$is_baned = true;
 				$baned = 21;
-				$reason = $uid." 在黑名单：".$ban_reason;
+				$reason = $uid." 在黑名单";
+			}
+			if (in_array($uid, $WHITELIST)) {
+				$is_whitelist = true;
 			}
 			break;
 		case "local_whitelist": // 本地白名单
@@ -107,6 +114,8 @@ if (ACCESS_KEY != "") { // access_key 存在
 				$is_baned = true;
 				$baned = 22;
 				$reason = $uid." 不在白名单";
+			} else {
+				$is_whitelist = true;
 			}
 			break;
 		default:
@@ -115,7 +124,6 @@ if (ACCESS_KEY != "") { // access_key 存在
 	// 写入日志
 	if (SAVE_LOG == 1 && $type != 1) {
 		define('BAN_CODE', $baned);
-		define('UID', $uid);
 		write_log();
 	}
 	// 开始ban
@@ -132,7 +140,6 @@ if (ACCESS_KEY != "") { // access_key 存在
 	if (CID == "13073143" || CID == "120453316") { // 漫游测速
 		// pass
 	} elseif (BLOCK_TYPE == "whitelist" || BLOCK_TYPE == "local_whitelist" || NEED_LOGIN == 1) { // 白名单模式 或 黑名单模式+需要登录
-		define('UID', 0);
 		block(23, "未提供访问密钥(漫游需要登录、脚本需要授权)");
 	}
 }

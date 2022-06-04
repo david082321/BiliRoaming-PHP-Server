@@ -427,12 +427,11 @@ function get_cache_blacklist() {
 	$expired_time = $vnum['expired_time'];
 	$is_blacklist = $vnum['is_blacklist'];
 	$is_whitelist = $vnum['is_whitelist'];
-	$ban_reason = $vnum['reason'];
 	if (time() > (int)$expired_time) {
 		$refresh_cache_status = 1; // 刷新缓存
 		return ["⑨","⑨"];
 	}
-	return [$is_blacklist, $is_whitelist, $ban_reason];
+	return [$is_blacklist, $is_whitelist];
 }
 
 // 写入黑白名单缓存
@@ -441,7 +440,6 @@ function write_cache_blacklist() {
 	global $uid;
 	global $is_blacklist;
 	global $is_whitelist;
-	global $ban_reason;
 	global $refresh_cache_status;
 	if ($is_blacklist) {
 		$is_blacklist = 1;
@@ -454,10 +452,10 @@ function write_cache_blacklist() {
 		$is_whitelist = 0;
 	}
 	$ts = time() + CACHE_TIME_BLACKLIST;
-	$sql = "INSERT INTO `status` (`expired_time`,`uid`,`is_blacklist`,`is_whitelist`,`reason`) VALUES ('".$ts."','".$uid."','".$is_blacklist."','".$is_whitelist."','".$ban_reason."')";
+	$sql = "INSERT INTO `status` (`expired_time`,`uid`,`is_blacklist`,`is_whitelist`,`reason`) VALUES ('".$ts."','".$uid."','".$is_blacklist."','".$is_whitelist."',NULL)";
 	// 刷新缓存
 	if ($refresh_cache_status == 1) {
-		$sql = "UPDATE `status` SET `expired_time` = '".$ts."', `is_blacklist` = '".$is_blacklist."', `is_whitelist` = '".$is_whitelist."', `reason` = '".$ban_reason."' WHERE `uid` = '".$uid."';";
+		$sql = "UPDATE `status` SET `expired_time` = '".$ts."', `is_blacklist` = '".$is_blacklist."', `is_whitelist` = '".$is_whitelist."', `reason` = NULL WHERE `uid` = '".$uid."';";
 	}
 	$dbh -> exec($sql);
 }
@@ -521,6 +519,9 @@ function write_log() {
 		$version_code = "0";
 	} else {
 		$version_code = BILIROAMING_VERSION_CODE;
+	}
+	if (!defined('UID')) {
+		define('UID', '0');
 	}
 	$ts = time();
 	$sql = "INSERT INTO `log` (`time`,`ip`,`area`,`version`,`version_code`,`access_key`,`uid`,`ban_code`,`path`,`query`) VALUES (now(),'".$ip."','".AREA."','".BILIROAMING_VERSION."','".$version_code."','".ACCESS_KEY."','".UID."','".BAN_CODE."','".PATH."','".QUERY."')";

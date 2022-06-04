@@ -37,7 +37,7 @@
 
 ## (非必要步骤) 防止重复的 301 转址
 
-### apache
+### Apache
 
 * [下载这个，然后放在网站根目录 (.htaccess) ](https://github.com/david082321/BiliRoaming-PHP-Server/blob/main/.htaccess)
 
@@ -45,39 +45,24 @@
 
 * 在配置文件中加入以下代码
 
-    server
-
-    {
-
+```
+server {
     #...(中间略过，请加在配置文件最底下)...
-
     rewrite "^/intl/gateway/v2/app/search/type?(.*)$" /intl/gateway/v2/app/search/type/index.php?$1 last;
-
     rewrite "^/intl/gateway/v2/app/search/v2?(.*)$" /intl/gateway/v2/app/search/v2/index.php?$1 last;
-
     rewrite "^/intl/gateway/v2/app/subtitle?(.*)$" /intl/gateway/v2/app/subtitle/index.php?$1 last;
-
     rewrite "^/intl/gateway/v2/ogv/playurl?(.*)$" /intl/gateway/v2/ogv/playurl/index.php?$1 last;
-
     rewrite "^/intl/gateway/v2/ogv/view/app/season?(.*)$" /intl/gateway/v2/ogv/view/app/season/index.php?$1 last;
-
     rewrite "^/intl/gateway/v2/ogv/view/app/season2?(.*)$" /intl/gateway/v2/ogv/view/app/season2/index.php?$1 last;
-
     rewrite "^/intl/gateway/v2/ogv/view/app/episode?(.*)$" /intl/gateway/v2/ogv/view/app/episode/index.php?$1 last;
-
     rewrite "^/pgc/player/api/playurl?(.*)$" /pgc/player/api/playurl/index.php?$1 last;
-
     rewrite "^/pgc/player/web/playurl?(.*)$" /pgc/player/web/playurl/index.php?$1 last;
-
     rewrite "^/pgc/view/web/season?(.*)$" /pgc/view/web/season/index.php?$1 last;
-
     rewrite "^/x/intl/passport-login/oauth2/refresh_token?(.*)$" /x/intl/passport-login/oauth2/refresh_token/index.php?$1 last;
-
     rewrite "^/x/v2/search/type?(.*)$" /x/v2/search/type/index.php?$1 last;
-
     rewrite "^/x/web-interface/search/type?(.*)$" /x/web-interface/search/type/index.php?$1 last;
-
-    }
+}
+```
 
 ## (非必要步骤) 缓存
 
@@ -86,8 +71,6 @@
 * 配置 config.php 的缓存设置
 
 * 导入 cache.sql
-
-* ！！！重要！！！v4.0.0 更新了数据库字段。从 1.x 或 2.x 或 3.x 升级的用户，请务必更新数据库。
 
 ## (非必要步骤，实验性) 支持网页版油猴脚本
 
@@ -113,89 +96,50 @@
 
 # 文件功能介绍
 
+```
 ├─intl/gateway/v2
-
 │　├─app
-
 │　│　└─search
-
 │　│　　├─type/index.php (东南亚APP 搜索)
-
 │　│　　└─v2/index.php (东南亚APP 搜索)
-
 │　└─subtitle/index.php (东南亚APP 字幕)
-
 │　└─ogv
-
 │　　　├─playurl/index.php (东南亚APP playurl)
-
 │　　　├─view/app/episode/index.php (东南亚APP episode)
-
 │　　　├─view/app/season/index.php (东南亚APP season)
-
 │　　　└─view/app/season2/index.php (东南亚APP season)
-
 ├─pgc
-
 │　├─player
-
 │　│　├─api/playurl/index.php (APP playurl)
-
 │　│　└─web/playurl/index.php (WEB playurl)
-
 │　└─view
-
 │　　　└─web/season/index.php (WEB season)
-
 ├─x/
-
 │　├─intl/passport-login/oauth2/refresh_token/index.php (东南亚APP refresh_token)
-
 │　├─v2/search/type/index.php (APP 搜索)
-
 │　└─web-interface/search/type/index.php (WEB 搜索)
-
 ├─utils/
-
 │　├─auth.php (鉴权)
-
 │　├─fuck_search.php (在搜索中添加提示)
-
 │　├─fuck_sub.php (添加东南亚番剧字幕)
-
 │　├─functions.php (功能函数合集)
-
 │　├─functions_cache.php (功能函数合集)[仅缓存使用]
-
 │　├─functions_cache_key.php (功能函数合集)[仅缓存使用]
-
 │　├─lock_area.php (锁区、web接口判断)
-
 │　├─process.php (处理用户传入参数)
-
 │　├─refresh_token.php (自动刷新访问密钥)
-
 │　├─refresh_token_th.php (自动刷新访问密钥)
-
 │　├─replace.php (修改返回内容)
-
 │　├─replace_playurl.php (替换视频)
-
 │　├─resign.php (替换访问密钥)
-
 │　└─version.php (版本信息、Header)
-
 ├─.htaccess (防止重复的 301 转址)
-
 ├─add_key.php (添加访问密钥)[仅缓存使用]
-
 ├─cache.sql (导入MySQL用的)[仅缓存使用]
-
 ├─config.php (设置本程序各种参数) ＜──参数设置在这里
-
 ├─hello.php (默认欢迎页面)
-
 └─index.php (WEB playurl、显示欢迎页)
+```
 
 # 友链
 

@@ -11,7 +11,7 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 			define('RESIGN_TH_PAID_KEY', $keys_th_paid[array_rand($keys_th_paid)]);
 			if (RESIGN_TH_PAID_KEY != "No key") {
 				// 替换
-				$query = sign("th",RESIGN_TH_PAID_KEY,$query);
+				$query = sign("7d089525d3611b1c",RESIGN_TH_PAID_KEY,$query);
 				$member_type = 9;
 			}
 		} elseif (RESIGN_TH == 1){ // 泰国登录会员
@@ -19,7 +19,7 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 			define('RESIGN_TH_KEY', $keys_th[array_rand($keys_th)]);
 			if (RESIGN_TH_KEY != "No key") {
 				// 替换
-				$query = sign("th",RESIGN_TH_KEY,$query);
+				$query = sign("7d089525d3611b1c",RESIGN_TH_KEY,$query);
 				$member_type = 8;
 			}
 		}
@@ -27,13 +27,7 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 }
 
 // sign计算
-function sign($sign_type, $access_key, $query) {
-	if ($sign_type == "th") {
-		$appkey = APPKEY_TH;
-		$appsec = APPSEC_TH;
-	} else {
-		return $query;
-	}
+function sign($appkey, $access_key, $query) {
 	parse_str($query, $query_arr);
 	// 去除 sign
 	unset($query_arr["sign"]);	
@@ -46,6 +40,7 @@ function sign($sign_type, $access_key, $query) {
 	ksort($query_arr);
 	// 签名
 	$query_new = http_build_query($query_arr);
+	$appsec = appkey2sec($appkey);
 	$sign = md5($query_new.$appsec);
 	return $query_new."&sign=".$sign;
 }
