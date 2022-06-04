@@ -15,7 +15,11 @@ if (SAVE_LOG == 1) {
 	define('QUERY', $query);
 }
 
-define('APPKEY', @$_GET['appkey']);
+if (@$_GET['appkey'] == "") {
+	define('APPKEY', "1d8b6e7d45233436"); // 兼容web脚本
+} else {
+	define('APPKEY', @$_GET['appkey']);
+}
 define('ACCESS_KEY', @$_GET['access_key']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
