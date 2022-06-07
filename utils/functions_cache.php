@@ -119,6 +119,7 @@ function write_cache() {
 	switch ($code) {
 		case "0":
 			// 删掉用户mid
+			/* 开始检测这个了
 			$array = json_decode($output, true);
 			$code = $array['code'];
 			$a = explode('mid=', $output);
@@ -129,6 +130,7 @@ function write_cache() {
 				$out = $out.'orderid='.$b[1];
 			}
 			$output = $out.$a[count($a)-1];
+			*/
 			$ts = $ts + CACHE_TIME;
 			break;
 		case "-10403":
