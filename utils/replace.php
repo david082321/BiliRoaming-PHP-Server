@@ -14,7 +14,9 @@ switch ($type) {
 		break;
 	case 2: // 东南亚APP season
 		$output = str_replace('"vip":0','"vip":1',$output); // 支持漫游 #320
-		include (ROOT_PATH."utils/fuck_sub.php"); // 添加中文字幕
+		if (AREA == "th") {
+			include (ROOT_PATH."utils/fuck_sub.php"); // 添加中文字幕
+		}
 		break;
 	case 3: // 东南亚APP 字幕
 		break;
