@@ -164,6 +164,7 @@ function check_412($output,$get_area){
 
 // appsec 查表
 function appkey2sec($appkey) {
+	if ($appkey == "") {return "";}
 	$appkey2sec = array("9d5889cf67e615cd" => "8fd9bb32efea8cef801fd895bef2713d", // Ai4cCreatorAndroid
 		"1d8b6e7d45233436" => "560c52ccd288fed045859ed18bffd973", // Android
 		"07da50c9a0bf829f" => "25bdede4e1581c836cab73a48790ca6e", // AndroidB
