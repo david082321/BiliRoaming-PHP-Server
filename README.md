@@ -8,10 +8,6 @@
 
 * [下载最新版](https://github.com/david082321/BiliRoaming-PHP-Server/releases/latest)
 
-* [下载历史版本](https://github.com/david082321/BiliRoaming-PHP-Server/releases)
-
-* ！！！⚠重要⚠！！！v4.2.2 更新了数据库。如果你有開啟緩存功能，请务必更新数据库。
-
 ## 用法：
 
 * 直接放到网站根目录，例如 wwwroot 或 public_html 或 private_html
@@ -62,6 +58,26 @@ server {
     rewrite "^/x/v2/search/type?(.*)$" /x/v2/search/type/index.php?$1 last;
     rewrite "^/x/web-interface/search/type?(.*)$" /x/web-interface/search/type/index.php?$1 last;
 }
+```
+
+### nginx，但是是宝塔用户
+
+* 打开网站设置的「伪静态」，然后直接复制下面代码，然后保存
+
+```
+rewrite "^/intl/gateway/v2/app/search/type?(.*)$" /intl/gateway/v2/app/search/type/index.php?$1 last;
+rewrite "^/intl/gateway/v2/app/search/v2?(.*)$" /intl/gateway/v2/app/search/v2/index.php?$1 last;
+rewrite "^/intl/gateway/v2/app/subtitle?(.*)$" /intl/gateway/v2/app/subtitle/index.php?$1 last;
+rewrite "^/intl/gateway/v2/ogv/playurl?(.*)$" /intl/gateway/v2/ogv/playurl/index.php?$1 last;
+rewrite "^/intl/gateway/v2/ogv/view/app/season?(.*)$" /intl/gateway/v2/ogv/view/app/season/index.php?$1 last;
+rewrite "^/intl/gateway/v2/ogv/view/app/season2?(.*)$" /intl/gateway/v2/ogv/view/app/season2/index.php?$1 last;
+rewrite "^/intl/gateway/v2/ogv/view/app/episode?(.*)$" /intl/gateway/v2/ogv/view/app/episode/index.php?$1 last;
+rewrite "^/pgc/player/api/playurl?(.*)$" /pgc/player/api/playurl/index.php?$1 last;
+rewrite "^/pgc/player/web/playurl?(.*)$" /pgc/player/web/playurl/index.php?$1 last;
+rewrite "^/pgc/view/web/season?(.*)$" /pgc/view/web/season/index.php?$1 last;
+rewrite "^/x/intl/passport-login/oauth2/refresh_token?(.*)$" /x/intl/passport-login/oauth2/refresh_token/index.php?$1 last;
+rewrite "^/x/v2/search/type?(.*)$" /x/v2/search/type/index.php?$1 last;
+rewrite "^/x/web-interface/search/type?(.*)$" /x/web-interface/search/type/index.php?$1 last;
 ```
 
 ## (非必要步骤) 缓存
