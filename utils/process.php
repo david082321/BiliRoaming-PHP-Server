@@ -65,7 +65,7 @@ if (BILIROAMING_VERSION == '' && BILIROAMING_VERSION_CODE == '') {
 	block(15, "错误请求头");
 }
 $ts = @$_GET['ts'];
-if ($ts == '') {
+if ($ts == '' || !SIGN) {
 	define('TS', time());
 } else {
 	if ($ts < time()-60 || $ts > time()+60) {
@@ -84,7 +84,7 @@ if (in_array(AREA, $BAN_SERVER_AREA)) {
 }
 
 // 验证 sign（playurl）
-if ($type == 1) {
+if ($type == 1 && SIGN) {
 	$sign = @$_GET['sign'];
 	if (APPKEY != "" && $sign != "" && TS != "") {
 		check_sign(APPKEY, $sign, $query);
