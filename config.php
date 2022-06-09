@@ -17,11 +17,12 @@ $WHITELIST = array('1', '2', '3'); // 本地白名单，填写 uid，可自行�
 define('ROAMING_MIN_VER', 0); // 设置最低允许漫游版本，详情看哔哩漫游仓库 versionCode
 define('ROAMING_MAX_VER', 0); // 0 表示不限制，设置最高允许漫游版本，详情看哔哩漫游仓库 versionCode
 define('BLACKLIST_ERROR', 1); // 在线黑名单服务器发生错误的处理方式。2 全部拉黑并提示错误, 1 改用本地黑白名单, 0 不拉黑任何人也不提示
+define('SIGN', true); // 用户传参的签名验证，请勿关闭，后果自负。false 关闭, true 开启
 
 // 封锁指定epid视频
 define('BAN_EP', 0); // 是否开启ban特定视频
-//$epid_list = array('369747','371362','371461','371462','371463','371596'); //示范内容：巨人最终季
-/* // 示范内容：○之空(范围屏蔽)
+//$epid_list = array('369747','371362','371461','371462','371463','371596'); //示范内容：(单集屏蔽)
+/* // 示范内容：(范围屏蔽)
 foreach (range(368703, 368714) as $n) {
 	array_push($epid_list, $n);
 }
@@ -33,7 +34,7 @@ $cid_list = array();
 
 // 缓存
 define('SAVE_CACHE', 0); // 开启缓存，须配置MySQL数据库。0 否, 1 是
-define('CACHE_TIME', 60*60*1.95); // Playurl缓存时长（秒），目前最长可到14400秒，建议7200秒以下(部分视频只有2小时)
+define('CACHE_TIME', 60*60*0.5); // Playurl缓存时长（秒），目前最长可到14400秒，建议7200秒以下(部分视频只有2小时)
 define('CACHE_TIME_SEASON', 60*60*0.5); // 泰国 season 的缓存时长（秒）
 // 发生错误时的缓存时长
 define('CACHE_TIME_10403', 60*60*24*14); // 返回10403（地区错误）时的缓存时长（秒）

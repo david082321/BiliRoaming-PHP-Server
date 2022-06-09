@@ -15,7 +15,11 @@ if (SAVE_LOG == 1) {
 	define('QUERY', $query);
 }
 
-define('APPKEY', @$_GET['appkey']);
+if (@$_GET['appkey'] == "") {
+	define('APPKEY', "1d8b6e7d45233436"); // 兼容web脚本
+} else {
+	define('APPKEY', @$_GET['appkey']);
+}
 define('ACCESS_KEY', @$_GET['access_key']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
@@ -61,7 +65,7 @@ if (BILIROAMING_VERSION == '' && BILIROAMING_VERSION_CODE == '') {
 	block(15, "错误请求头");
 }
 $ts = @$_GET['ts'];
-if ($ts == '') {
+if ($ts == '' || !SIGN) {
 	define('TS', time());
 } else {
 	if ($ts < time()-60 || $ts > time()+60) {
@@ -80,7 +84,7 @@ if (in_array(AREA, $BAN_SERVER_AREA)) {
 }
 
 // 验证 sign（playurl）
-if ($type == 1) {
+if ($type == 1 && SIGN) {
 	$sign = @$_GET['sign'];
 	if (APPKEY != "" && $sign != "" && TS != "") {
 		check_sign(APPKEY, $sign, $query);
