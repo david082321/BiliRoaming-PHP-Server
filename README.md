@@ -1,6 +1,11 @@
+# 写在开头
+* 动手能力强的可以用这个，服务器回应的速度比我这个快多了。
+* https://github.com/JasonKhew96/biliroaming-go-server
+
+----
+
 # BiliRoaming-PHP-Server
 哔哩漫游 PHP 解析服务器
-
 
 自建解析服务器参考配置
 
@@ -10,7 +15,7 @@
 
 ## 用法：
 
-* 直接放到网站根目录，例如 wwwroot 或 public_html 或 private_html
+* 直接放到网站根目录，例如 wwwroot 或 public_html 或 private_html 或 网站域名的文件夹(宝塔)
 
 * 默认为「在线黑名单」模式，若要切换到其他模式，请看底下说明。
 
@@ -37,7 +42,7 @@
 
 * [下载这个，然后放在网站根目录 (.htaccess) ](https://github.com/david082321/BiliRoaming-PHP-Server/blob/main/.htaccess)
 
-### nginx
+### Nginx
 
 * 在配置文件中加入以下代码
 
@@ -60,7 +65,7 @@ server {
 }
 ```
 
-### nginx，但是是宝塔用户
+### Nginx，但是是宝塔用户
 
 * 打开网站设置的「伪静态」，然后直接复制下面代码，然后保存
 
@@ -94,19 +99,19 @@ rewrite "^/x/web-interface/search/type?(.*)$" /x/web-interface/search/type/index
 
 * 配置 config.php 的 WEB_ON
 
-* 脚本的 代理服务器->自定义 输入以下内容 ( example.com 请改成你的服务器地址)
+* 脚本的 代理服务器->自定义 输入以下内容 (example.com 请改成你的服务器地址)
 
 ##### 　　　https://example.com/
 
-* 脚本的 代理服务器->自定义(泰国/东南亚) 输入以下内容 ( example.com 请改成你的服务器地址)
+* 脚本的 代理服务器->自定义(泰国/东南亚) 输入以下内容 (example.com 请改成你的服务器地址)
 
 ##### 　　　https://example.com/intl/gateway/v2/ogv/playurl/
 
-* (可选步骤) 配置上面的禁用 301 转址。然后脚本的 代理服务器->自定义 改成
+* (可选步骤) 配置上面的禁用 301 转址。然后脚本的 代理服务器->自定义 输入以下内容 (example.com 请改成你的服务器地址)
 
 ##### 　　　https://example.com
 
-* 注意：不配置上面的 「禁用 301 转址」，少部分 泰国/东南亚番剧 将无法在网页版加载。(哔哩漫游无影响)
+* 注意：不配置上面的 「禁用 301 转址」，部分 泰国/东南亚番剧 将无法在网页版加载。(哔哩漫游无影响)
 
 --------
 
@@ -120,14 +125,14 @@ rewrite "^/x/web-interface/search/type?(.*)$" /x/web-interface/search/type/index
 │　│　　└─v2/index.php (东南亚APP 搜索)
 │　└─subtitle/index.php (东南亚APP 字幕)
 │　└─ogv
-│　　　├─playurl/index.php (东南亚APP playurl)
+│　　　├─playurl/index.php (东南亚APP 播放地址)
 │　　　├─view/app/episode/index.php (东南亚APP episode)
 │　　　├─view/app/season/index.php (东南亚APP season)
 │　　　└─view/app/season2/index.php (东南亚APP season)
 ├─pgc
 │　├─player
-│　│　├─api/playurl/index.php (APP playurl)
-│　│　└─web/playurl/index.php (WEB playurl)
+│　│　├─api/playurl/index.php (APP 播放地址)
+│　│　└─web/playurl/index.php (WEB 播放地址)
 │　└─view
 │　　　└─web/season/index.php (WEB season)
 ├─x/
@@ -151,14 +156,8 @@ rewrite "^/x/web-interface/search/type?(.*)$" /x/web-interface/search/type/index
 │　└─version.php (版本信息、Header)
 ├─.htaccess (防止重复的 301 转址)
 ├─add_key.php (添加访问密钥)[仅缓存使用]
-├─cache.sql (导入MySQL用的)[仅缓存使用]
+├─cache.sql (导入 MySQL 用的)[仅缓存使用]
 ├─config.php (设置本程序各种参数) ＜──参数设置在这里
 ├─hello.php (默认欢迎页面)
-└─index.php (WEB playurl、显示欢迎页)
+└─index.php (WEB 播放地址、显示欢迎页)
 ```
-
-# 友链
-
-* https://github.com/JasonKhew96/biliroaming-go-server
-
-* 动手能力强的可以用这个，服务器回应的速度比我这个快多了。
