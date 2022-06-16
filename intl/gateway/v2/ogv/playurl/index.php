@@ -43,17 +43,6 @@ if (IP_RESOLVE == 1) {
 check_412($output,$get_area);
 // 替换内容
 include (ROOT_PATH."utils/replace.php");
-$array = json_decode($output, true);
-@$items_old = $array['data']['video_info']['stream_list'];
-$items = array();
-foreach ($items_old as $item) {
-	if ($item['stream_info']['quality'] >= 16) {
-		array_push($items,$item);
-	}
-}
-$array['data']['video_info']['stream_list'] = $items;
-$output = json_encode($array, 320);
-
 // 返回内容给用户
 print($output);
 // 写入缓存
