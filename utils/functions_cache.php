@@ -279,7 +279,7 @@ function write_cache_season() {
 	if (AREA == "th") {
 		$array = json_decode($output, true);
 		$code = $array['code'];
-		if ($code == "0" || $code == 0) {
+		if (($code == "0" || $code == 0)&&isset($array['result']['modules'][0]['data']['episodes'])) {
 			$ss_id = $array['result']['season_id'];
 			$items = $array['result']['modules'][0]['data']['episodes'];
 			for ($i=0; $i<count($items); $i++) {
