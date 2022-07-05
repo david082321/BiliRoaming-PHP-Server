@@ -1,7 +1,7 @@
 <?php
 	$array = json_decode($output, true);
 	$code = $array['code'];
-	if ($code == "0" || $code == 0) {
+	if (($code == "0" || $code == 0)&&isset($array['result']['modules'][0]['data']['episodes'])) {
 		// 替换 aid
 		$episodes_items = $array['result']['modules'][0]['data']['episodes'];
 		for ($i=0; $i<count($episodes_items); $i++) {
