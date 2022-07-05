@@ -1,12 +1,10 @@
 <?php
 	$array = json_decode($output, true);
 	$code = $array['code'];
-	if (($code == "0" || $code == 0)&&isset($array['result']['modules'][0]['data']['episodes'])) {
-		// 替换 aid
-		$episodes_items = $array['result']['modules'][0]['data']['episodes'];
-		for ($i=0; $i<count($episodes_items); $i++) {
-			$array['result']['modules'][0]['data']['episodes'][$i]['aid'] = TH_AID;
-		}
+	if ($code == "0" || $code == 0) {
+		// 判断 episode 数量
+		$not_empty_ep = true;
+		
 		// 判断 season 内容
 		if (count($array['result']) > 0) {
 			$ss_type = "result";
@@ -14,9 +12,34 @@
 			$ss_type = "data";
 		} else {
 			$ss_type = "";
+			$not_empty_ep = false;
 		}
+		
+		// 判断 episode 数量
+		if ($ss_type == "result") {
+			if (isset($array['result']['modules'][0]['data']['episodes'])) {
+				// 替换 aid
+				$episodes_items = $array['result']['modules'][0]['data']['episodes'];
+				for ($i=0; $i<count($episodes_items); $i++) {
+					$array['result']['modules'][0]['data']['episodes'][$i]['aid'] = TH_AID;
+				}
+			} else {
+				$not_empty_ep = false;
+			}
+		} else if ($ss_type == "data") {
+			if (isset($array['data']['sections']['section'][0]['ep_details'])) {
+				// 替换 aid
+				$episodes_items = $array['data']['sections']['section'][0]['ep_details'];
+				for ($i=0; $i<count($episodes_items); $i++) {
+					$array['data']['sections']['section'][0]['ep_details'][$i]['episode_id'] = TH_AID;
+				}
+			} else {
+				$not_empty_ep = false;
+			}							    
+		}
+		
 		// 下载要替换的字幕
-		if (SUBTITLE_API != 'https://example.com/path?season_id=') {
+		if (SUBTITLE_API != 'https://example.com/path?season_id=' && $not_empty_ep) {
 			if ($ss_type == "result") {
 				$ss_id = $array['result']['season_id'];
 			} else {
@@ -30,7 +53,7 @@
 			if ($code == "0") {
 				$replace = $replace_array['data'];
 				if ($ss_type == "result") {
-				    $items = $array['result']['modules'][0]['data']['episodes'];
+					$items = $array['result']['modules'][0]['data']['episodes'];
 				} else {
 					$items = $array['data']['sections']['section'][0]['ep_details'];
 				}
@@ -44,7 +67,7 @@
 						if ($ss_type == "result") {
 							$sub_arr = $array['result']['modules'][0]['data']['episodes'][$ep]['subtitles'];
 						} else {
-							$sub_arr = $array['data']['sections']['section'][0]['ep_details'][$ep]['subtitles'];				    
+							$sub_arr = $array['data']['sections']['section'][0]['ep_details'][$ep]['subtitles'];
 						}
 						$sub_count = count($sub_arr);
 						$add_arr = array(
@@ -61,7 +84,6 @@
 						} else {
 							$array['data']['sections']['section'][0]['ep_details'][$ep]['subtitles'] = $sub_arr;				    
 						}
-						
 					}
 				}
 			}
