@@ -160,7 +160,7 @@ function check_412($output,$get_area) {
 			}
 		}
 		try {
-			file_get_contents(TG_BOT_API.'/'.TG_BOT_KEY.'/sendMessage?chat_id='.TG_CHAT_ID.'&text='.$msg);
+			file_get_contents(TG_BOT_API.'/bot'.TG_BOT_KEY.'/sendMessage?chat_id='.TG_CHAT_ID.'&text='.$msg);
 		} catch (Exception $e) {
 			// 不做任何事
 		}
