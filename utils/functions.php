@@ -138,26 +138,31 @@ function get_userinfo() {
 }
 
 // 412 提醒
-function check_412($output,$get_area){
+function check_412($output,$get_area) {
 	if (TG_NOTIFY == 1) {
 		$status = json_decode($output, true);
-		if(SAVE_CACHE == 0){
+		if (SAVE_CACHE == 0) {
 			if ($status['code'] == -412) {
-				file_get_contents(TG_BOT_API.'/'.TG_BOT_KEY.'/sendMessage?chat_id='.TG_CHAT_ID.'&text=破服务器412啦，地区:' . $get_area);
+				$msg = '破服务器412啦，地区:'.$get_area;
 			}
 		} else {
 			$latest_code = read_status($get_area);
-			if($latest_code != $status['code']){
-				if($status['code'] == -412){
-					file_get_contents(TG_BOT_API.'/'.TG_BOT_KEY.'/sendMessage?chat_id='.TG_CHAT_ID.'&text=破服务器412啦，地区:' . $get_area);
+			if ($latest_code != $status['code']) {
+				if ($status['code'] == -412) {
+					$msg = '破服务器412啦，地区:' . $get_area;
 					write_status($status['code'],$get_area);
 				} else {
-					if($latest_code == -412){
-						file_get_contents(TG_BOT_API.'/'.TG_BOT_KEY.'/sendMessage?chat_id='.TG_CHAT_ID.'&text=破服务器恢复啦，地区:' . $get_area);
+					if ($latest_code == -412) {
+						$msg = '破服务器恢复啦，地区:' . $get_area;
 					}
 					write_status(0,$get_area);
 				}
 			}
+		}
+		try {
+			file_get_contents(TG_BOT_API.'/'.TG_BOT_KEY.'/sendMessage?chat_id='.TG_CHAT_ID.'&text='.$msg);
+		} catch (Exception $e) {
+			// 不做任何事
 		}
 	}
 }
