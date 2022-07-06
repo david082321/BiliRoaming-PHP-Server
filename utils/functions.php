@@ -192,7 +192,7 @@ function add_query($appkey, $query, $add_query) {
 	parse_str($add_query, $query_arr2);
 	$query_arr = array_merge($query_arr, $query_arr2);
 	// 泰区删除 area 参数
-	if ($appkey == "7d089525d3611b1c" && CUSTOM_HOST_TH == "https://app.biliintl.com") {
+	if ($appkey == "7d089525d3611b1c") {
 		unset($query_arr["area"]);
 	}
 	unset($query_arr["sign"]);
