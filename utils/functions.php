@@ -141,6 +141,7 @@ function get_userinfo() {
 function check_412($output,$get_area) {
 	if (TG_NOTIFY == 1) {
 		$status = json_decode($output, true);
+		$msg = "";
 		if (SAVE_CACHE == 0) {
 			if ($status['code'] == -412) {
 				$msg = '破服务器412啦，地区:'.$get_area;
@@ -159,10 +160,12 @@ function check_412($output,$get_area) {
 				}
 			}
 		}
-		try {
-			file_get_contents(TG_BOT_API.'/bot'.TG_BOT_KEY.'/sendMessage?chat_id='.TG_CHAT_ID.'&text='.$msg);
-		} catch (Exception $e) {
-			// 不做任何事
+		if ($msg != "") {
+			try {
+				file_get_contents(TG_BOT_API.'/bot'.TG_BOT_KEY.'/sendMessage?chat_id='.TG_CHAT_ID.'&text='.$msg);
+			} catch (Exception $e) {
+				// 不做任何事
+			}
 		}
 	}
 }
