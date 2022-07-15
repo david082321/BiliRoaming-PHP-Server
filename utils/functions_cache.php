@@ -136,7 +136,11 @@ function write_cache() {
 	global $refresh_cache;
 	$ts = time();
 	$array = json_decode($output, true);
-	$code = $array['code'];
+	if(is_array($array)){
+		$code = $array['code'];
+	} else {
+		$code = -404;
+	}
 	switch ($code) {
 		case "0":
 			// 删掉用户mid
@@ -295,7 +299,11 @@ function write_cache_season() {
 
 	$ts = time();
 	$array = json_decode($output, true);
-	$code = $array['code'];
+	if(is_array($array)){
+		$code = $array['code'];
+	} else {
+		$code = -404;
+	}
 	switch ($code) {
 		case "0":
 			$ts = $ts + CACHE_TIME_SEASON;
@@ -359,10 +367,19 @@ function write_cache_season() {
 	// 缓存泰区字幕
 	if (AREA == "th") {
 		$array = json_decode($output, true);
-		$code = $array['code'];
+		if(is_array($array)){
+			$code = $array['code'];
+		} else {
+			$code = -404;
+		}
 		if (($code == "0" || $code == 0) && isset($array['result']['modules'][0]['data']['episodes'])) {
-			$ss_id = $array['result']['season_id'];
-			$items = $array['result']['modules'][0]['data']['episodes'];
+			if(is_array($array)){
+				$ss_id = $array['result']['season_id'];
+				$items = $array['result']['modules'][0]['data']['episodes'];
+			} else {
+				$ss_id = "";
+				$items = "";
+			}
 			for ($i=0; $i<count($items); $i++) {
 				$ep_id = $items[$i]['id'];
 				$sqlco = "SELECT `expired_time`,`cid` FROM `cache` WHERE `area` = '".$area."' AND `cache_type` = 'subtitle_".$cache_type."' AND `ep_id` = '".$ep_id."'";
@@ -377,7 +394,11 @@ function write_cache_season() {
 				} else {
 					$refresh_cache_subtitle = 0; // INSERT
 				}
-				$sub_arr = $array['result']['modules'][0]['data']['episodes'][$i]['subtitles'];
+				if(is_array($array)){
+					$sub_arr = $array['result']['modules'][0]['data']['episodes'][$i]['subtitles'];
+				} else {
+					$sub_arr = array();
+				}
 				$sub_count = count($sub_arr);
 				$sub_init = '{"code":0,"message":"0","ttl":1,"data":{"suggest_key":"en","subtitles":null}}';
 				$sub_json = json_decode($sub_init, true);
