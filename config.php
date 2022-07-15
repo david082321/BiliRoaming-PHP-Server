@@ -33,7 +33,7 @@ define('BAN_CID', 0); // 是否开启ban特定视频
 $cid_list = array();
 
 // 缓存
-define('SAVE_CACHE', 0); // 开启缓存，须配置MySQL数据库。0 否, 1 是
+define('SAVE_CACHE', 0); // 开启缓存，须配置MySQL数据库（必须）及redis（可选）。0 否, 1 是
 define('CACHE_TIME', 60*60*0.5); // Playurl缓存时长（秒），目前最长可到14400秒，建议7200秒以下(部分视频只有2小时)
 define('CACHE_TIME_SEASON', 60*60*0.5); // 泰国 season 的缓存时长（秒）
 // 发生错误时的缓存时长
@@ -50,6 +50,12 @@ define('DB_HOST', 'localhost');
 define('DB_USER', '这里改成登录的用户名'); // 登录的用户名
 define('DB_PASS', '登录的密码'); // 登录的密码
 define('DB_NAME', '数据库名称'); // 数据库名称
+
+// redis数据库
+define('REDIS_ON', 0); // 是否开启redis缓存，0 否, 1 是 不开启缓存时，此开关无效
+define('REDIS_HOST', 'localhost'); // redis服务器地址
+define('REDIS_PORT', 6379); // redis服务器端口
+define('REDIS_PASS', ''); // redis服务器密码
 
 // 服务器所在的地区
 /*

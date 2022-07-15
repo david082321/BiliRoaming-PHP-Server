@@ -222,7 +222,7 @@ function check_sign($appkey, $sign, $query) {
 	// 按 key 排序
 	ksort($query_arr);
 	$query_new = http_build_query($query_arr);
-	if ($sign != md5($query_new.$appsec)) {		
+	if ($sign != md5($query_new.$appsec)) {
 		block(41, "参数sign错误");
 	}
 }
