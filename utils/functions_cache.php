@@ -136,7 +136,7 @@ function write_cache() {
 	global $refresh_cache;
 	$ts = time();
 	$array = json_decode($output, true);
-	if(is_array($array)){
+	if (is_array($array)) {
 		$code = $array['code'];
 	} else {
 		$code = -404;
@@ -338,10 +338,10 @@ function write_cache_season() {
 		// 修复转义问题
 		$output = str_replace("\\", "\\\\", $output);
 		// 当 code==0 缓存成 area=main
-		if (REDIS_ON){
+		if (REDIS_ON) {
 			$redisConn = new redisFunc(REDIS_HOST,REDIS_PORT,REDIS_PASS);
 			$redisConn->add($area.'-season-'.$cache_type.'-'.$ss_id.'-'.$ep_id, $output, $ts);
-		}else{
+		} else {
 			$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".$area."','0','season_".$cache_type."','".$ss_id."','".$ep_id."','".$output."')";
 			// 刷新缓存
 			if ($refresh_cache_season == 1) {
@@ -394,7 +394,7 @@ function write_cache_season() {
 				} else {
 					$refresh_cache_subtitle = 0; // INSERT
 				}
-				if(is_array($array)){
+				if (is_array($array)) {
 					$sub_arr = $array['result']['modules'][0]['data']['episodes'][$i]['subtitles'];
 				} else {
 					$sub_arr = array();
