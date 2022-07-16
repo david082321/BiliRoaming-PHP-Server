@@ -42,7 +42,7 @@
         }
         public function add($key,$value,$expire){
             $redis = new Redis();
-            $time = time()+$expire;
+            $time = $expire;
             try{
                 $redis->connect($this->SERVER,$this->PORT);
                 if($this->PASSWORD != ""){
