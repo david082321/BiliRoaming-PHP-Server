@@ -15,6 +15,14 @@ try {
 	//echo $e;
 	echo '数据库连接失敗';
 }
+if (REDIS_ON) {
+	include 'redis-class.php';
+	try {
+		$redisConn = new redisFunc(REDIS_HOST,REDIS_PORT,REDIS_PASS);
+	} catch(Exception $e) {
+		echo 'redis连接失敗';
+	}
+}
 
 // 参数（判断是否刷新缓存）
 $refresh_cache = 0;
@@ -78,14 +86,27 @@ function get_cache() {
 	global $member_type;
 	global $cache_type;
 	global $refresh_cache;
-	$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".AREA."' AND `type` = '".$member_type."' AND `cache_type` = '".$cache_type."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."'";
-	$cres = $dbh -> query($sqlco);
-	$vnum = $cres -> fetch();
-	if (!$vnum){
-		return "";
+	if (REDIS_ON) {
+		$redisConn = new redisFunc(REDIS_HOST,REDIS_PORT,REDIS_PASS);
+		if ($redisConn->check(AREA.'-'.$member_type.'-'.$cache_type.'-'.CID.'-'.EP_ID)) {
+			@$cache = $redisConn->get(AREA.'-'.$member_type.'-'.$cache_type.'-'.CID.'-'.EP_ID);
+			@$expired_time = $redisConn->ttl(AREA.'-'.$member_type.'-'.$cache_type.'-'.CID.'-'.EP_ID)+time();
+		} else {
+			$cache = "";
+		}
+		if (!$cache) {
+			return "";
+		}
+	} else {
+		$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".AREA."' AND `type` = '".$member_type."' AND `cache_type` = '".$cache_type."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."'";
+		$cres = $dbh -> query($sqlco);
+		$vnum = $cres -> fetch();
+		if (!$vnum){
+			return "";
+		}
+		@$cache = $vnum['cache'];
+		@$expired_time = $vnum['expired_time'];
 	}
-	@$cache = $vnum['cache'];
-	@$expired_time = $vnum['expired_time'];
 	//修复读取问题
 	$cache = str_replace("u0026", "&", $cache);
 	$cache = str_replace("\r", "\\r", $cache);
@@ -115,7 +136,11 @@ function write_cache() {
 	global $refresh_cache;
 	$ts = time();
 	$array = json_decode($output, true);
-	$code = $array['code'];
+	if (is_array($array)) {
+		$code = $array['code'];
+	} else {
+		$code = -404;
+	}
 	switch ($code) {
 		case "0":
 			// 删掉用户mid
@@ -146,13 +171,18 @@ function write_cache() {
 			$ts = $ts + CACHE_TIME_OTHER;
 	}
 	if ($output !== "") { //没有获取到输出内容不写入缓存
-		$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','".$member_type."','".$cache_type."','".CID."','".EP_ID."','".$output."')";
-		// 刷新缓存
-		if ($refresh_cache == 1) {
-		$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `type` = '".$member_type."' AND `cache_type` = '".$cache_type."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."';";
+		if (REDIS_ON) {
+			$redisConn = new redisFunc(REDIS_HOST,REDIS_PORT,REDIS_PASS);
+			$redisConn->add(AREA.'-'.$member_type.'-'.$cache_type.'-'.CID.'-'.EP_ID, $output, $ts);
+		} else {
+			$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','".$member_type."','".$cache_type."','".CID."','".EP_ID."','".$output."')";
+			// 刷新缓存
+			if ($refresh_cache == 1) {
+			$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `type` = '".$member_type."' AND `cache_type` = '".$cache_type."' AND `cid` = '".CID."' AND `ep_id` = '".EP_ID."';";
+			}
+			$dbh -> exec($sql);
 		}
-		$dbh -> exec($sql);
-	} 	
+	}
 }
 
 // 获取season缓存
@@ -161,46 +191,91 @@ function get_cache_season() {
 	global $member_type;
 	global $cache_type;
 	global $refresh_cache_season;
-	
+
 	if (AREA == "th") {
 		$area = "th"; //泰区
 	} else {
 		$area = "main"; //主站
 	}
-	if (EP_ID != "") {
-		$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".$area."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '0' AND `ep_id` = '".EP_ID."'";
-	} elseif (SS_ID != "") {
-		$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".$area."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".SS_ID."' AND `ep_id` = '0'";
-	} else {
-		return "";
-	}
-	$cres = $dbh -> query($sqlco);
-	$vnum = $cres -> fetch();
-	if (!$vnum) {
-		//给主站的一次机会获取自身 AREA 可能 code!=0 的缓存
-		if ($area == "main") {
-			if (EP_ID != "") {
-				$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".AREA."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '0' AND `ep_id` = '".EP_ID."'";
-			} elseif (SS_ID != "") {
-				$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".AREA."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".SS_ID."' AND `ep_id` = '0'";
+	if (REDIS_ON) {
+		$redisConn = new redisFunc(REDIS_HOST,REDIS_PORT,REDIS_PASS);
+		if (EP_ID != "") {
+			if ($redisConn->check($area.'-season-'.$cache_type.'-0-'.EP_ID)){
+				@$cache = $redisConn->get($area.'-season-'.$cache_type.'-0-'.EP_ID);
+				@$expired_time = $redisConn->ttl($area.'-season-'.$cache_type.'-0-'.EP_ID)+time();
+			} else {
+				@$cache = "";
+				@$expired_time = time();
 			}
-			$cres = $dbh -> query($sqlco);
-			$vnum2 = $cres -> fetch();
+		} elseif (SS_ID != "") {
+			if ($redisConn->check($area.'-season-'.$cache_type.'-0-'.EP_ID)){
+				@$cache = $redisConn->get($area.'-season-'.$cache_type.'-'.SS_ID.'-0');
+				@$expired_time = $redisConn->ttl($area.'-season-'.$cache_type.'-'.SS_ID.'-0')+time();
+			} else {
+				@$cache = "";
+				@$expired_time = time();
+			}
 		}
-	}
-	@$cache1 = $vnum['cache'];
-	@$expired_time1 = $vnum['expired_time'];
-	@$cache2 = $vnum2['cache'];
-	@$expired_time2 = $vnum2['expired_time'];
-	
-	if ($cache1 != "") {
-		$cache = $cache1;
-		$expired_time = $expired_time1;
-	} elseif ($cache2 != "") {
-		$cache = $cache2;
-		$expired_time = $expired_time2;
+		if (!$cache) {
+			if ($area == "main") {
+				if (EP_ID != "") {
+					if ($redisConn->check($area.'-season-'.$cache_type.'-0-'.EP_ID)){
+						@$cache = $redisConn->get($area.'-season-'.$cache_type.'-0-'.EP_ID);
+						@$expired_time = $redisConn->ttl($area.'-season-'.$cache_type.'-0-'.EP_ID)+time();
+					} else {
+						@$cache = "";
+						@$expired_time = time();
+					}
+				} elseif (SS_ID != "") {
+					if ($redisConn->check($area.'-season-'.$cache_type.'-0-'.EP_ID)){
+						@$cache = $redisConn->get(AREA.'-season-'.$cache_type.'-'.SS_ID.'-0');
+						@$expired_time = $redisConn->ttl(AREA.'-season-'.$cache_type.'-'.SS_ID.'-0')+time();
+					} else {
+						@$cache = "";
+						@$expired_time = time();
+					}
+				}
+			}
+		}
+		if (!$cache) {
+			return "";
+		}
 	} else {
-		return "";
+		if (EP_ID != "") {
+			$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".$area."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '0' AND `ep_id` = '".EP_ID."'";
+		} elseif (SS_ID != "") {
+			$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".$area."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".SS_ID."' AND `ep_id` = '0'";
+		} else {
+			return "";
+		}
+		$cres = $dbh -> query($sqlco);
+		$vnum = $cres -> fetch();
+		if (!$vnum) {
+			//给主站的一次机会获取自身 AREA 可能 code!=0 的缓存
+			if ($area == "main") {
+				if (EP_ID != "") {
+					$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".AREA."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '0' AND `ep_id` = '".EP_ID."'";
+				} elseif (SS_ID != "") {
+					$sqlco = "SELECT `cache`,`expired_time` FROM `cache` WHERE `area` = '".AREA."' AND `type` = '0' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".SS_ID."' AND `ep_id` = '0'";
+				}
+				$cres = $dbh -> query($sqlco);
+				$vnum2 = $cres -> fetch();
+			}
+		}
+		@$cache1 = $vnum['cache'];
+		@$expired_time1 = $vnum['expired_time'];
+		@$cache2 = $vnum2['cache'];
+		@$expired_time2 = $vnum2['expired_time'];
+
+		if ($cache1 != "") {
+			$cache = $cache1;
+			$expired_time = $expired_time1;
+		} elseif ($cache2 != "") {
+			$cache = $cache2;
+			$expired_time = $expired_time2;
+		} else {
+			return "";
+		}
 	}
 	if (time() <= (int)$expired_time) {
 		//修复读取问题
@@ -221,10 +296,14 @@ function write_cache_season() {
 	global $output;
 	global $cache_type;
 	global $refresh_cache_season;
-	
+
 	$ts = time();
 	$array = json_decode($output, true);
-	$code = $array['code'];
+	if (is_array($array)) {
+		$code = $array['code'];
+	} else {
+		$code = -404;
+	}
 	switch ($code) {
 		case "0":
 			$ts = $ts + CACHE_TIME_SEASON;
@@ -259,29 +338,48 @@ function write_cache_season() {
 		// 修复转义问题
 		$output = str_replace("\\", "\\\\", $output);
 		// 当 code==0 缓存成 area=main
-		$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".$area."','0','season_".$cache_type."','".$ss_id."','".$ep_id."','".$output."')";
-		// 刷新缓存
-		if ($refresh_cache_season == 1) {
-			$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".$area."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
+		if (REDIS_ON) {
+			$redisConn = new redisFunc(REDIS_HOST,REDIS_PORT,REDIS_PASS);
+			$redisConn->add($area.'-season-'.$cache_type.'-'.$ss_id.'-'.$ep_id, $output, $ts);
+		} else {
+			$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".$area."','0','season_".$cache_type."','".$ss_id."','".$ep_id."','".$output."')";
+			// 刷新缓存
+			if ($refresh_cache_season == 1) {
+				$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".$area."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
+			}
+			$dbh -> exec($sql);
 		}
 	} elseif ($code !== "") {
 		// 修复转义问题
 		$output = str_replace("\\", "\\\\", $output);
 		// 缓存到自身 AREA 里面
-		$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','season_".$cache_type."','".$ss_id."','".$ep_id."','".$output."')";
-		// 刷新缓存
-		if ($refresh_cache_season == 1) {
-			$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
+		if (REDIS_ON) {
+			$redisConn = new redisFunc(REDIS_HOST,REDIS_PORT,REDIS_PASS);
+			$redisConn->add($area.'-season-'.$cache_type.'-'.$ss_id.'-'.$ep_id, $output, $ts);
+		} else {
+			$sql = "INSERT INTO `cache` (`expired_time`,`area`,`type`,`cache_type`,`cid`,`ep_id`,`cache`) VALUES ('".$ts."','".AREA."','0','season_".$cache_type."','".$ss_id."','".$ep_id."','".$output."')";
+			// 刷新缓存
+			if ($refresh_cache_season == 1) {
+				$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$output."' WHERE `area` = '".AREA."' AND `cache_type` = 'season_".$cache_type."' AND `cid` = '".$ss_id."' AND `ep_id` = '".$ep_id."';";
+			}
 		}
 	}
-	$dbh -> exec($sql);
 	// 缓存泰区字幕
 	if (AREA == "th") {
 		$array = json_decode($output, true);
-		$code = $array['code'];
+		if (is_array($array)) {
+			$code = $array['code'];
+		} else {
+			$code = -404;
+		}
 		if (($code == "0" || $code == 0) && isset($array['result']['modules'][0]['data']['episodes'])) {
-			$ss_id = $array['result']['season_id'];
-			$items = $array['result']['modules'][0]['data']['episodes'];
+			if (is_array($array)) {
+				$ss_id = $array['result']['season_id'];
+				$items = $array['result']['modules'][0]['data']['episodes'];
+			} else {
+				$ss_id = "";
+				$items = "";
+			}
 			for ($i=0; $i<count($items); $i++) {
 				$ep_id = $items[$i]['id'];
 				$sqlco = "SELECT `expired_time`,`cid` FROM `cache` WHERE `area` = '".$area."' AND `cache_type` = 'subtitle_".$cache_type."' AND `ep_id` = '".$ep_id."'";
@@ -296,7 +394,11 @@ function write_cache_season() {
 				} else {
 					$refresh_cache_subtitle = 0; // INSERT
 				}
-				$sub_arr = $array['result']['modules'][0]['data']['episodes'][$i]['subtitles'];
+				if (is_array($array)) {
+					$sub_arr = $array['result']['modules'][0]['data']['episodes'][$i]['subtitles'];
+				} else {
+					$sub_arr = array();
+				}
 				$sub_count = count($sub_arr);
 				$sub_init = '{"code":0,"message":"0","ttl":1,"data":{"suggest_key":"en","subtitles":null}}';
 				$sub_json = json_decode($sub_init, true);
@@ -311,7 +413,6 @@ function write_cache_season() {
 					$sql = "UPDATE `cache` SET `expired_time` = '".$ts."', `cache` = '".$sub."', `cid` = '".$ss_id."' WHERE `area` = '".AREA."' AND `cache_type` = 'subtitle_".$cache_type."' AND `ep_id` = '".$ep_id."';";
 				}
 				$dbh -> exec($sql);
-				
 			}
 		}
 	}
@@ -322,7 +423,7 @@ function get_cache_subtitle() {
 	global $dbh;
 	global $cache_type;
 	global $refresh_cache_subtitle;
-	
+
 	if (AREA == "th") {
 		$area = "th"; //泰区
 	} else {
@@ -341,7 +442,7 @@ function get_cache_subtitle() {
 	@$cache = $vnum['cache'];
 	@$expired_time = $vnum['expired_time'];
 	@$ss_id = $vnum['cid'];
-	
+
 	if ($cache != "") {
 		if (time() <= (int)$expired_time) {
 			//修复读取问题
@@ -471,6 +572,9 @@ function read_status($area){
 		$sqlco = "SELECT `code` FROM `status_code` WHERE `area` = '".$area."'";
 		$result = $dbh -> query($sqlco);
 		$code = $result -> fetch();
+		if ($code == false) {
+		    return 0;
+		}
 		return $code['code'];
 	} else {
 		return 0;
