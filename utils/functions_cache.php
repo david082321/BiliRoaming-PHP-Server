@@ -17,7 +17,7 @@ try {
 }
 if (REDIS_ON) {
 	include 'redis-class.php';
-	try{
+	try {
 		$redisConn = new redisFunc(REDIS_HOST,REDIS_PORT,REDIS_PASS);
 	} catch(Exception $e) {
 		echo 'redis连接失敗';
@@ -94,7 +94,7 @@ function get_cache() {
 		} else {
 			$cache = "";
 		}
-		if(!$cache){
+		if (!$cache) {
 			return "";
 		}
 	} else {
