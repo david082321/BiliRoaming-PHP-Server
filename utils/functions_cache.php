@@ -299,7 +299,7 @@ function write_cache_season() {
 
 	$ts = time();
 	$array = json_decode($output, true);
-	if(is_array($array)){
+	if (is_array($array)) {
 		$code = $array['code'];
 	} else {
 		$code = -404;
@@ -367,13 +367,13 @@ function write_cache_season() {
 	// 缓存泰区字幕
 	if (AREA == "th") {
 		$array = json_decode($output, true);
-		if(is_array($array)){
+		if (is_array($array)) {
 			$code = $array['code'];
 		} else {
 			$code = -404;
 		}
 		if (($code == "0" || $code == 0) && isset($array['result']['modules'][0]['data']['episodes'])) {
-			if(is_array($array)){
+			if (is_array($array)) {
 				$ss_id = $array['result']['season_id'];
 				$items = $array['result']['modules'][0]['data']['episodes'];
 			} else {
