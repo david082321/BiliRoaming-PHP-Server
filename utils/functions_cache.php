@@ -572,7 +572,7 @@ function read_status($area){
 		$sqlco = "SELECT `code` FROM `status_code` WHERE `area` = '".$area."'";
 		$result = $dbh -> query($sqlco);
 		$code = $result -> fetch();
-		if($code == false){
+		if ($code == false) {
 		    return 0;
 		}
 		return $code['code'];
