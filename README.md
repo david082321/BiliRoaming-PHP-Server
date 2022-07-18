@@ -1,5 +1,6 @@
 # 写在开头
-* 动手能力强的可以用这个，服务器回应的速度比我这个快多了。
+* 动手能力强的可以用这个，服务器回应的速度比我这个快多了。（ps:不启用redis的情况下，现在加上redis后五五开！
+* ![优势在我.jpg](https://iknow-pic.cdn.bcebos.com/622762d0f703918f384e8c5e433d269758eec483?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_450%2Ch_600%2Climit_1%2Fquality%2Cq_85%2Fformat%2Cf_auto)
 * https://github.com/JasonKhew96/biliroaming-go-server
 
 ----
