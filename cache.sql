@@ -24,7 +24,7 @@ ALTER TABLE `cache`
 CREATE TABLE `keys` (
   `id` int(10) UNSIGNED NOT NULL COMMENT 'id',
   `add_time` datetime NOT NULL COMMENT '添加时间',
-  `uid` int(20) DEFAULT NULL COMMENT '用户ID',
+  `uid` bigint(20) DEFAULT NULL COMMENT '用户ID',
   `access_key` varchar(100) DEFAULT NULL,
   `due_date` bigint(50) DEFAULT NULL,
   `expired` tinyint(1) NOT NULL DEFAULT 0 COMMENT '过期key'
@@ -40,7 +40,7 @@ CREATE TABLE `my_keys` (
   `id` int(10) UNSIGNED NOT NULL COMMENT 'id',
   `expired_time` int(11) NOT NULL COMMENT '到期时间',
   `type` tinyint(4) NOT NULL COMMENT '类型',
-  `uid` int(20) DEFAULT NULL COMMENT '用户ID',
+  `uid` bigint(20) DEFAULT NULL COMMENT '用户ID',
   `access_token` varchar(100) NOT NULL,
   `refresh_token` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='我的key';
@@ -54,7 +54,7 @@ ALTER TABLE `my_keys`
 CREATE TABLE `status` (
   `id` int(10) NOT NULL COMMENT 'id',
   `expired_time` int(11) NOT NULL COMMENT '到期时间',
-  `uid` int(20) NOT NULL COMMENT '用户id',
+  `uid` bigint(20) NOT NULL COMMENT '用户id',
   `is_blacklist` tinyint(1) NOT NULL,
   `is_whitelist` tinyint(1) NOT NULL,
   `reason` varchar(100) DEFAULT NULL
@@ -74,7 +74,7 @@ CREATE TABLE `log` (
   `version` tinytext COMMENT '漫游版本号',
   `version_code` smallint(6) DEFAULT '0' COMMENT '漫游版本编号',
   `access_key` tinytext,
-  `uid` int(11) DEFAULT '0',
+  `uid` bigint(20) DEFAULT '0',
   `ban_code` tinyint(4) DEFAULT '0' COMMENT '封禁代号',
   `path` text COMMENT '请求路径',
   `query` mediumtext COMMENT '请求参数'
