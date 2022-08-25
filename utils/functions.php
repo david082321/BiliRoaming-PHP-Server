@@ -185,6 +185,8 @@ function appkey2sec($appkey) {
 		"37207f2beaebf8d7" => "e988e794d4d4b6dd43bc0e89d6e90c43", // BiliLink
 		"9a75abf7de2d8947" => "35ca1c82be6c2c242ecc04d88c735f31", // BiliScan
 		"7d089525d3611b1c" => "acd495b248ec528c2eed1e862d393126", // BstarA
+		"4ebafd7c4951b366" => "8cb98205e9b2ad3669aad0fce12a4c13", // iPhone
+		"84956560bc028eb7" => "94aba54af9065f71de72f5508f1cd42e", // 未知
 	);
 	return $appkey2sec[$appkey];
 }
