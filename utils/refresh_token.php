@@ -14,9 +14,9 @@ if (PROXY_ON == 1) {
 	curl_setopt($ch, CURLOPT_PROXYTYPE, PROXY_TYPE);
 	if (PROXY_IP_CN != ""){
 		$proxy_ip = PROXY_IP_CN;
-	} else if (PROXY_IP_HK != ""){
+	} elseif (PROXY_IP_HK != ""){
 		$proxy_ip = PROXY_IP_HK;
-	} else if (PROXY_IP_TW != ""){
+	} elseif (PROXY_IP_TW != ""){
 		$proxy_ip = PROXY_IP_TW;
 	} else {
 		$proxy_ip = PROXY_IP;

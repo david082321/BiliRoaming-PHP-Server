@@ -71,12 +71,12 @@ if (ACCESS_KEY != "") { // access_key 存在
 				if (SAVE_CACHE == 1) {
 					write_cache_blacklist(); // 写入缓存
 				}
-			} else if (BLACKLIST_ERROR == 2) {
+			} elseif (BLACKLIST_ERROR == 2) {
 				block(24, "黑名单服务器连接异常，请联系服务器提供者，或是等待修复。");
-			} else if (BLACKLIST_ERROR == 1) {
+			} elseif (BLACKLIST_ERROR == 1) {
 				if (in_array($uid, $BLACKLIST)) {
 					$is_blacklist = true;
-				} else if (in_array($uid, $WHITELIST)) {
+				} elseif (in_array($uid, $WHITELIST)) {
 					$is_whitelist = true;
 				}
 			}

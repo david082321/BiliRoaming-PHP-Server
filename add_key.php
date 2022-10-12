@@ -16,11 +16,11 @@ $sign = @$_GET['sign'];
 
 if ($sign != MAGIC_KEY || $sign == "123") {
 	exit("密码错误或未设置密码。");
-} else if ($type == "") {
+} elseif ($type == "") {
 	exit("需要参数type (数字)：1=登录会员、2=大会员、8=东南亚登录会员、9=东南亚大会员");
-} else if ($key == "") {
+} elseif ($key == "") {
 	exit("需要参数access_token");
-} else if ($refresh == "") {
+} elseif ($refresh == "") {
 	exit("需要参数refresh_token");
 } else {
 	$out = add_mykey($type, $key, $refresh);

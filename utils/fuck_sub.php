@@ -26,7 +26,7 @@
 			} else {
 				$not_empty_ep = false;
 			}
-		} else if ($ss_type == "data") {
+		} elseif ($ss_type == "data") {
 			if (isset($array['data']['sections']['section'][0]['ep_details'])) {
 				// 替换 aid
 				$episodes_items = $array['data']['sections']['section'][0]['ep_details'];
