@@ -40,6 +40,21 @@ function get_webpage($url,$host="",$ip="") {
 	return $output;
 }
 
+function get_blacklist($uid) {
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, "https://black.qimo.ink/api/users/".$uid);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_POST, false);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		"User-Agent: biliroaming-php-server/".VERSION
+	));
+	$output = curl_exec($ch);
+	curl_close($ch);
+	return $output;
+}
+
 function get_host($type,$cache_type) {
 	switch ($type) {
 		case 1: // playurl
