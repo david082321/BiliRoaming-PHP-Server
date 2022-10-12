@@ -63,8 +63,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 			$is_whitelist = $out[1];
 		}
 		if ((SAVE_CACHE == 1 && $is_blacklist == "⑨") || SAVE_CACHE == 0) {
-			$url = "https://black.qimo.ink/api/users/".UID;
-			$status = json_decode(get_webpage($url), true);
+			$status = json_decode(get_blacklist(UID), true);
 			@$code = $status['code'];
 			if ((string)$code == "0") {
 				$is_blacklist = $status['data']['is_blacklist'];
