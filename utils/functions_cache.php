@@ -157,6 +157,8 @@ function write_cache() {
 			$output = $out.$a[count($a)-1];
 			*/
 			$ts = $ts + CACHE_TIME;
+			// 缓存 playurl 前，使用 vip_status 字段来判断是否为大会员
+			if ($type == 1 && AREA != "th") { $member_type = $array['vip_status'] + 1; }
 			break;
 		case "-10403":
 			$ts = $ts + CACHE_TIME_10403;
