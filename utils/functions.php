@@ -130,8 +130,7 @@ function get_host($type,$cache_type) {
 // 获取用户信息
 function get_userinfo() {
 	global $member_type;
-	$appsec = appkey2sec(APPKEY);
-	$sign = md5("access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS.$appsec);
+	$sign = md5("access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS.APPSEC);
 	$url = "https://app.bilibili.com/x/v2/account/myinfo?access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS."&sign=".$sign;
 	$output = get_webpage($url);
 	$array = json_decode($output, true);
