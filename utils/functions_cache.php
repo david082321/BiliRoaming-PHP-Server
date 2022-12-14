@@ -37,6 +37,7 @@ function refresh_userinfo() {
 	$out = get_userinfo();
 	$uid = $out[0];
 	$due = $out[1];
+	$msg = $out[2];
 	if ($uid != "0") {
 		$sql = " UPDATE `keys` SET `add_time` = now(), `uid` = '".$uid."', `due_date` = '".$due."', `expired` = '0' WHERE `keys`.`access_key` = '".ACCESS_KEY."';";
 		$dbh -> exec($sql);
@@ -46,6 +47,7 @@ function refresh_userinfo() {
 			$member_type = 1; // 不是大会员
 		}
 		$expired = 0;
+		$msg = "";
 	} else {
 		$sql = " UPDATE `keys` SET `expired` = '1' WHERE `keys`.`access_key` = '".ACCESS_KEY."';";
 		$dbh -> exec($sql);
@@ -54,7 +56,7 @@ function refresh_userinfo() {
 		$due = 0;
 		$expired = 1;
 	}
-	return [$uid, $due, $expired];
+	return [$uid, $due, $expired, $msg];
 }
 
 // 从缓存获取用户信息

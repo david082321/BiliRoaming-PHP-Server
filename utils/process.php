@@ -16,19 +16,18 @@ if (SAVE_LOG == 1) {
 }
 
 if (@$_GET['appkey'] == "") {
-	define('APPKEY', "1d8b6e7d45233436"); // 兼容web脚本
-	define('APPSEC', "560c52ccd288fed045859ed18bffd973");
+	define('APPKEY', "27eb53fc9058f8c3"); // 兼容web脚本
 } else {
 	// 检查是否存在对应的 APPSEC
 	$appsec = appkey2sec(@$_GET['appkey']);
 	if ($appsec == "") {
 		define('APPKEY', "1d8b6e7d45233436");
-		define('APPSEC', "560c52ccd288fed045859ed18bffd973");
 	} else {
 		define('APPKEY', @$_GET['appkey']);
-		define('APPSEC', $appsec);
 	}
 }
+define('APPSEC', appkey2sec(APPKEY));
+define('MOBI_APP', appkey2mobi(APPKEY));
 define('ACCESS_KEY', @$_GET['access_key']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
