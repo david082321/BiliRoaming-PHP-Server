@@ -623,7 +623,7 @@ function write_log() {
 	} else {
 		$ip = $_SERVER["REMOTE_ADDR"];
 	}
-	if (BILIROAMING_VERSION_CODE==""){
+	if (BILIROAMING_VERSION_CODE == ""){
 		$version_code = "0";
 	} else {
 		$version_code = BILIROAMING_VERSION_CODE;

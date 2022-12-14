@@ -28,6 +28,7 @@ foreach (range(368703, 368714) as $n) {
 }
 */
 $epid_list = array();
+
 // 封锁指定cid视频
 define('BAN_CID', 0); // 是否开启ban特定视频
 $cid_list = array();
@@ -96,12 +97,14 @@ define('CUSTOM_HOST_TH_WEBSUB', 'https://api.bilibili.tv'); // 泰区 字幕api
 define('CUSTOM_HOST_TH_TOKEN', 'https://passport.biliintl.com'); // 泰区 刷新TOKEN api
 
 // 自定义API,避免集中请求，降低风控几率
-//$hk_api = array('host1','host2','host3');// 可以自定义其他反代api,例如云函数,CFW
-//$tw_api = array('host1','host2','host3');// 可以自定义其他反代api,例如云函数,CFW
-// $hk_sum = array_rand($hk_api);//计数
-// $tw_sum = array_rand($tw_api);//计数
-// define('CUSTOM_HOST_HK', $hk_api[$hk_sum]); // 随机调用HK 启用要注释上方默认api
-// define('CUSTOM_HOST_TW', $tw_api[$tw_sum]); // 随机调用TW 启用要注释上方默认api
+$hk_api = array('host1','host2','host3'); // 随机调用HK，可以自定义其他反代api，例如云函数、CFW，请自行修改 host1~3 的內容，启用要注释上方默认api
+$tw_api = array('host1','host2','host3'); // 随机调用TW，可以自定义其他反代api，例如云函数、CFW，请自行修改 host1~3 的內容，启用要注释上方默认api
+if (CUSTOM_HOST_HK == "CUSTOM_HOST_HK") {
+	define('CUSTOM_HOST_HK', $hk_api[array_rand($hk_api)]); // 随机调用HK
+}
+if (CUSTOM_HOST_TW == "CUSTOM_HOST_TW") {
+	define('CUSTOM_HOST_TW', $tw_api[array_rand($tw_api)]); // 随机调用TW
+}
 
 // 指定HTTP或SOCKS5代理
 define('PROXY_ON', 0); // 开启功能。0 否, 1 是

@@ -21,10 +21,10 @@ if ((CID != "" || EP_ID != "") && WEB_ON == 1) {
 } else {
 	// 欢迎语
 	header('Content-Type: text/html; charset=utf-8');
-	if (WELCOME=="file"){
+	if (WELCOME == "file"){
 		include(WELCOME_FILE);
 		exit();
-	} elseif (WELCOME=="text"){
+	} elseif (WELCOME == "text"){
 		exit(WELCOME_TEXT);
 	}
 }
