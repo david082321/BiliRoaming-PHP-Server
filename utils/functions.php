@@ -189,19 +189,32 @@ function check_412($output,$get_area) {
 function appkey2sec($appkey) {
 	if ($appkey == "") {return "";}
 	$appkey2sec = array("9d5889cf67e615cd" => "8fd9bb32efea8cef801fd895bef2713d", // Ai4cCreatorAndroid
-		"1d8b6e7d45233436" => "560c52ccd288fed045859ed18bffd973", // Android
-		"07da50c9a0bf829f" => "25bdede4e1581c836cab73a48790ca6e", // AndroidB
-		"8d23902c1688a798" => "710f0212e62bd499b8d3ac6e1db9302a", // AndroidBiliThings
-		"dfca71928277209b" => "b5475a8825547a4fc26c7d518eaaa02e", // AndroidHD
-		"bb3101000e232e27" => "36efcfed79309338ced0380abd824ac1", // AndroidI
+		"1d8b6e7d45233436" => "560c52ccd288fed045859ed18bffd973", // 安卓 客户端
+		"57263273bc6b67f6" => "a0488e488d1567960d3a765e8d129f90", // 安卓 客户端
+		"bca7e84c2d947ac6" => "60698ba2f68e01ce44738920a0ffe768", // 安卓 客户端 登录专用
+		"07da50c9a0bf829f" => "25bdede4e1581c836cab73a48790ca6e", // 安卓 概念版
+		"178cf125136ca8ea" => "34381a26236dd1171185c0beb042e1c6", // 安卓 概念版
+		"7d336ec01856996b" => "a1ce6983bc89e20a36c37f40c4f1a0dd", // 安卓 概念版
+		"dfca71928277209b" => "b5475a8825547a4fc26c7d518eaaa02e", // 安卓 HD版
+		"37207f2beaebf8d7" => "e988e794d4d4b6dd43bc0e89d6e90c43", // 安卓 BiliLink
+		"8d23902c1688a798" => "710f0212e62bd499b8d3ac6e1db9302a", // 安卓 车机版
+		"bb3101000e232e27" => "36efcfed79309338ced0380abd824ac1", // 安卓 国际版
+		"8e16697a1b4f8121" => "f5dd03b752426f2e623d7badb28d190a", // 安卓 国际版
+		"ae57252b0c09105d" => "c75875c596a69eb55bd119e74b07cfe3", // 安卓 国际版
+		"7d089525d3611b1c" => "acd495b248ec528c2eed1e862d393126", // 安卓 東南亞版
+		"cc578d267072c94d" => "ffb6bb4c4edae2566584dbcacfc6a6ad", // 安卓 轻视频
+		"4409e2ce8ffd12b8" => "59b43e04ad6965f34319062b478f83dd", // 安卓 TV版
+		"cc8617fd6961e070" => "3131924b941aac971e45189f265262be", // 安卓 漫画
+		"5dce947fe22167f9" => "", // 安卓 必剪
 		"4c6e1021617d40d9" => "e559a59044eb2701b7a8628c86aa12ae", // AndroidMallTicket
 		"c034e8b74130a886" => "e4e8966b1e71847dc4a3830f2d078523", // AndroidOttSdk
-		"4409e2ce8ffd12b8" => "59b43e04ad6965f34319062b478f83dd", // AndroidTV
-		"37207f2beaebf8d7" => "e988e794d4d4b6dd43bc0e89d6e90c43", // BiliLink
 		"9a75abf7de2d8947" => "35ca1c82be6c2c242ecc04d88c735f31", // BiliScan
-		"7d089525d3611b1c" => "acd495b248ec528c2eed1e862d393126", // BstarA
+		"7d089525d3611b1c" => "acd495b248ec528c2eed1e862d393126", // 安卓 東南亞版
 		"4ebafd7c4951b366" => "8cb98205e9b2ad3669aad0fce12a4c13", // iPhone
+		"27eb53fc9058f8c3" => "c2ed53a74eeefe3cf99fbd01d8c9c375", // ios 客户端
+		"aae92bc66f3edfab" => "af125a0d5279fd576c1b4418a3e8276d", // PC 投稿工具
 		"84956560bc028eb7" => "94aba54af9065f71de72f5508f1cd42e", // 未知
+		"85eb6835b0a1034e" => "2ad42749773c441109bdc0191257a664", // 未知
 	);
 	return $appkey2sec[$appkey];
 }
