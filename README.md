@@ -1,7 +1,7 @@
 # 写在开头
 * 动手能力强的可以用这个，服务器回应的速度比我这个快多了。
-* https://github.com/JasonKhew96/biliroaming-go-server
-* https://github.com/pchpub/BiliRoaming-Rust-Server
+* Go: https://github.com/JasonKhew96/biliroaming-go-server
+* Rust: https://github.com/pchpub/BiliRoaming-Rust-Server
 
 ----
 
