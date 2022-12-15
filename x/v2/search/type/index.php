@@ -11,7 +11,7 @@ include (ROOT_PATH."utils/functions.php");
 // 处理用户传入参数
 include (ROOT_PATH."utils/process.php");
 // 设置host
-$host = get_host($type,$cache_type);
+$host = get_host($type, $cache_type);
 // 锁区、web接口、X-From-Biliroaming
 include (ROOT_PATH."utils/lock_area.php");
 // 鉴权、替换access_key、获取缓存
@@ -26,7 +26,7 @@ $query = $add_query($type, $query, "");
 // 转发到指定服务器
 $url = $host.$path."?".$query;
 if (IP_RESOLVE == 1) {
-	$output = get_webpage($url,$host,$ip);
+	$output = get_webpage($url, $host, $ip);
 } else {
 	$output = get_webpage($url);
 }

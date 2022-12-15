@@ -34,8 +34,8 @@
 		@$total = $array['data']['total'];
 		@$pages = $array['data']['pages'];
 		@$items_old = $array['data']['items'];
-		$items_new= trim(json_encode($items_old, 320),'[]');
-		$items = str_replace('["追番","已追番"]','{"0":"追番","1":"已追番"}',$items_new);
+		$items_new= trim(json_encode($items_old, 320), '[]');
+		$items = str_replace('["追番","已追番"]', '{"0":"追番","1":"已追番"}', $items_new);
 	} else {
 		$trackid = "";
 		$exp_str = "";

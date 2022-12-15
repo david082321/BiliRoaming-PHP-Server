@@ -35,12 +35,12 @@ $query = $add_query($type, $query, "");
 // 转发到指定服务器
 $url = $host.$path."?".$query;
 if (IP_RESOLVE == 1) {
-	$output = get_webpage($url,$host,$ip);
+	$output = get_webpage($url, $host, $ip);
 } else {
 	$output = get_webpage($url);
 }
 // 412提醒
-check_412($output,$get_area);
+check_412($output, $get_area);
 // 替换内容
 include (ROOT_PATH."utils/replace.php");
 // 返回内容给用户

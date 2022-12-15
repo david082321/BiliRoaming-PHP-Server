@@ -31,7 +31,7 @@ if ($httpcode == "301") {
 	// 转发到指定服务器
 	$url = CUSTOM_HOST_TH_TOKEN."/x/intl/passport-login/oauth2/refresh_token/index.php?".$PostData;
 	if (IP_RESOLVE == 1) {
-		$output2 = get_webpage($url,$host,$ip);
+		$output2 = get_webpage($url, $host, $ip);
 	} else {
 		$output2 = get_webpage($url);
 	}

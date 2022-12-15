@@ -18,7 +18,7 @@ try {
 if (REDIS_ON) {
 	include 'redis-class.php';
 	try {
-		$redisConn = new redisFunc(REDIS_HOST,REDIS_PORT,REDIS_PASS);
+		$redisConn = new redisFunc(REDIS_HOST, REDIS_PORT, REDIS_PASS);
 	} catch(Exception $e) {
 		echo 'redis连接失敗';
 	}
@@ -68,7 +68,7 @@ function get_userinfo_fromsql() {
 	$vnum = $cres -> fetch();
 	if (!$vnum) {
 		$member_type = 0; //未登录
-		return ["0","0","0","0"];
+		return ["0", "0", "0", "0"];
 	}
 	$uid = $vnum['uid'];
 	$add_time = $vnum['add_time'];
@@ -89,10 +89,10 @@ function get_cache() {
 	global $cache_type;
 	global $refresh_cache;
 	if (REDIS_ON) {
-		$redisConn = new redisFunc(REDIS_HOST,REDIS_PORT,REDIS_PASS);
-		if ($redisConn->check(AREA.'-'.$member_type.'-'.$cache_type.'-'.CID.'-'.EP_ID)) {
-			@$cache = $redisConn->get(AREA.'-'.$member_type.'-'.$cache_type.'-'.CID.'-'.EP_ID);
-			@$expired_time = $redisConn->ttl(AREA.'-'.$member_type.'-'.$cache_type.'-'.CID.'-'.EP_ID)+time();
+		$redisConn = new redisFunc(REDIS_HOST, REDIS_PORT, REDIS_PASS);
+		if ($redisConn -> check(AREA.'-'.$member_type.'-'.$cache_type.'-'.CID.'-'.EP_ID)) {
+			@$cache = $redisConn -> get(AREA.'-'.$member_type.'-'.$cache_type.'-'.CID.'-'.EP_ID);
+			@$expired_time = $redisConn -> ttl(AREA.'-'.$member_type.'-'.$cache_type.'-'.CID.'-'.EP_ID)+time();
 		} else {
 			$cache = "";
 		}
@@ -114,8 +114,8 @@ function get_cache() {
 	$cache = str_replace("\r", "\\r", $cache);
 	$cache = str_replace("\n", "\\n", $cache);
 	if (QN != "" && ($cache_type == "app" || $cache_type == "appV2")) {
-			$cache = str_replace('"data":{"video_info":{"quality":','"data":{"video_info":{"quality":'.QN.',"quality_fuck":',$cache);
-			$cache = str_replace('"data":{"playurl":{"quality":','"data":{"playurl":{"quality":'.QN.',"quality_fuck":',$cache);
+			$cache = str_replace('"data":{"video_info":{"quality":', '"data":{"video_info":{"quality":'.QN.',"quality_fuck":', $cache);
+			$cache = str_replace('"data":{"playurl":{"quality":', '"data":{"playurl":{"quality":'.QN.',"quality_fuck":', $cache);
 	}
 	if ($cache != "") {
 		if (time() <= (int)$expired_time) {
@@ -204,17 +204,17 @@ function get_cache_season() {
 	if (REDIS_ON) {
 		$redisConn = new redisFunc(REDIS_HOST,REDIS_PORT,REDIS_PASS);
 		if (EP_ID != "") {
-			if ($redisConn->check($area.'-season-'.$cache_type.'-0-'.EP_ID)){
-				@$cache = $redisConn->get($area.'-season-'.$cache_type.'-0-'.EP_ID);
-				@$expired_time = $redisConn->ttl($area.'-season-'.$cache_type.'-0-'.EP_ID)+time();
+			if ($redisConn -> check($area.'-season-'.$cache_type.'-0-'.EP_ID)){
+				@$cache = $redisConn -> get($area.'-season-'.$cache_type.'-0-'.EP_ID);
+				@$expired_time = $redisConn -> ttl($area.'-season-'.$cache_type.'-0-'.EP_ID)+time();
 			} else {
 				@$cache = "";
 				@$expired_time = time();
 			}
 		} elseif (SS_ID != "") {
-			if ($redisConn->check($area.'-season-'.$cache_type.'-0-'.EP_ID)){
-				@$cache = $redisConn->get($area.'-season-'.$cache_type.'-'.SS_ID.'-0');
-				@$expired_time = $redisConn->ttl($area.'-season-'.$cache_type.'-'.SS_ID.'-0')+time();
+			if ($redisConn -> check($area.'-season-'.$cache_type.'-0-'.EP_ID)){
+				@$cache = $redisConn -> get($area.'-season-'.$cache_type.'-'.SS_ID.'-0');
+				@$expired_time = $redisConn -> ttl($area.'-season-'.$cache_type.'-'.SS_ID.'-0')+time();
 			} else {
 				@$cache = "";
 				@$expired_time = time();
@@ -223,17 +223,17 @@ function get_cache_season() {
 		if (!$cache) {
 			if ($area == "main") {
 				if (EP_ID != "") {
-					if ($redisConn->check($area.'-season-'.$cache_type.'-0-'.EP_ID)){
-						@$cache = $redisConn->get($area.'-season-'.$cache_type.'-0-'.EP_ID);
-						@$expired_time = $redisConn->ttl($area.'-season-'.$cache_type.'-0-'.EP_ID)+time();
+					if ($redisConn -> check($area.'-season-'.$cache_type.'-0-'.EP_ID)){
+						@$cache = $redisConn -> get($area.'-season-'.$cache_type.'-0-'.EP_ID);
+						@$expired_time = $redisConn -> ttl($area.'-season-'.$cache_type.'-0-'.EP_ID)+time();
 					} else {
 						@$cache = "";
 						@$expired_time = time();
 					}
 				} elseif (SS_ID != "") {
-					if ($redisConn->check($area.'-season-'.$cache_type.'-0-'.EP_ID)){
-						@$cache = $redisConn->get(AREA.'-season-'.$cache_type.'-'.SS_ID.'-0');
-						@$expired_time = $redisConn->ttl(AREA.'-season-'.$cache_type.'-'.SS_ID.'-0')+time();
+					if ($redisConn -> check($area.'-season-'.$cache_type.'-0-'.EP_ID)){
+						@$cache = $redisConn -> get(AREA.'-season-'.$cache_type.'-'.SS_ID.'-0');
+						@$expired_time = $redisConn -> ttl(AREA.'-season-'.$cache_type.'-'.SS_ID.'-0')+time();
 					} else {
 						@$cache = "";
 						@$expired_time = time();
@@ -528,7 +528,7 @@ function get_cache_blacklist() {
 	$cres = $dbh -> query($sqlco);
 	$vnum = $cres -> fetch();
 	if (!$vnum) {
-		return ["⑨","⑨"];
+		return ["⑨", "⑨"];
 	}
 	//$uid = $vnum['uid'];
 	$expired_time = $vnum['expired_time'];
@@ -536,7 +536,7 @@ function get_cache_blacklist() {
 	$is_whitelist = $vnum['is_whitelist'];
 	if (time() > (int)$expired_time) {
 		$refresh_cache_status = 1; // 刷新缓存
-		return ["⑨","⑨"];
+		return ["⑨", "⑨"];
 	}
 	return [$is_blacklist, $is_whitelist];
 }
@@ -586,7 +586,7 @@ function read_status($area){
 }
 
 //写入此次解析状态
-function write_status($code,$area) {
+function write_status($code, $area) {
 	global $dbh;
 	$result = $dbh -> query("SHOW TABLES LIKE 'status_code'");
 	$row = $result -> fetchAll();

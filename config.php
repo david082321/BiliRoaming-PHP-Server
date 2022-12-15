@@ -3,7 +3,7 @@
 define('SYSTEM', TRUE);
 
 // 代码放置路径（通常不需要修改）
-define('ROOT_PATH',$_SERVER['DOCUMENT_ROOT'].'/');
+define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT'].'/');
 
 // 封锁
 define('BLOCK_TYPE', 'blacklist'); // 封锁类型：blacklist 在线黑名单, whitelist 在线白名单, local_blacklist 本地黑名单, local_whitelist 本地白名單, 不是填写前面几个就是不封锁

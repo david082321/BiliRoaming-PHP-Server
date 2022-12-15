@@ -3,7 +3,7 @@
 if(!defined('SYSTEM')) {exit();}
 
 // 替换内容
-$output = str_replace("\u0026","&",$output);
+$output = str_replace("\u0026", "&", $output);
 switch ($type) {
 	case 0: // 搜索
 		if ($cache_type != "web") {
@@ -13,7 +13,7 @@ switch ($type) {
 	case 1: // playurl
 		break;
 	case 2: // 东南亚APP season
-		$output = str_replace('"vip":0','"vip":1',$output); // 支持漫游 #320
+		$output = str_replace('"vip":0', '"vip":1', $output); // 支持漫游 #320
 		if (AREA == "th") {
 			include (ROOT_PATH."utils/fuck_sub.php"); // 添加中文字幕
 		}

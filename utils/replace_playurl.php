@@ -85,7 +85,7 @@ function replace_playurl() {
 
 	// 发送内容
 	$output3 = json_encode($array2);
-	$output3 = str_replace("\/","/",$output3);
+	$output3 = str_replace("\/", "/", $output3);
 	exit($output3);
 }
 ?>

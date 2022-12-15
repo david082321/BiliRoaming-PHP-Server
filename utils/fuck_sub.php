@@ -71,14 +71,14 @@
 						}
 						$sub_count = count($sub_arr);
 						$add_arr = array(
-							"id"=>1,
-							"key"=>$key,
-							"title"=>"[非官方]".$lang."(".SUBTITLE_TEAM_NAME.")",
-							"url"=>"https://".$url,
-							"is_machine"=>false
+							"id" => 1,
+							"key" => $key,
+							"title" => "[非官方]".$lang."(".SUBTITLE_TEAM_NAME.")",
+							"url" => "https://".$url,
+							"is_machine" => false
 						);
-						array_unshift($sub_arr,$add_arr); //这个会放在前面
-						//array_push($sub_arr,$add_arr); //这个会放在后面
+						array_unshift($sub_arr, $add_arr); //这个会放在前面
+						//array_push($sub_arr, $add_arr); //这个会放在后面
 						if ($ss_type == "result") {
 							$array['result']['modules'][0]['data']['episodes'][$ep]['subtitles'] = $sub_arr;
 						} else {

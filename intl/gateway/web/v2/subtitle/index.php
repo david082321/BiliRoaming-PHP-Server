@@ -32,7 +32,7 @@ if (IP_RESOLVE == 1) {
 // 转发到指定服务器
 $url = $host.$path."?".$query;
 if (IP_RESOLVE == 1) {
-	$output = get_webpage($url,$host,$ip);
+	$output = get_webpage($url, $host, $ip);
 } else {
 	$output = get_webpage($url);
 }

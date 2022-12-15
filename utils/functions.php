@@ -3,7 +3,7 @@
 if(!defined('SYSTEM')) {exit();}
 $member_type = 0; // 判断用户状态
 
-function get_webpage($url,$host="",$ip="") {
+function get_webpage($url, $host="", $ip="") {
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
 	if (PROXY_ON == 1) { // 指定代理
@@ -55,7 +55,7 @@ function get_blacklist($uid) {
 	return $output;
 }
 
-function get_host($type,$cache_type) {
+function get_host($type, $cache_type) {
 	switch ($type) {
 		case 1: // playurl
 			switch (AREA) {
@@ -154,7 +154,7 @@ function get_userinfo() {
 }
 
 // 412 提醒
-function check_412($output,$get_area) {
+function check_412($output, $get_area) {
 	if (TG_NOTIFY == 1) {
 		$status = json_decode($output, true);
 		$msg = "";
@@ -167,12 +167,12 @@ function check_412($output,$get_area) {
 			if ($latest_code != $status['code']) {
 				if ($status['code'] == -412) {
 					$msg = '破服务器412啦，地区:' . $get_area;
-					write_status($status['code'],$get_area);
+					write_status($status['code'], $get_area);
 				} else {
 					if ($latest_code == -412) {
 						$msg = '破服务器恢复啦，地区:' . $get_area;
 					}
-					write_status(0,$get_area);
+					write_status(0, $get_area);
 				}
 			}
 		}
@@ -221,7 +221,7 @@ function appkey2sec($appkey) {
 
 // mobi_app 查表
 // appkey 反查
-function appkey2mobi($appkey,$flip=false) {
+function appkey2mobi($appkey, $flip=false) {
 	if ($appkey == "") {return "";}
 	$appkey2mobi = array("57263273bc6b67f6" => "android", // 安卓 客户端
 		"bca7e84c2d947ac6" => "android", // 安卓 客户端 登录专用
@@ -279,7 +279,7 @@ function check_appkey($appkey="1d8b6e7d45233436") {
 
 // 检查 mobi_app
 function check_mobi_app($mobi_app="iphone") {
-	$appkey = appkey2mobi($mobi_app,$flip=true);
+	$appkey = appkey2mobi($mobi_app, $flip=true);
 	$appsec = appkey2sec($appkey);
 	if ($appkey == "" || $appsec == "") {
 		return array("", "", "", "");

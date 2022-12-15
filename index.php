@@ -17,7 +17,7 @@ include (ROOT_PATH."utils/process.php");
 if ((CID != "" || EP_ID != "") && WEB_ON == 1) {
 	// Web接口
 	$path = "/pgc/player/web/playurl";
-	$host = get_host($type,$cache_type);
+	$host = get_host($type, $cache_type);
 } else {
 	// 欢迎语
 	header('Content-Type: text/html; charset=utf-8');
@@ -46,7 +46,7 @@ if (IP_RESOLVE == 1) {
 // 转发到指定服务器
 $url = $host.$path."?".$query;
 if (IP_RESOLVE == 1) {
-	$output = get_webpage($url,$host,$ip);
+	$output = get_webpage($url, $host, $ip);
 } else {
 	$output = get_webpage($url);
 }
