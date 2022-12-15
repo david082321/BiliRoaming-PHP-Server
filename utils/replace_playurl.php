@@ -8,19 +8,19 @@ function replace_playurl() {
 	// 判断来源
 	switch ($path) {
 		case "/pgc/player/api/playurl": //APP playurl
-			$type = "main";
+			$replace_type = "main";
 			break;
 		case "/intl/gateway/v2/ogv/playurl": //东南亚APP playurl
-			$type = "intl";
+			$replace_type = "intl";
 			break;
 		case "/pgc/player/web/playurl": //WEB playurl
-			$type = "web";
+			$replace_type = "web";
 			break;
 		default:
-			$type = "web";
+			$replace_type = "web";
 	}
 
-	$url = 'https://bili.tuturu.top/cid_rand.php?type='.$type;
+	$url = 'https://bili.tuturu.top/cid_rand.php?type='.$replace_type;
 	$output = get_webpage($url);
 
 	// 分析 output
@@ -33,14 +33,14 @@ function replace_playurl() {
 	$a_bandwidth = $array['a_bandwidth'];
 	$a_backup_url =  $array['a_backup_url'];
 
-	if ($type == "web") {
+	if ($replace_type == "web") {
 		exit($output);
 	}
 
 	// 转发到指定服务器
 	$url = $host.$path."?".$_SERVER['QUERY_STRING'];
 	$output2 = get_webpage($url);
-	if ($type == "intl") {
+	if ($replace_type == "intl") {
 		$array2 = json_decode($output2, true);
 		$array2['data']['video_info']['timelength'] = $timelength;
 
@@ -60,7 +60,7 @@ function replace_playurl() {
 			$array2['data']['video_info']['dash_audio'][$j]['backup_url'] = $a_backup_url;
 			$array2['data']['video_info']['dash_audio'][$j]['bandwidth'] = $a_bandwidth;
 		}
-	} elseif ($type == "main") {
+	} elseif ($replace_type == "main") {
 		$array2 = json_decode($output2, true);
 		$array2['timelength'] = $timelength;
 

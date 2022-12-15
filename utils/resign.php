@@ -11,7 +11,7 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 			define('RESIGN_TH_PAID_KEY', $keys_th_paid[array_rand($keys_th_paid)]);
 			if (RESIGN_TH_PAID_KEY != "No key") {
 				// 替换
-				$query = sign("7d089525d3611b1c",RESIGN_TH_PAID_KEY,$query);
+				$query = sign("bstar_a", RESIGN_TH_PAID_KEY, $query);
 				$member_type = 9;
 			}
 		} elseif (RESIGN_TH == 1){ // 泰国登录会员
@@ -19,7 +19,7 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 			define('RESIGN_TH_KEY', $keys_th[array_rand($keys_th)]);
 			if (RESIGN_TH_KEY != "No key") {
 				// 替换
-				$query = sign("7d089525d3611b1c",RESIGN_TH_KEY,$query);
+				$query = sign("bstar_a", RESIGN_TH_KEY, $query);
 				$member_type = 8;
 			}
 		}
@@ -27,21 +27,25 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 }
 
 // sign计算
-function sign($appkey, $access_key, $query) {
+function sign($mobi_app, $access_key, $query) {
 	parse_str($query, $query_arr);
 	// 去除 sign
 	unset($query_arr["sign"]);	
 	// 加上参数
-	$query_arr["appkey"] = $appkey;
+	$check = check_mobi_app($mobi_app);
+	$query_arr["appkey"] = $check[0];
 	if ($access_key != "") {
 		$query_arr["access_key"] = $access_key;
+	}
+	if ($cache_type != "web") {
+		$query_arr["mobi_app"] = $check[2];
+		$query_arr["platform"] = $check[3];
 	}
 	// 按 key 排序
 	ksort($query_arr);
 	// 签名
 	$query_new = http_build_query($query_arr);
-	$appsec = appkey2sec($appkey);
-	$sign = md5($query_new.$appsec);
+	$sign = md5($query_new.$check[1]);
 	return $query_new."&sign=".$sign;
 }
 ?>

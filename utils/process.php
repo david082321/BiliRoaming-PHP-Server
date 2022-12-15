@@ -14,20 +14,37 @@ if (SAVE_LOG == 1) {
 	define('PATH', $path);
 	define('QUERY', $query);
 }
-
-if (@$_GET['appkey'] == "") {
-	define('APPKEY', "27eb53fc9058f8c3"); // 兼容web脚本
-} else {
-	// 检查是否存在对应的 APPSEC
-	$appsec = appkey2sec(@$_GET['appkey']);
-	if ($appsec == "") {
-		define('APPKEY', "1d8b6e7d45233436");
-	} else {
-		define('APPKEY', @$_GET['appkey']);
+// 验证 sign（playurl）
+$appkey = @$_GET['appkey'];
+if ($type == 1 && SIGN) {
+	$sign = @$_GET['sign'];
+	if ($appkey != "" && $sign != "" && TS != "") {
+		check_sign($appkey, $sign, $query);
 	}
 }
-define('APPSEC', appkey2sec(APPKEY));
-define('MOBI_APP', appkey2mobi(APPKEY));
+// 验证 ts
+$ts = @$_GET['ts'];
+if ($ts == '' || !SIGN) {
+	define('TS', time());
+} else {
+	if ($ts < time()-120 || $ts > time()+120) {
+		block(17, "参数ts错误");
+	}
+	define('TS', $ts);
+}
+// 其他参数
+define('BILIROAMING_PLATFORM', @$_SERVER['HTTP_PLATFORM_FROM_BILIROAMING']);
+if (BILIROAMING_PLATFORM != "") { // 新版漫游
+	$check = check_mobi_app(BILIROAMING_PLATFORM);
+} elseif ($appkey == "" || $cache_type == "web") { // 兼容web脚本
+	$check = check_mobi_app("iphone");
+} else { // 兼容旧版漫游及其他第三方客户端
+	$check = check_appkey(@$_GET['appkey']);
+}
+define('APPKEY', $check[0]);
+define('APPSEC', $check[1]);
+define('MOBI_APP', $check[2]);
+define('PLATFORM', $check[3]);
 define('ACCESS_KEY', @$_GET['access_key']);
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
@@ -72,15 +89,6 @@ if (BILIROAMING_VERSION == '' && BILIROAMING_VERSION_CODE == '') {
 } else {
 	block(15, "错误请求头");
 }
-$ts = @$_GET['ts'];
-if ($ts == '' || !SIGN) {
-	define('TS', time());
-} else {
-	if ($ts < time()-60 || $ts > time()+60) {
-		block(17, "参数ts错误");
-	}
-	define('TS', $ts);
-}
 if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
 	block(11, "禁止解锁此视频，请改用其他解析服务器");
 }
@@ -90,15 +98,6 @@ if (in_array(CID, $cid_list) && BAN_CID == 1) {
 if (in_array(AREA, $BAN_SERVER_AREA)) {
 	block(13, "不支持解锁「".AREA."」地区，请将「".AREA."」改用其他解析服务器");
 }
-
-// 验证 sign（playurl）
-if ($type == 1 && SIGN) {
-	$sign = @$_GET['sign'];
-	if (APPKEY != "" && $sign != "" && TS != "") {
-		check_sign(APPKEY, $sign, $query);
-	}
-}
-
 // 写入日志（非 playurl）
 if (SAVE_LOG == 1 && $type != 1) {
 	define('BAN_CODE', '0');
@@ -106,7 +105,7 @@ if (SAVE_LOG == 1 && $type != 1) {
 	write_log();
 }
 
-function block($code, $reason){
+function block($code, $reason, $upstreem_reason=""){
 	// 写入日志
 	if (SAVE_LOG == 1 && $code <= 20) {
 		define('BAN_CODE', $code);
@@ -114,7 +113,10 @@ function block($code, $reason){
 		write_log();
 	}
 	// 返回内容
-	http_response_code(200); // B站就是都返回200
+	if ($upstreem_reason != "") {
+		$reason = reason."上游錯誤：".$upstreem_reason
+	}
+	http_response_code(200); // B站就是都返回200	
 	exit('{"code":-'.$code.',"message":"'.$reason.'(E='.$code.')"}');
 }
 ?>

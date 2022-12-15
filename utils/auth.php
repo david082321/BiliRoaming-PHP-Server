@@ -36,7 +36,7 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 	}
 	// key已过期 或 服务器不允许未登录用户
 	if ($uid == "0" && (NEED_LOGIN == 1 || $expired == "1")) {
-		block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)，上游提示：".$msg);
+		block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)", $msg);
 	}
 } elseif (ACCESS_KEY != "") {
 	// 有 access_key 但没开缓存，只会在需要时检查用户
@@ -46,7 +46,7 @@ if (ACCESS_KEY != "" && SAVE_CACHE == 1) {
 		$due = $out[1];
 		$msg = $out[2];
 		if ($uid == "0") {
-			block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)，上游提示：".$msg);
+			block(20, "访问密钥已过期或不存在(脚本设置左下角重新授权)", $msg);
 		}
 	}
 }

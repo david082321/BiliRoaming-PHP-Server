@@ -130,7 +130,7 @@ function get_host($type,$cache_type) {
 // 获取用户信息
 function get_userinfo() {
 	global $member_type;
-	$param = "access_key=".ACCESS_KEY."&appkey=".APPKEY."&build=7000300&channel=master&mobi_app=".MOBI_APP."&ts=".TS;
+	$param = "access_key=".ACCESS_KEY."&appkey=".APPKEY."&ts=".TS;
 	$sign = md5($param.APPSEC);
 	$url = "https://app.bilibili.com/x/v2/account/myinfo?".$param."&sign=".$sign;
 	$output = get_webpage($url);	
@@ -148,7 +148,7 @@ function get_userinfo() {
 		$out[0] = "0";
 		$out[1] = "0";
 		$member_type = 0; //未登录
-		$out[2] = $array['message'];
+		$out[2] = $code.$array['message'];
 	}
 	return $out;
 }
@@ -206,9 +206,9 @@ function appkey2sec($appkey) {
 		"cc578d267072c94d" => "ffb6bb4c4edae2566584dbcacfc6a6ad", // 安卓 轻视频
 		"4409e2ce8ffd12b8" => "59b43e04ad6965f34319062b478f83dd", // 安卓 TV版
 		"cc8617fd6961e070" => "3131924b941aac971e45189f265262be", // 安卓 漫画
-		"5dce947fe22167f9" => "", // 安卓 必剪
 		"4c6e1021617d40d9" => "e559a59044eb2701b7a8628c86aa12ae", // AndroidMallTicket
 		"c034e8b74130a886" => "e4e8966b1e71847dc4a3830f2d078523", // AndroidOttSdk
+		"50e1328c6a1075a1" => "4d35e3dea073433cd24dd14b503d242e", // AnguAndroid
 		"9a75abf7de2d8947" => "35ca1c82be6c2c242ecc04d88c735f31", // BiliScan
 		"4ebafd7c4951b366" => "8cb98205e9b2ad3669aad0fce12a4c13", // iPhone
 		"27eb53fc9058f8c3" => "c2ed53a74eeefe3cf99fbd01d8c9c375", // ios 客户端
@@ -220,60 +220,112 @@ function appkey2sec($appkey) {
 }
 
 // mobi_app 查表
-function appkey2mobi($appkey) {
+// appkey 反查
+function appkey2mobi($appkey,$flip=false) {
 	if ($appkey == "") {return "";}
-	$appkey2mobi = array("9d5889cf67e615cd" => "android", // Ai4cCreatorAndroid
-		"1d8b6e7d45233436" => "android", // 安卓 客户端
-		"57263273bc6b67f6" => "android", // 安卓 客户端
+	$appkey2mobi = array("57263273bc6b67f6" => "android", // 安卓 客户端
 		"bca7e84c2d947ac6" => "android", // 安卓 客户端 登录专用
-		"07da50c9a0bf829f" => "android_b", // 安卓 概念版
 		"178cf125136ca8ea" => "android_b", // 安卓 概念版
 		"7d336ec01856996b" => "android_b", // 安卓 概念版
-		"dfca71928277209b" => "android_hd", // 安卓 HD版
-		"37207f2beaebf8d7" => "", // 安卓 BiliLink
-		"8d23902c1688a798" => "", // 安卓 车机版
-		"bb3101000e232e27" => "android_i", // 安卓 国际版
 		"8e16697a1b4f8121" => "android_i", // 安卓 国际版
 		"ae57252b0c09105d" => "android_i", // 安卓 国际版
+		//"cc578d267072c94d" => "", // 安卓 轻视频
+		"cc8617fd6961e070" => "android_comic", // 安卓 漫画
+		"4ebafd7c4951b366" => "iphone", // iPhone
+		//"aae92bc66f3edfab" => "", // PC 投稿工具
+		//"84956560bc028eb7" => "", // 未知
+		//"85eb6835b0a1034e" => "", // 未知
+		// 上方内容不确定
+		"9d5889cf67e615cd" => "ai4c_creator_android", // Ai4cCreatorAndroid
+		"1d8b6e7d45233436" => "android", // 安卓 客户端
+		"07da50c9a0bf829f" => "android_b", // 安卓 概念版
+		"8d23902c1688a798" => "android_bilithings", // 安卓 车机版
+		"dfca71928277209b" => "android_hd", // 安卓 HD版
+		"bb3101000e232e27" => "android_i", // 安卓 国际版
+		"4c6e1021617d40d9" => "android_mall_ticket", // AndroidMallTicket
+		"c034e8b74130a886" => "android_ott_sdk", // AndroidOttSdk
+		"4409e2ce8ffd12b8" => "android_tv", // 安卓 TV版
+		"50e1328c6a1075a1" => "angu_android", // AnguAndroid
+		"37207f2beaebf8d7" => "biliLink", // 安卓 BiliLink
+		"9a75abf7de2d8947" => "biliScan", // BiliScan
 		"7d089525d3611b1c" => "bstar_a", // 安卓 東南亞版
-		"cc578d267072c94d" => "", // 安卓 轻视频
-		"4409e2ce8ffd12b8" => "", // 安卓 TV版
-		"cc8617fd6961e070" => "", // 安卓 漫画
-		"5dce947fe22167f9" => "", // 安卓 必剪
-		"4c6e1021617d40d9" => "", // AndroidMallTicket
-		"c034e8b74130a886" => "", // AndroidOttSdk
-		"9a75abf7de2d8947" => "", // BiliScan
-		"4ebafd7c4951b366" => "ios", // iPhone
-		"27eb53fc9058f8c3" => "ios", // ios 客户端
-		"aae92bc66f3edfab" => "", // PC 投稿工具
-		"84956560bc028eb7" => "", // 未知
-		"85eb6835b0a1034e" => "", // 未知
+		"27eb53fc9058f8c3" => "iphone", // ios 客户端
 	);
-	$mobi_app = $appkey2mobi[$appkey];
-	return $mobi_app;
+	if ($flip) {
+		return array_flip($appkey2mobi)[$appkey];
+	} else {
+		return $appkey2mobi[$appkey];
+	}	
+}
+
+// 检查 appkey
+function check_appkey($appkey="1d8b6e7d45233436") {
+	$appsec = appkey2sec($appkey);
+	$mobi_app = appkey2mobi($appkey);
+	if ($appsec == "") {
+		if (BILIROAMING_PLATFORM == "") {
+			return check_mobi_app();
+		} else {
+			return check_mobi_app(BILIROAMING_PLATFORM);
+		}
+	}
+	if ($mobi_app == "iphone" || $mobi_app == "ipad") {
+		$platform = "ios";
+	} else {
+		$platform  = "android";
+	}
+	return array($appkey, $appsec, $mobi_app, $platform);
+}
+
+// 检查 mobi_app
+function check_mobi_app($mobi_app="iphone") {
+	$appkey = appkey2mobi($mobi_app,$flip=true);
+	$appsec = appkey2sec($appkey);
+	if ($appkey == "" || $appsec == "") {
+		return array("", "", "", "");
+	} elseif ($mobi_app == "iphone" || $mobi_app == "ipad") {
+		$platform = "ios";
+	} else {
+		$platform  = "android";
+	}
+	return array($appkey, $appsec, $mobi_app, $platform);
 }
 
 // 强制添加参数
-function add_query($appkey, $query, $add_query) {
-	parse_str($query, $query_arr);
-	parse_str($add_query, $query_arr2);
-	$query_arr = array_merge($query_arr, $query_arr2);
-	// 泰区删除 area 参数
-	if ($appkey == "7d089525d3611b1c") {
-		unset($query_arr["area"]);
+function add_query($type, $query, $add_query) {
+	if (APPKEY == "" || @$_GET['appkey'] == "") {
+		return $query;
 	}
+	parse_str($query, $query_arr);
+	if ($add_query != "") {
+		parse_str($add_query, $query_arr2);
+		$query_arr = array_merge($query_arr, $query_arr2);
+	}
+	$query_arr["appkey"] = APPKEY;
+	$query_arr["mobi_app"] = MOBI_APP;
+	$query_arr["platform"] = PLATFORM;
+	$appsec = APPSEC;
+	$query_arr["ts"] = time();
 	unset($query_arr["sign"]);
-	$query_arr["appkey"] = $appkey;
-	$mobi_app = appkey2mobi($appkey);
-	if ($mobi_app != "") {
-		$query_arr["mobi_app"] = $mobi_app;
+	// 泰区参数
+	if (AREA == "th") {
+		unset($query_arr["area"]);
+		$query_arr["appkey"] = "7d089525d3611b1c";
+		$query_arr["build"] = "1080003";
+		$query_arr["mobi_app"] = "bstar_a";
+		$query_arr["platform"] = PLATFORM;
+		$query_arr["s_locale"] = "zh_SG";
+		$appsec = "acd495b248ec528c2eed1e862d393126";
+	}
+	// playurl 参数
+	if ($type == 1) {
+		$query_arr["fnver"] = "0";
+		$query_arr["fnval"] = "4048";
+		$query_arr["fourk"] = "1";
+		$query_arr["qn"] = "125";
 	}
 	ksort($query_arr);
 	$query_new = http_build_query($query_arr);
-	$appsec = appkey2sec($appkey);
-	if ($appsec == "") {
-		return $query_new;
-	}
 	$sign = md5($query_new.$appsec);
 	return $query_new."&sign=".$sign;
 }
