@@ -114,7 +114,7 @@ function block($code, $reason, $upstreem_reason=""){
 	}
 	// 返回内容
 	if ($upstreem_reason != "") {
-		$reason = reason."上游錯誤：".$upstreem_reason
+		$reason = reason."上游錯誤：".$upstreem_reason;
 	}
 	http_response_code(200); // B站就是都返回200	
 	exit('{"code":-'.$code.',"message":"'.$reason.'(E='.$code.')"}');
