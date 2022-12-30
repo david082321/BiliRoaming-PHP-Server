@@ -28,7 +28,7 @@ if (IP_RESOLVE == 1) {
 	$ip = $ips[array_rand($ips)];
 }
 // 加入必要参数
-$query = $add_query($type, $query, "");
+$query = add_query($type, $query, "");
 // 转发到指定服务器
 $url = $host.$path."?".$query;
 if (IP_RESOLVE == 1) {
