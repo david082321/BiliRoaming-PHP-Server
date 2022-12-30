@@ -14,14 +14,6 @@ if (SAVE_LOG == 1) {
 	define('PATH', $path);
 	define('QUERY', $query);
 }
-// 验证 sign（playurl）
-$appkey = @$_GET['appkey'];
-if ($type == 1 && SIGN) {
-	$sign = @$_GET['sign'];
-	if ($appkey != "" && $sign != "" && TS != "") {
-		check_sign($appkey, $sign, $query);
-	}
-}
 // 验证 ts
 $ts = @$_GET['ts'];
 if ($ts == '' || !SIGN) {
@@ -31,6 +23,14 @@ if ($ts == '' || !SIGN) {
 		block(17, "参数ts错误");
 	}
 	define('TS', $ts);
+}
+// 验证 sign（playurl）
+$appkey = @$_GET['appkey'];
+if ($type == 1 && SIGN) {
+	$sign = @$_GET['sign'];
+	if ($appkey != "" && $sign != "" && TS != "") {
+		check_sign($appkey, $sign, $query);
+	}
 }
 // 其他参数
 define('BILIROAMING_PLATFORM', @$_SERVER['HTTP_PLATFORM_FROM_BILIROAMING']);
