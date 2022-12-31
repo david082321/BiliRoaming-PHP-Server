@@ -52,7 +52,6 @@ define('SS_ID', @$_GET['season_id']);
 define('QN', @$_GET['qn']);
 define('BILIROAMING_VERSION', @$_SERVER['HTTP_X_FROM_BILIROAMING']);
 define('BILIROAMING_VERSION_CODE', @$_SERVER['HTTP_BUILD']);
-$baned = 0;
 $th_paths = array("/intl/gateway/v2/app/search/type", "/intl/gateway/v2/app/search/v2", "/intl/gateway/v2/app/subtitle", "/intl/gateway/web/v2/subtitle", "/intl/gateway/v2/ogv/view/app/season", "/intl/gateway/v2/ogv/view/app/season2", "/intl/gateway/v2/ogv/playurl", "/intl/gateway/v2/ogv/view/app/episode");
 $get_area = @$_GET['area'];
 if (BILIROAMING_VERSION == '' && BILIROAMING_VERSION_CODE == '') {

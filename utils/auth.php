@@ -86,6 +86,7 @@ if (ACCESS_KEY != "") { // access_key 存在
 		}
 	}
 	$is_baned = false;
+	$baned = 0;
 	switch (BLOCK_TYPE) {
 		case "blacklist": // 在线黑名单
 			if ($is_blacklist) {

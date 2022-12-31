@@ -576,7 +576,7 @@ function read_status($area){
 		$sqlco = "SELECT `code` FROM `status_code` WHERE `area` = '".$area."'";
 		$result = $dbh -> query($sqlco);
 		$code = $result -> fetch();
-		if ($code == false) {
+		if (!$code) {
 		    return 0;
 		}
 		return $code['code'];
@@ -593,7 +593,6 @@ function write_status($code, $area) {
 	//判断表是否存在
 	if ( count($row) == '1' ) {
 		$sql = "UPDATE `status_code` SET `time` = '".time()."', `code` = '".$code."' WHERE `area` = '".$area."';";
-		$dbh -> exec($sql);
 	} else {
 		$sql = "CREATE TABLE status_code (
 		id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
@@ -609,8 +608,8 @@ function write_status($code, $area) {
 		$sql = "INSERT INTO `status_code` (`area`,`code`,`time`) VALUES ('tw','".$code."','".time()."')";
 		$dbh -> exec($sql);
 		$sql = "INSERT INTO `status_code` (`area`,`code`,`time`) VALUES ('th','".$code."','".time()."')";
-		$dbh -> exec($sql);
 	}
+	$dbh -> exec($sql);
 }
 
 // 写入日志
