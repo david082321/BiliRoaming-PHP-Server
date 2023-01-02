@@ -132,6 +132,7 @@ function get_cache() {
 function write_cache() {
 	global $dbh;
 	global $SERVER_AREA;
+	global $type;
 	global $member_type;
 	global $cache_type;
 	global $output;
@@ -159,8 +160,10 @@ function write_cache() {
 			$output = $out.$a[count($a)-1];
 			*/
 			$ts = $ts + CACHE_TIME;
+			// 获取 vip_status
+			$vip_status = explode(',"', explode('"vip_status":', $output)[1])[0];
 			// 缓存 playurl 前，使用 vip_status 字段来判断是否为大会员
-			if ($type == 1 && AREA != "th") { $member_type = $array['vip_status'] + 1; }
+			if ($type == 1 && AREA != "th") { $member_type = intval($vip_status) + 1; }
 			break;
 		case "-10403":
 			$ts = $ts + CACHE_TIME_10403;
