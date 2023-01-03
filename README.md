@@ -39,6 +39,8 @@
 
 ## (非必要步骤) 防止重复的 301 转址
 
+若要开启网页版油猴脚本的支持，务必设置这个
+
 ### Apache
 
 * [下载这个，然后放在网站根目录 (.htaccess) ](https://github.com/david082321/BiliRoaming-PHP-Server/blob/main/.htaccess)
@@ -98,21 +100,17 @@ rewrite "^/x/web-interface/search/type?(.*)$" /x/web-interface/search/type/index
 
 * [油猴脚本地址](https://github.com/ipcjs/bilibili-helper/blob/user.js/packages/unblock-area-limit/README.md)
 
-* 配置 config.php 的 WEB_ON
+* 修改 config.php 的 WEB_ON 设置
+
+* 配置上面的禁用 301 转址
 
 * 脚本的 代理服务器->自定义 输入以下内容 (example.com 请改成你的服务器地址)
 
-##### 　　　https://example.com/
+##### 　　　　https://example.com
 
-* 脚本的 代理服务器->自定义(泰国/东南亚) 输入以下内容 (example.com 请改成你的服务器地址)
+* 注意：不配置上面的 「禁用 301 转址」，将无法正常加载。(哔哩漫游无影响)
 
-##### 　　　https://example.com/intl/gateway/v2/ogv/playurl/
-
-* (可选步骤) 配置上面的禁用 301 转址。然后脚本的 代理服务器->自定义 输入以下内容 (example.com 请改成你的服务器地址)
-
-##### 　　　https://example.com
-
-* 注意：不配置上面的 「禁用 301 转址」，部分 泰国/东南亚番剧 将无法在网页版加载。(哔哩漫游无影响)
+* 题外话：如果不会配置，可以改用[这个脚本](https://github.com/zzc10086/grocery_store/blob/master/bili_proxy/BPplayurl.php)
 
 --------
 
