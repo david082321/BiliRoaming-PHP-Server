@@ -144,6 +144,7 @@ function get_userinfo() {
 		} else {
 			$member_type = 1; // 不是大会员
 		}
+		$out[2] = "";
 	} else {
 		$out[0] = "0";
 		$out[1] = "0";
