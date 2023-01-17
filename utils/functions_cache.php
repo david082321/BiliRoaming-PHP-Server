@@ -37,7 +37,7 @@ function refresh_userinfo() {
 	$out = get_userinfo();
 	$uid = $out[0];
 	$due = $out[1];
-	$msg = $out[2];
+	@$msg = $out[2];
 	if ($uid != "0") {
 		$sql = " UPDATE `keys` SET `add_time` = now(), `uid` = '".$uid."', `due_date` = '".$due."', `expired` = '0' WHERE `keys`.`access_key` = '".ACCESS_KEY."';";
 		$dbh -> exec($sql);
