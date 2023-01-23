@@ -88,11 +88,21 @@ rewrite "^/x/web-interface/search/type?(.*)$" /x/web-interface/search/type/index
 
 ## (非必要步骤) 缓存
 
+多人使用时建议开启
+
 * 安装 MySQL
 
-* 配置 config.php 的缓存设置
+* 修改 config.php 的 SAVE_CACHE 设置
 
 * 导入 cache.sql
+
+* 配置 config.php 的“MySQL数据库”
+
+* 可选项：开启 Redis 可以加快服务器反应速度
+
+    * 安装 Redis
+
+    * 配置 config.php 的“redis数据库”
 
 ## (非必要步骤，实验性) 支持网页版油猴脚本
 
