@@ -51,7 +51,7 @@ function get_blacklist($uid) {
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_POST, false);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-		"User-Agent: biliroaming-php-server/".VERSION
+		"User-Agent: ".AGENT
 	));
 	$output = curl_exec($ch);
 	curl_close($ch);
