@@ -3,7 +3,7 @@
 if(!defined('SYSTEM')) {exit();}
 $member_type = 0; // 判断用户状态
 
-function get_webpage($url, $host="", $ip="") {
+function get_webpage($url, $host="", $ip="", $agent="") {
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
 	if (PROXY_ON == 1) { // 指定代理
@@ -28,12 +28,15 @@ function get_webpage($url, $host="", $ip="") {
 	if (IP_RESOLVE == 1) { // 指定ip回源
 		curl_setopt($ch, CURLOPT_RESOLVE,[$host.":443:".$ip]);
 	}
+	if ($agent == "") {
+		$agent = @$_SERVER["HTTP_USER_AGENT"];
+	}
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_POST, false);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-		"User-Agent: ".@$_SERVER["HTTP_USER_AGENT"]
+		"User-Agent: ".$agent
 	));
 	$output = curl_exec($ch);
 	curl_close($ch);
