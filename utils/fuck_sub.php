@@ -46,7 +46,7 @@
 				$ss_id = $array['data']['season_id'];
 			}
 			$url = SUBTITLE_API.$ss_id;
-			$replace_json = get_webpage($url);
+			$replace_json = get_webpage($url,"","",AGENT);
 			$replace_array = json_decode($replace_json, true);
 			$code = $replace_array['code'];
 			// 替换字幕
