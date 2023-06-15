@@ -45,7 +45,7 @@ define('APPKEY', $check[0]);
 define('APPSEC', $check[1]);
 define('MOBI_APP', $check[2]);
 define('PLATFORM', $check[3]);
-define('ACCESS_KEY', @$_GET['access_key']);
+define('ACCESS_KEY', substr(@$_GET['access_key'], 0, 32));
 define('CID', @$_GET['cid']);
 define('EP_ID', @$_GET['ep_id']);
 define('SS_ID', @$_GET['season_id']);
