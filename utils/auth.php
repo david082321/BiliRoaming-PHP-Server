@@ -89,14 +89,14 @@ if (ACCESS_KEY != "") { // access_key 存在
 	$baned = 0;
 	switch (BLOCK_TYPE) {
 		case "blacklist": // 在线黑名单
-			if ($is_blacklist) {
+			if ($is_blacklist == 1) {
 				$is_baned = true;
 				$baned = 21;
 				$reason = $uid." 在黑名单";
 			}
 			break;
 		case "whitelist": // 在线白名单
-			if (!$is_whitelist) {
+			if (!$is_whitelist == 1) {
 				$is_baned = true;
 				$baned = 22;
 				$reason = $uid." 不在白名单";
