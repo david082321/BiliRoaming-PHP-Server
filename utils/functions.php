@@ -50,6 +50,7 @@ function get_blacklist($uid) {
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_POST, false);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 3);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 		"User-Agent: ".AGENT
 	));
