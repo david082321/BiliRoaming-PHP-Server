@@ -45,7 +45,7 @@ function get_webpage($url, $host="", $ip="", $agent="") {
 
 function get_blacklist($uid) {
 	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, "https://black.qimo.ink/api/users/".$uid);
+	curl_setopt($ch, CURLOPT_URL, "https://b23.day/api/users/".$uid);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
