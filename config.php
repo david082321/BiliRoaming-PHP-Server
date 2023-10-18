@@ -19,18 +19,18 @@ define('ROAMING_MAX_VER', 0); // 0 表示不限制，设置最高允许漫游版
 define('BLACKLIST_ERROR', 1); // 在线黑名单服务器发生错误的处理方式。2 全部拉黑并提示错误, 1 改用本地黑白名单, 0 不拉黑任何人也不提示
 define('SIGN', true); // 用户传参的签名验证，请勿关闭，后果自负。false 关闭, true 开启
 
-// 封锁指定epid视频
-define('BAN_EP', 0); // 是否开启ban特定视频
+// 封锁指定epid视频，必须用单引号或双引号
+define('BAN_EP', "0"); // 是否开启ban特定视频
 //$epid_list = array('369747','371362','371461','371462','371463','371596'); //示范内容：(单集屏蔽)
 /* // 示范内容：(范围屏蔽)
 foreach (range(368703, 368714) as $n) {
-	array_push($epid_list, $n);
+	array_push($epid_list, strval($n));
 }
 */
 $epid_list = array();
 
-// 封锁指定cid视频
-define('BAN_CID', 0); // 是否开启ban特定视频
+// 封锁指定cid视频，必须用单引号或双引号
+define('BAN_CID', "0"); // 是否开启ban特定视频
 $cid_list = array();
 
 // 缓存
