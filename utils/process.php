@@ -88,10 +88,10 @@ if (BILIROAMING_VERSION == '' && BILIROAMING_VERSION_CODE == '') {
 } else {
 	block(15, "错误请求头");
 }
-if (in_array(EP_ID, $epid_list) && BAN_EP == 1) {
+if (in_array(strval(EP_ID), $epid_list) && BAN_EP == 1) {
 	block(11, "禁止解锁此视频，请改用其他解析服务器");
 }
-if (in_array(CID, $cid_list) && BAN_CID == 1) {
+if (in_array(strval(CID), $cid_list) && BAN_CID == 1) {
 	block(12, "禁止解锁此视频，请改用其他解析服务器");
 }
 if (in_array(AREA, $BAN_SERVER_AREA)) {
