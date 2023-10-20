@@ -627,14 +627,15 @@ function write_log() {
 	} else {
 		$ip = $_SERVER["REMOTE_ADDR"];
 	}
-	if (BILIROAMING_VERSION_CODE == ""){
-		$version_code = "0";
-	} else {
-		$version_code = BILIROAMING_VERSION_CODE;
-	}
-	if (!defined('UID')) {
-		define('UID', '0');
-	}
+	if (!defined('AREA')) {define('AREA', "");}
+	if (!defined('BILIROAMING_VERSION')){define('BILIROAMING_VERSION', "");}
+	if (!defined('BILIROAMING_VERSION_CODE')){define('BILIROAMING_VERSION_CODE', "");}
+	if (BILIROAMING_VERSION_CODE == ""){$version_code = "0";}
+	if (!defined('ACCESS_KEY')){define('ACCESS_KEY', "");}
+	if (!defined('PATH')){define('PATH', "");}
+	if (!defined('QUERY')){define('QUERY', "");}
+	if (!defined('BAN_CODE')){define('BAN_CODE', "0");}
+	if (!defined('UID')){define('UID', '0');}
 	$ts = time();
 	$sql = "INSERT INTO `log` (`time`,`ip`,`area`,`version`,`version_code`,`access_key`,`uid`,`ban_code`,`path`,`query`) VALUES (now(),'".$ip."','".AREA."','".BILIROAMING_VERSION."','".$version_code."','".ACCESS_KEY."','".UID."','".BAN_CODE."','".PATH."','".QUERY."')";
 	$dbh -> exec($sql);
